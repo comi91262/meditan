@@ -32,14 +32,18 @@ const state = {
 }
 
 
+
+
 const actions = {
+    up: () => state => ({q: state.q + 1}),
     update: text => ({text: text}),
-    set_answer: bool =>  ({is_correct: bool}),
-    set_result: bool => ({show_result: bool}),
-    create: state => {
+    show_answer: bool =>  ({is_correct: bool}),
+    show_result: bool => ({show_result: bool}),
+    create: () => state => {
         request
-            .get("/questions/" + "1") 
+            .get("/questions/" + state.q) 
             .end(function(err, res){
+                console.log(state.q)
                 console.log(res.body.name_jp)
                 main.update(res.body.name_jp)
             })
@@ -50,9 +54,19 @@ const actions = {
             .query({q: state.q, text: text})
             .end(function(err, res){
                 console.log(res.body.result);
-                main.set_answer(res.body.result);
-                main.set_result(true);
-                
+                main.show_answer(res.body.result);
+                main.show_result(true);
+                main.up();
+            })
+    },
+    to_next: () => state => {
+        main.show_result(false);
+        request
+            .get("/questions/" + state.q) 
+            .end(function(err, res){
+                console.log(state.q)
+                console.log(res.body.name_jp)
+                main.update(res.body.name_jp)
             })
     }
 
@@ -105,7 +119,7 @@ const view = (state, actions) =>
                     state.show_result?
                     div({class: "col-md-6 col-sm-6"}, [ 
                         h1({}, state.is_correct? '正解！':'間違い(><)'),
-                        button({class: "btn btn-primary", onclick: console.log("TODO")}, "次に問題に進む")
+                        button({class: "btn btn-primary", onclick: actions.to_next}, "次に問題に進む")
                     ]): null
                 ])
             ])
