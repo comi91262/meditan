@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
         if question.name_en == text then
             render json: {result: true}
         else 
-            render json: {result: false}
+            render json: {result: false, answer: question.name_en}
         end
        
     end

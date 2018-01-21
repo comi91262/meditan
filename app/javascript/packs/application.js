@@ -17,7 +17,7 @@
 //});
 //
 import { h, app } from "hyperapp"
-import { header, section, nav, div,h1, a, p, span, button} from "@hyperapp/html"
+import { header, section, nav, div,h2,h1, a, p, span, button, input} from "@hyperapp/html"
 import request from 'superagent'
 
 
@@ -25,47 +25,60 @@ const root_url = location.protocol + '//' + location.hostname + ':3000';
 
 const state = {
     q: 1,
-    text: 'a',
+    text: '',
+    answer_text: '',
     show_result: false,
     is_correct: true,
     input: 'ここに入力してね'
 }
 
 
+
+
 const actions = {
+    up: () => state => ({q: state.q + 1}),
     update: text => ({text: text}),
-    set_answer: bool =>  ({is_correct: bool}),
-    set_result: bool => ({show_result: bool}),
-    create: state => {
+    update2: input => ({input}),
+    update_answer_text: text=> ({answer_text: text}),
+    show_answer: bool =>  ({is_correct: bool}),
+    show_result: bool => ({show_result: bool}),
+    create: () => state => {
         request
-            .get("/questions/" + "1") 
+            .get("/questions/" + state.q) 
             .end(function(err, res){
+                console.log(state.q)
                 console.log(res.body.name_jp)
                 main.update(res.body.name_jp)
             })
     },
     send: text => state => {
+        if (!state.show_result){
+            request
+                .get(root_url + "/questions/search")
+                .query({q: state.q, text: text})
+                .end(function(err, res){
+                    if(err && err.status === 404) {
+                        console.log(err);
+                    }
+                    if (!res.body.result){
+                        main.update_answer_text(res.body.answer); 
+                    } 
+                    main.show_answer(res.body.result);
+                    main.show_result(true);
+                    main.up();
+                })
+        }
+    },
+    to_next: () => state => {
+        main.show_result(false);
         request
-            .get(root_url + "/questions/search")
-            .query({q: state.q, text: text})
+            .get("/questions/" + state.q) 
             .end(function(err, res){
-                console.log(res.body.result);
-                main.set_answer(res.body.result);
-                main.set_result(true);
-                
+                console.log(state.q)
+                console.log(res.body.name_jp)
+                main.update(res.body.name_jp)
             })
     }
-
-    //送信用
-   // send: text => state => {
-   //     console.log(text);
-   //     var host = location.hostname
-   //     request
-   //     .post("http://" + host + ":3000/questions")//TOSO 絶対URL
-   //     .end(function(err, res){
-   //         console.log(res.body)
-   //     })
-   // }
 
 }
 
@@ -91,21 +104,18 @@ const view = (state, actions) =>
             div({class: "container"}, [
                 div({class: "row"}, [
                     div({class: "col-md-6 col-sm-6"}, [
-                        div({}, [
                             h1({ oncreate: actions.create,
-                                onclick: () => console.log("a") }, state.text)
-                        ]),
-                        div({}, [
-                            h("input", { class: 'form-control',
+                                onclick: () => console.log("a") }, state.text),
+                            input({ class: 'form-control',
+                                type: 'text',
                                 placeholder: state.input,
-                                onkeypress: e =>  actions.send(e.target.value)},
-                                state.input)
-                        ]),
+                                onkeypress: ({target: {value}}) => actions.send(value)})
                     ]),
                     state.show_result?
                     div({class: "col-md-6 col-sm-6"}, [ 
-                        h1({}, state.is_correct? '正解！':'間違い(><)'),
-                        button({class: "btn btn-primary", onclick: console.log("TODO")}, "次に問題に進む")
+                        h2({}, state.is_correct? '正解！':'間違い(><)'),
+                        h2({}, state.is_correct? '':'正解は'+ state.answer_text +'でした'),
+                        button({class: "btn btn-primary", onclick: actions.to_next}, "次に問題に進む")
                     ]): null
                 ])
             ])
