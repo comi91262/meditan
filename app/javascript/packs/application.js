@@ -21,7 +21,7 @@ import { header, section, nav, div,h2,h1, a, p, span, button, input} from "@hype
 import request from 'superagent'
 
 
-const root_url = location.protocol + '//' + location.hostname;
+const root_url = location.protocol + '//' + location.hostname + ':3000';
 
 const state = {
     q: 1,
@@ -51,22 +51,24 @@ const actions = {
                 main.update(res.body.name_jp)
             })
     },
-    send: text => state => {
-        if (!state.show_result){
-            request
-                .get(root_url + "/questions/search")
-                .query({q: state.q, text: text})
-                .end(function(err, res){
-                    if(err && err.status === 404) {
-                        console.log(err);
-                    }
-                    if (!res.body.result){
-                        main.update_answer_text(res.body.answer); 
-                    } 
-                    main.show_answer(res.body.result);
-                    main.show_result(true);
-                    main.up();
-                })
+    send: ({text, code}) => state => {
+        if(code==32||code==13||code==188||code==186){
+            if (!state.show_result){
+                request
+                    .get(root_url + "/questions/search")
+                    .query({q: state.q, text: text})
+                    .end(function(err, res){
+                        if(err && err.status === 404) {
+                            console.log(err);
+                        }
+                        if (!res.body.result){
+                            main.update_answer_text(res.body.answer); 
+                        } 
+                        main.show_answer(res.body.result);
+                        main.show_result(true);
+                        main.up();
+                    })
+            }
         }
     },
     to_next: () => state => {
@@ -104,12 +106,12 @@ const view = (state, actions) =>
             div({class: "container"}, [
                 div({class: "row"}, [
                     div({class: "col-md-6 col-sm-6"}, [
-                            h1({ oncreate: actions.create,
-                                onclick: () => console.log("a") }, state.text),
-                            input({ class: 'form-control',
-                                type: 'text',
-                                placeholder: state.input,
-                                onkeypress: ({target: {value}}) => actions.send(value)})
+                        h1({ oncreate: actions.create,
+                            onclick: () => console.log("a") }, state.text),
+                        input({ class: 'form-control',
+                            type: 'text',
+                            placeholder: state.input,
+                            onkeyup: ({target: {value}, which}) => actions.send({text: value, code: which})})
                     ]),
                     state.show_result?
                     div({class: "col-md-6 col-sm-6"}, [ 
