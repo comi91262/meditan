@@ -21,7 +21,7 @@ import { header, section, nav, div,h2,h1, a, p, span, button, input} from "@hype
 import request from 'superagent'
 
 
-const root_url = location.protocol + '//' + location.hostname + ':3000';
+const root_url = location.protocol + '//' + location.hostname;
 
 const state = {
     q: 1,
