@@ -21,7 +21,7 @@ import { header, section, nav, div,h2,h1, a, p, span, button, input} from "@hype
 import request from 'superagent'
 
 
-const root_url = location.protocol + '//' + location.hostname;
+const root_url = location.protocol + '//' + location.hostname + ':' + location.port;
 
 const state = {
     q: 1,
@@ -89,7 +89,7 @@ const header_layout = () =>
     header({}, [
         nav({class: "navbar navbar-inverse bg-faded"}, [
             a({class: "navbar-brand", href: '/'}, "Medical Term Test"),
-            a({class: "navbar-brand nav-link", href: "/toy/title"}, "テスト"),
+            a({class: "navbar-brand nav-link", href: "/test"}, "テスト"),
             a({class: "navbar-brand nav-link", href: "/toy/title"}, "やり直しテスト"),
             a({class: "navbar-brand nav-link", href: "/toy/title"}, "一覧"),
         ])
