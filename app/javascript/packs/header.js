@@ -27,7 +27,7 @@ const header_layout = () =>
     header({}, [
         nav({class: "navbar navbar-inverse bg-faded"}, [
             a({class: "navbar-brand", href: '/'}, "Medical Term Test"),
-            a({class: "navbar-brand nav-link", href: "/exam"}, "テスト"),
+            a({class: "navbar-brand nav-link", href: "/exam/select1"}, "テスト"),
             a({class: "navbar-brand nav-link", href: "/review"}, "復習"),
             a({class: "navbar-brand nav-link", href: "/summary"}, "まとめ"),
         ])

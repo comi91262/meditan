@@ -1,0 +1,18 @@
+<header>
+    <nav class="navbar navbar-inverse bg-faded">
+        <a class="navbar-brand" href="/"> Medical Term Test </a>
+        <a class="navbar-brand nav-link" href="/exam/select1"> テスト </a>
+        <a class="navbar-brand nav-link" href="/review"> 復習 </a>
+        <a class="navbar-brand nav-link" href="/summary"> まとめ </a>
+    </nav>
+</header>
+
+<h1>ジャンルを選択してください</h1>
+
+<form action="/exam">
+<% @genres.each do |genre| %>
+    <button type='submit' class="btn btn-primary">
+        <%= genre.genre_jp %> 
+    </button>
+<% end %>
+</form>

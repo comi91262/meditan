@@ -7,15 +7,6 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-
-//const promise = new Promise((resolve, reject) => {
-//  if ('処理が成功') {
-//    resolve(1);
-//  } else {
-//    reject(new Error('error'));
-//  }
-//});
-//
 import { h, app } from "hyperapp"
 import { header, section, nav, div,h2,h1, a, p, span, button, input} from "@hyperapp/html"
 import request from 'superagent'
@@ -84,19 +75,15 @@ const actions = {
 
 }
 
-
 const header_layout = () =>
     header({}, [
         nav({class: "navbar navbar-inverse bg-faded"}, [
             a({class: "navbar-brand", href: '/'}, "Medical Term Test"),
-            a({class: "navbar-brand nav-link", href: "/test"}, "テスト"),
-            a({class: "navbar-brand nav-link", href: "/toy/title"}, "やり直しテスト"),
-            a({class: "navbar-brand nav-link", href: "/toy/title"}, "一覧"),
+            a({class: "navbar-brand nav-link", href: "/exam/select1"}, "テスト"),
+            a({class: "navbar-brand nav-link", href: "/review"}, "復習"),
+            a({class: "navbar-brand nav-link", href: "/summary"}, "まとめ"),
         ])
     ])
-
-
-
 
 
 const view = (state, actions) =>
@@ -123,19 +110,6 @@ const view = (state, actions) =>
             ])
         ])
     ])
-//
-//    <label> 問題！</label>
-//    </p>
-//    <p>
-//    <input type="text" class="form-control" placeholder="ここに入力してね！">
-//    </p>
-
-//const view = (state, actions) =>
-//  h("div", {}, [
-//    h("h1", {}, state.count),
-//    h("button", { onclick: () => actions.down(1) }, "–"),
-//    h("button", { onclick: () => actions.up(1) }, "+")
-//  ])
 
 window.main = app(state, actions, view, document.body)
 
