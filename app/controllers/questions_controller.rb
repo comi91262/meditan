@@ -11,23 +11,37 @@ class QuestionsController < ApplicationController
         #render json: "ok!"
 
     end
+
     def search 
         q = params[:q]
         text = params[:text]
+        lang = session[:lang]
         question = Question.find(q)
-        if question.name_en == text then
+
+        if lang == 'en' then 
+            answer_text = question.name_jp
+        else
+            answer_text = question.name_en
+        end
+
+        if answer_text == text then
             render json: {result: true}
         else 
-            render json: {result: false, answer: question.name_en}
+            render json: {result: false, answer: answer_text}
         end
-       
+
     end
 
     def show
         id = params[:id]
-        question = Question.find(id)
+        lang = session[:lang]
 
-        render json: question
+        question = Question.find(id)
+        if lang == 'jp' then
+            render json: {question: question.name_jp}
+        elsif lang == 'en' then
+            render json: {question: question.name_en}
+        end
     end
 
     def create

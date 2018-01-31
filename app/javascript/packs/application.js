@@ -15,6 +15,7 @@ import request from 'superagent'
 const root_url = location.protocol + '//' + location.hostname + ':' + location.port;
 
 const state = {
+    //lang: '',
     q: 1,
     text: '',
     answer_text: '',
@@ -31,15 +32,18 @@ const actions = {
     update: text => ({text: text}),
     update2: input => ({input}),
     update_answer_text: text=> ({answer_text: text}),
+    //set_lang: lang => state => ({lang: lang}),
     show_answer: bool =>  ({is_correct: bool}),
     show_result: bool => ({show_result: bool}),
     create: () => state => {
+        //railsから受け取る
+        //actions.set_lang(window.lang);
         request
             .get("/questions/" + state.q) 
+            //.query({lang: state.lang})
             .end(function(err, res){
-                console.log(state.q)
-                console.log(res.body.name_jp)
-                main.update(res.body.name_jp)
+                console.log(res.body.question)
+                main.update(res.body.question)
             })
     },
     send: ({text, code}) => state => {
@@ -68,8 +72,8 @@ const actions = {
             .get("/questions/" + state.q) 
             .end(function(err, res){
                 console.log(state.q)
-                console.log(res.body.name_jp)
-                main.update(res.body.name_jp)
+                console.log(res.body.question)
+                main.update(res.body.question)
             })
     }
 
@@ -93,8 +97,7 @@ const view = (state, actions) =>
             div({class: "container"}, [
                 div({class: "row"}, [
                     div({class: "col-md-6 col-sm-6"}, [
-                        h1({ oncreate: actions.create,
-                            onclick: () => console.log("a") }, state.text),
+                        h1({ oncreate: actions.create}, state.text),
                         input({ class: 'form-control',
                             type: 'text',
                             placeholder: state.input,

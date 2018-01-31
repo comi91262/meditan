@@ -1,6 +1,7 @@
 class ExamController < ApplicationController
     def index
-        render 'exam' 
+        #@lang = session[:lang]
+        render 'exam'
     end
 
     def select1 
@@ -8,6 +9,8 @@ class ExamController < ApplicationController
     end
 
     def select2
+        lang = params[:lang]
+        session[:lang] = lang
         @genres = Genre.all
         render 'select2'
     end
