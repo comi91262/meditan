@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180128082439) do
+ActiveRecord::Schema.define(version: 20180201082256) do
 
   create_table "genres", force: :cascade do |t|
     t.string "genre_jp"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20180128082439) do
     t.string "name_en"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "genre"
   end
 
   create_table "terms", force: :cascade do |t|
