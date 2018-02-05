@@ -16,7 +16,9 @@ class QuestionsController < ApplicationController
         q = params[:q]
         text = params[:text]
         lang = session[:lang]
-        question = Question.find(q)
+        genre = session[:genre]
+
+        question = Question.where('genre = ?', genre)[q.to_i]
 
         if lang == 'en' then 
             answer_text = question.name_jp
@@ -35,8 +37,10 @@ class QuestionsController < ApplicationController
     def show
         id = params[:id]
         lang = session[:lang]
+        genre = session[:genre]
 
-        question = Question.find(id)
+        question = Question.where('genre = ?', genre)[id.to_i]
+
         if lang == 'jp' then
             render json: {question: question.name_jp}
         elsif lang == 'en' then

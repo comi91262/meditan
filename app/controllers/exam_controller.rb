@@ -1,6 +1,7 @@
 class ExamController < ApplicationController
     def index
-        #@lang = session[:lang]
+        genre = params[:genre]
+        session[:genre] = genre
         render 'exam'
     end
 
