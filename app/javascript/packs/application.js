@@ -21,7 +21,7 @@ const state = {
     answer_text: '',
     show_result: false,
     is_correct: true,
-    input: 'ここに入力してね'
+    input: ''
 }
 
 
@@ -35,6 +35,7 @@ const actions = {
     //set_lang: lang => state => ({lang: lang}),
     show_answer: bool =>  ({is_correct: bool}),
     show_result: bool => ({show_result: bool}),
+    clear: () => ({input: ''}),
     create: () => state => {
         //railsから受け取る
         //actions.set_lang(window.lang);
@@ -48,6 +49,7 @@ const actions = {
     },
     send: ({text, code}) => state => {
         if(code==32||code==13||code==188||code==186){
+            main.clear();
             if (!state.show_result){
                 request
                     .get(root_url + "/questions/search")
@@ -100,7 +102,8 @@ const view = (state, actions) =>
                         h1({ oncreate: actions.create}, state.text),
                         input({ class: 'form-control',
                             type: 'text',
-                            placeholder: state.input,
+                            placeholder: 'ここに入力してね',
+                            value: state.input,
                             onkeyup: ({target: {value}, which}) => actions.send({text: value, code: which})})
                     ]),
                     state.show_result?
