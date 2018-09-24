@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.11.4
+        environment:
+            TZ: Asia/Tokyo
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "d2:9c:6f:82:a8:21:7b:76:7f:72:39:6c:cb:a5:12:38"
+      - run:
+          name: Build
+          command: |
+            sh .circleci/setup-heroku.sh
+#            npm install
+# - npm test
+      - run:
+          name: Deploy
+          command: |
+            heroku login
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/meditan.git develop
+            # git push heroku master
