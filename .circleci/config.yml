@@ -21,4 +21,3 @@ jobs:
           command: |
             heroku login
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/meditan.git develop
-            # git push heroku master
