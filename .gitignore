@@ -1,6 +1,6 @@
-# npm
-node_modules
-
-# elm
-.vscode
-elm-stuff
+# laravel
+/vendor
+/node_modules
+Homestead.yaml
+Homestead.json
+.env
