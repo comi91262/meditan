@@ -3,6 +3,10 @@
         <title>meditan</title>
     </head>
     <body>
-        <h1>Hello, {{ $name }}</h1>
+@foreach ($terms as $term)
+<div>
+    <span> {{ $term->name_jp }} {{ $term->name_en }} {{ $term->category }}  </span>
+</div>
+@endforeach
     </body>
 </html>

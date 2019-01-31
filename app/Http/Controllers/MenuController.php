@@ -9,8 +9,8 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $name = DB::select('select * from users');
+        $terms = DB::table('terms')->get();
 
-        return view('menu', ['name' => 'あああ']);
+        return view('menu', ['terms' => $terms]);
     }
 }
