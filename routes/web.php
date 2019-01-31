@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'MenuController@index');
+
+// Route::get('/user', 'UserController@index');
