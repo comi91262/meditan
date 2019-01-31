@@ -16,7 +16,7 @@ class CreateTermsTable extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name_jp', 30)->collation('utf8_general_ci')->comment('日本名');
-            $table->string('name_en', 30);
+            $table->string('name_en', 50);
             $table->string('category', 10);
             $table->timestamps();
             $table->index('category');
