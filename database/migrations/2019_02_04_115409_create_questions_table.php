@@ -20,8 +20,8 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->integer('number')->comment('問題番号');
             $table->string('question', 100)->comment('問題');
-            $table->boolean('success')->comment('正解したかどうか');
-            $table->dateTime('success_datetime')->comment('正解したかどうか');
+            $table->boolean('success')->default(false)->comment('正解したかどうか');
+            $table->dateTime('success_datetime')->nullable()->comment('正解した時の日時');
             $table->timestamps();
         });
     }
