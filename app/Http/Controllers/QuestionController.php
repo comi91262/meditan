@@ -4,9 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Services\Question\QuestionServiceInterface;
 
 class QuestionController extends Controller
 {
+    /**
+    * @var QuestionServiceInterface $question
+    */
+    private $service;
+
+    /**
+    * @param object $question
+    */
+    public function __construct(QuestionServiceInterface $questionService)
+    {
+        $this->service = $questionService;
+    }
+
     /**
      * TODO 引数の検証
      *
@@ -42,5 +56,19 @@ class QuestionController extends Controller
         )->first();
 
         return ['isSuccess' => true];
+    }
+
+    /**
+     * デバッグ用。あとで廃止
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $section = $this->service->createQuestions();
+
+        return ['section' => $section];
     }
 }
