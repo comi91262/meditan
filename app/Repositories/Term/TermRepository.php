@@ -16,7 +16,7 @@ class TermRepository implements TermRepositoryInterface
         $this->term = $term;
     }
 
-    public function retrieveRandmizedTerms($number)
+    public function retrieveRandomizedTerms($number)
     {
         return $this->term->inRandomOrder()->take($number)->get();
     }

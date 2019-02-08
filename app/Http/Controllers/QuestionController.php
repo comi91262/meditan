@@ -24,7 +24,8 @@ class QuestionController extends Controller
     /**
      * TODO 引数の検証
      *
-     * @param  int  $id
+     * @param  string $section
+     * @param  string  $number
      * @return \Illuminate\Http\Response
      */
     public function show($section, $number)
@@ -62,7 +63,6 @@ class QuestionController extends Controller
      * デバッグ用。あとで廃止
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function create()

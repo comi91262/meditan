@@ -17,15 +17,13 @@ class QuestionRepository implements QuestionRepositoryInterface
         $this->question = $question;
     }
 
-    public function saveTerms(array $terms)
+    public function saveTerms($terms)
     {
         $section = Uuid::generate()->string;
 
-        $bulk =  [];
+        $bulk = [];
         foreach ($terms as $index => $term) {
-            $bulk[] = [
-                ['section' => $section, 'number' => $index, 'question' => $term->name_jp]
-            ];
+            $bulk[] = ['section' => $section, 'number' => $index, 'question' => $term->name_jp];
         }
 
         $this->question->insert($bulk);
