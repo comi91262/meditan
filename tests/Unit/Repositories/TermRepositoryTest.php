@@ -30,7 +30,7 @@ class TermRepositoryTest extends TestCase
      *
      * @return void
      */
-    public function testRetrieveRandmizedTerms()
+    public function testRetrieveRandomizedTerms()
     {
         factory(Term::class, 20)->create();
         $terms = $this->repository->retrieveRandmizedTerms(5);
