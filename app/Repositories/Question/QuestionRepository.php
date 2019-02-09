@@ -23,7 +23,7 @@ class QuestionRepository implements QuestionRepositoryInterface
 
         $bulk = [];
         foreach ($terms as $index => $term) {
-            $bulk[] = ['section' => $section, 'number' => $index, 'question' => $term->name_jp];
+            $bulk[] = ['section' => $section, 'number' => $index, 'question' => $term->name_jp, 'answer' => $term->name_en ];
         }
 
         $this->question->insert($bulk);

@@ -19,3 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('questions/{section}/{number}', 'QuestionController@show');
 Route::put('questions/{section}/{number}', 'QuestionController@update');
+
+// for Debug
+Route::post('questions/create', 'QuestionController@create');

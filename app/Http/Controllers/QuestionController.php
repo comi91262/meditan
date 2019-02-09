@@ -23,6 +23,7 @@ class QuestionController extends Controller
 
     /**
      * TODO 引数の検証
+     * TODO 認証の検証
      *
      * @param  string $section
      * @param  string  $number
@@ -44,11 +45,13 @@ class QuestionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string $section
+     * @param  string  $number
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $section, $number)
     {
+        $userAnswer = $request->input('answer');
         $question = DB::table('questions')->where(
             [
                 'section' => $section,
@@ -56,7 +59,15 @@ class QuestionController extends Controller
             ]
         )->first();
 
-        return ['isSuccess' => true];
+        if ($question->answer === $userAnswer) {
+            DB::table('questions')
+            ->where(['section' => $section, 'number' => $number])
+            ->update(['success' => true]);
+            // TOOD 結果の種類を増やす
+            return [ 'success' => true ];
+        }
+
+        return [ 'success' => false ];
     }
 
     /**

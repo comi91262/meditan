@@ -3,6 +3,14 @@
     <input v-model="message" placeholder="回答を入力してね">
     <span>入力テキスト: {{ message }}</span>
     <button v-on:click="next">次へ</button>
+    <button v-on:click="answer">回答する</button>
+    <button v-on:click="load">ロード</button>
+    <div>
+        セクション: {{ section }}
+    </div>
+    <div>
+        問題: {{ question }}
+    </div>
 </div>
 </template>
 
@@ -11,15 +19,35 @@ export default {
     data: function () {
         return {
             message: '',
-            response: '',
+            section: '',
+            question: '',
+            number: 1,
         }
     },
     methods: {
         next: function (event) {
             axios
-                .get('http://localhost:8000/api/questions/0b78aae0-2a16-11e9-92e7-ef281055be64/1')
-                .then(response => (this.response = response))
-        }
+                .get('/api/questions/'+this.section+'/'+this.number)
+                .then(response => {
+                    this.question = response.data.question;
+                })
+        },
+        answer: function (event) {
+            axios
+                .put('/api/questions/'+this.section+'/'+this.number, {'answer': this.message})
+                .then(response => {
+                    if (response.data.success == true) {
+                        this.number++;
+                    }
+                })
+        },
+        load: function (event) {
+            axios
+                .post('/api/questions/create')
+                .then(response => {
+                    this.section = response.data.section;
+                })
+        },
     }
 }
 </script>

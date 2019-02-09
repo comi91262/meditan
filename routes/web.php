@@ -12,5 +12,7 @@
 */
 
 Route::get('/', 'MenuController@index');
+Route::get('/start', 'MenuController@start');
+Route::get('/test', 'MenuController@test');
 
 // Route::get('/user', 'UserController@index');
