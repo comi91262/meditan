@@ -41,11 +41,12 @@ export default {
                 .put('/api/questions/'+this.section+'/'+this.number, {'answer': this.message})
                 .then(response => {
                     if (response.data.success == true) {
-                        this.number++;
                         this.success_text = '正解！'
                     } else {
                         this.success_text = '不正解'
                     }
+                    this.number++;
+                    this.next();
                 })
         },
         load: function (event) {
