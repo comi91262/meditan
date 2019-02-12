@@ -11,6 +11,9 @@
     <div>
         問題: {{ question }}
     </div>
+    <div>
+        {{ success_text }}
+    </div>
 </div>
 </template>
 
@@ -22,6 +25,7 @@ export default {
             section: '',
             question: '',
             number: 1,
+            success_text: '',
         }
     },
     methods: {
@@ -38,6 +42,9 @@ export default {
                 .then(response => {
                     if (response.data.success == true) {
                         this.number++;
+                        this.success_text = '正解！'
+                    } else {
+                        this.success_text = '不正解'
                     }
                 })
         },
