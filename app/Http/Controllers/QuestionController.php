@@ -38,6 +38,11 @@ class QuestionController extends Controller
             ]
         )->first();
 
+        // TODO とりあえずこれ以上出題はないと解釈する
+        if (null === $question) {
+            return response()->json(['message' => 'not found'], 404);
+        }
+
         return ['question' => $question->question];
     }
 
@@ -58,6 +63,7 @@ class QuestionController extends Controller
                 'number' => $number,
             ]
         )->first();
+
 
         if ($question->answer === $userAnswer) {
             DB::table('questions')

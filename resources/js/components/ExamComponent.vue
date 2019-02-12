@@ -35,6 +35,9 @@ export default {
                 .then(response => {
                     this.question = response.data.question;
                 })
+                .catch(error => {
+                    this.result();
+                })
         },
         answer: function (event) {
             axios
@@ -56,6 +59,9 @@ export default {
                     this.section = response.data.section;
                 })
         },
+        result: function() {
+            console.log('終了！');
+        }
     }
 }
 </script>
