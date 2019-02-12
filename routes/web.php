@@ -11,8 +11,11 @@
 |
 */
 
-Route::get('/', 'MenuController@index');
-Route::get('/start', 'MenuController@start');
-Route::get('/test', 'MenuController@test');
+Route::get('/', 'MenuController@index')->middleware('auth.basic');
+Route::get('/exam', 'MenuController@exam')->middleware('auth.basic');
 
 // Route::get('/user', 'UserController@index');
+
+// TODO あとでフレームワークに頼らない形に
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');

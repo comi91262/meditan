@@ -1,12 +1,15 @@
 <html>
     <head>
         <title>meditan</title>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
 @foreach ($terms as $term)
 <div>
-    <span> {{ $term->name_jp }} {{ $term->name_en }} {{ $term->category }}  </span>
+    <span> {{ $term->id }} </span>
 </div>
 @endforeach
+
     </body>
 </html>

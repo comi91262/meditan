@@ -15,12 +15,7 @@ class MenuController extends Controller
         return view('menu', ['terms' => $terms]);
     }
 
-    public function start()
-    {
-        return view('test', ['questions' => $terms]);
-    }
-
-    public function test()
+    public function exam()
     {
         return view('exam');
     }
