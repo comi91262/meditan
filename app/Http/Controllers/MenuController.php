@@ -10,13 +10,22 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $terms = DB::table('terms')->get();
-
-        return view('menu', ['terms' => $terms]);
+        return view('menu');
     }
 
     public function exam()
     {
         return view('exam');
+    }
+
+    public function history()
+    {
+        return view('history');
+    }
+
+    public function list()
+    {
+        $terms = DB::table('terms')->get();
+        return view('list', ['terms' => $terms]);
     }
 }
