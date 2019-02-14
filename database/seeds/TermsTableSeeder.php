@@ -44,6 +44,20 @@ class TermsTableSeeder extends Seeder
                 ['name_jp' => '肝性脳症', 'name_en' => 'hepatic encephalopathy', 'category' => '消化器'],
                 ['name_jp' => '胆管炎', 'name_en' => ' cholangitis', 'category' => '消化器'],
                 ['name_jp' => '胆嚢炎', 'name_en' => 'cholecystitis', 'category' => '消化器'],
+                ['name_jp' => '狭心症', 'name_en' => 'angina pectoris', 'category' => '循環器'],
+                ['name_jp' => '心筋症', 'name_en' => 'cardiomyopathy', 'category' => '循環器'],
+                ['name_jp' => '動脈瘤', 'name_en' => 'aneurysm', 'category' => '循環器'],
+                ['name_jp' => '弁膜症', 'name_en' => 'valvular heart disease', 'category' => '循環器'],
+                ['name_jp' => '心臓病学', 'name_en' => 'cardiology', 'category' => '循環器'],
+                ['name_jp' => '上腕動脈', 'name_en' => 'brachial artery', 'category' => '循環器'],
+                ['name_jp' => '大腿動脈', 'name_en' => 'femoral artery', 'category' => '循環器'],
+                ['name_jp' => '動脈硬化', 'name_en' => 'arteriosclerosis', 'category' => '循環器'],
+                ['name_jp' => '心内膜炎', 'name_en' => 'endocarditis', 'category' => '循環器'],
+                ['name_jp' => '心房細動', 'name_en' => 'atrial fibrillation', 'category' => '循環器'],
+                ['name_jp' => '橈側皮静脈', 'name_en' => ' => cephalic vein', 'category' => '循環器'],
+                ['name_jp' => '大動脈弁狭窄症', 'name_en' => ' aortic stenosis', 'category' => '循環器'],
+                ['name_jp' => 'アテローム硬化', 'name_en' => ' atherosclerosis', 'category' => '循環器'],
+                ['name_jp' => '大動脈弁閉鎖不全', 'name_en' => ' aortic regurgitation', 'category' => '循環器']
             ]
         );
     }
