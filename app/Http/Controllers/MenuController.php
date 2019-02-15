@@ -18,6 +18,11 @@ class MenuController extends Controller
         return view('exam');
     }
 
+    public function select()
+    {
+        return view('select');
+    }
+
     public function history()
     {
         return view('history');
