@@ -1,0 +1,12 @@
+version: "3"
+services:
+  master:
+    build: .
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_HOST: master
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: meditan
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret

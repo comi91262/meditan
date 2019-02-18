@@ -11,11 +11,13 @@
 |
 */
 
-Route::get('/', 'MenuController@index')->middleware('auth.basic');
-Route::get('/exam', 'MenuController@exam')->name('menu.exam')->middleware('auth.basic');
-Route::get('/history', 'MenuController@history')->name('menu.history')->middleware('auth.basic');
-Route::get('/list', 'MenuController@list')->name('menu.list')->middleware('auth.basic');
-
+Route::middleware(['auth.basic'])->group(function () {
+    Route::get('/', 'MenuController@index');
+    Route::get('/select', 'MenuController@select')->name('menu.select');
+    Route::post('/exam', 'MenuController@exam')->name('menu.exam');
+    Route::get('/history', 'MenuController@history')->name('menu.history');
+    Route::get('/list', 'MenuController@list')->name('menu.list');
+});
 // TODO あとでフレームワークに頼らない形に
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

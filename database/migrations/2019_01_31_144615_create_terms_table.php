@@ -17,9 +17,9 @@ class CreateTermsTable extends Migration
             $table->increments('id');
             $table->string('name_jp', 30)->collation('utf8_general_ci')->comment('日本名');
             $table->string('name_en', 50);
-            $table->string('category', 10);
+            $table->string('department', 10);
             $table->timestamps();
-            $table->index('category');
+            $table->index('department');
             $table->index('name_jp');
             $table->index('name_en');
             $table->unique(['name_jp', 'name_en']);
