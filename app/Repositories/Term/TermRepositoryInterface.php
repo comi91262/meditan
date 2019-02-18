@@ -4,5 +4,5 @@ namespace App\Repositories\Term;
 
 interface TermRepositoryInterface
 {
-    public function retrieveRandomizedTerms($number);
+    public function retrieveRandomizedTerms($number, $genre);
 }

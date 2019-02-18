@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="app">
-        <exam-component></exam-component>
+        <exam-component section={{ $section }}></exam-component>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 @endsection

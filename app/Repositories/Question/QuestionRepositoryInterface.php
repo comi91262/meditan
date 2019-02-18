@@ -4,5 +4,5 @@ namespace App\Repositories\Question;
 
 interface QuestionRepositoryInterface
 {
-    public function saveTerms($terms);
+    public function saveTerms($terms, $lang);
 }

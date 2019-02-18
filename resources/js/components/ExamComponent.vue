@@ -4,7 +4,6 @@
     <span>入力テキスト: {{ message }}</span>
     <button v-on:click="next">次へ</button>
     <button v-on:click="answer">回答する</button>
-    <button v-on:click="load">ロード</button>
     <div>
         セクション: {{ section }}
     </div>
@@ -19,10 +18,10 @@
 
 <script>
 export default {
+    props: ['section'],
     data: function () {
         return {
             message: '',
-            section: '',
             question: '',
             number: 1,
             success_text: '',
@@ -50,13 +49,6 @@ export default {
                     }
                     this.number++;
                     this.next();
-                })
-        },
-        load: function (event) {
-            axios
-                .post('/api/questions/create')
-                .then(response => {
-                    this.section = response.data.section;
                 })
         },
         result: function() {

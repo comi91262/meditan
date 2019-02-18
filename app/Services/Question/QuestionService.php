@@ -24,11 +24,13 @@ class QuestionService implements QuestionServiceInterface
     }
 
     /**
+    * @param string 問題文の言語
+    * @param string ジャンル
     * @return string セクション番号
     */
-    public function createQuestions()
+    public function createQuestions($lang, $genre)
     {
-        $terms = $this->termRepository->retrieveRandomizedTerms(10);
-        return $this->questionRepository->saveTerms($terms);
+        $terms = $this->termRepository->retrieveRandomizedTerms(10, $genre);
+        return $this->questionRepository->saveTerms($terms, $lang);
     }
 }

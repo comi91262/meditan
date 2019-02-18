@@ -4,5 +4,5 @@ namespace App\Services\Question;
 
 interface QuestionServiceInterface
 {
-    public function createQuestions();
+    public function createQuestions($lang, $genre);
 }

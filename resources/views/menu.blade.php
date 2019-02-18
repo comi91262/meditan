@@ -2,7 +2,7 @@
 
 @section('content')
 <div>
-    <a href={{ route('menu.exam') }}>問題をとく</a>
+    <a href={{ route('menu.select') }}>問題をとく</a>
 </div>
 <div>
     <a href={{ route('menu.history') }}>テスト履歴へ</a>
