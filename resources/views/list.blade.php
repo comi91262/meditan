@@ -14,7 +14,7 @@
         <tr>
             <td>{{$term->name_jp}}</td>
             <td>{{$term->name_en}}</td>
-            <td>{{$term->category}}</td>
+            <td>{{$term->department}}</td>
         </tr>
 @endforeach
 </tbody>

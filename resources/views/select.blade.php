@@ -5,9 +5,9 @@
 {!! Form::open(['route' => 'menu.exam']) !!}
 
 <div>
-@foreach($categories as $category)
-{{ Form::radio('genre', $category) }}
-    {{ Form::label('genre', $category) }}
+@foreach($departments as $department)
+{{ Form::radio('department', $department) }}
+    {{ Form::label('department', $department) }}
 @endforeach
 </div>
 
