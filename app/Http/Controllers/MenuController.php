@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Services\Question\QuestionServiceInterface;
 
 class MenuController extends Controller
@@ -43,7 +44,8 @@ class MenuController extends Controller
 
     public function history()
     {
-        return view('history');
+        $questions = DB::table('questions')->select()->where('user', Auth::id())->get();
+        return view('history', ['questions' => $questions]);
     }
 
     public function list()

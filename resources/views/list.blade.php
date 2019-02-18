@@ -9,14 +9,14 @@
             <td>カテゴリ名</td>
         </tr>
     </thead>
-@foreach ($terms as $term)
 <tbody>
+@foreach ($terms as $term)
         <tr>
             <td>{{$term->name_jp}}</td>
             <td>{{$term->name_en}}</td>
             <td>{{$term->category}}</td>
         </tr>
-</tbody>
 @endforeach
+</tbody>
 </table>
 @endsection
