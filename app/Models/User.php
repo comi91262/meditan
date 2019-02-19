@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    // これを指定しないと、pgsql 実行時、セッション操作で型が合わずエラーになる
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
