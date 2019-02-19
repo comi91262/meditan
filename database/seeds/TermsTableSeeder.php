@@ -74,7 +74,6 @@ class TermsTableSeeder extends Seeder
                 ['name_jp' => '骨粗鬆症', 'name_en' => 'osteoporosis', 'department' => '内分泌'],
                 ['name_jp' => '先端巨大症', 'name_en' => 'acromegaly', 'department' => '内分泌'],
                 ['name_jp' => '甲状腺腫', 'name_en' => 'goiter', 'department' => '内分泌'],
-                ['name_jp' => '泌尿器科学', 'name_en' => 'urology', 'department' => '腎臓'],
                 ['name_jp' => '糸球体', 'name_en' => 'glomerulus', 'department' => '腎臓'],
                 ['name_jp' => '尿細管', 'name_en' => 'renal tubule', 'department' => '腎臓'],
                 ['name_jp' => 'ネフローゼ', 'name_en' => 'nephrosis', 'department' => '腎臓'],
