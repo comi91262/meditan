@@ -1,12 +1,8 @@
 <template>
 <div>
     <input v-model="message" placeholder="回答を入力してね">
-    <span>入力テキスト: {{ message }}</span>
     <button v-on:click="next">次へ</button>
-    <button v-on:click="answer">回答する</button>
-    <div>
-        セクション: {{ section }}
-    </div>
+    <button v-on:click="answer">回答</button>
     <div>
         問題: {{ question }}
     </div>
@@ -26,6 +22,10 @@ export default {
             number: 1,
             success_text: '',
         }
+    },
+    created: function () {
+        // 最初の問題をロードする
+        this.next();
     },
     methods: {
         next: function (event) {
@@ -52,7 +52,7 @@ export default {
                 })
         },
         result: function() {
-            console.log('終了！');
+            window.location.href = '/';
         }
     }
 }
