@@ -35,18 +35,18 @@ class QuestionRepository implements QuestionRepositoryInterface
                     $bulk[] = [
                         'section' => $section,
                         'user' =>  Auth::id(),
-                        'number' => $index,
+                        'number' => $index + 1, // 1 origin
                         'question' => $term->name_en,
-                        'answer' => $term->name_jp
+                        'answer' => $term->name_jp,
                     ];
                     break;
                 case 'jp':
                     $bulk[] = [
                         'section' => $section,
                         'user' =>  Auth::id(),
-                        'number' => $index,
+                        'number' => $index + 1,
                         'question' => $term->name_jp,
-                        'answer' => $term->name_en
+                        'answer' => $term->name_en,
                     ];
                     break;
                 default:

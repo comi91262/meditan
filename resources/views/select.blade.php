@@ -4,20 +4,25 @@
 <h1>問題の選択</h1>
 {!! Form::open(['route' => 'menu.exam']) !!}
 
-<div>
+<section>
+{{ Form::label('', 'Department を選択してください') }}
 @foreach($departments as $department)
+<div>
 {{ Form::radio('department', $department) }}
     {{ Form::label('department', $department) }}
-@endforeach
 </div>
+@endforeach
+</section>
 
+<section>
+{{ Form::label('', '問題文の言語を選択してください。') }}
 <div>
-{{ Form::label('', 'どちらで問題を解きますか') }}
 {{ Form::radio('lang', 'jp') }}
     {{ Form::label('lang', '日本語') }}
 {{ Form::radio('lang', 'en') }}
     {{ Form::label('lang', '英語') }}
 </div>
+</section>
 
 {{ Form::submit('回答開始') }}
 
