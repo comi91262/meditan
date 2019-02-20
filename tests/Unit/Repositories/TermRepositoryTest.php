@@ -33,7 +33,7 @@ class TermRepositoryTest extends TestCase
     public function testRetrieveRandomizedTerms()
     {
         factory(Term::class, 20)->create();
-        $terms = $this->repository->retrieveRandomizedTerms(5, '');
+        $terms = $this->repository->retrieveRandomizedTerms(5, '放射線科');
 
         $this->assertCount(5, $terms);
     }
