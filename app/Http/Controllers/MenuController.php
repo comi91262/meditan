@@ -44,7 +44,11 @@ class MenuController extends Controller
 
     public function history()
     {
-        $questions = DB::table('questions')->select()->where('user', Auth::id())->get();
+        $questions = DB::table('questions')
+            ->select()
+            ->where('user', Auth::id())
+            ->whereNotNull('answer_datetime')
+            ->get();
         return view('history', ['questions' => $questions]);
     }
 
