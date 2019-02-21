@@ -8,8 +8,8 @@
 {{ Form::label('', 'Department を選択してください') }}
 @foreach($departments as $department)
 <div>
-{{ Form::radio('department', $department) }}
-    {{ Form::label('department', $department) }}
+    {{ Form::checkbox('departments[]', $department) }}
+    {{ Form::label('', $department) }}
 </div>
 @endforeach
 </section>
@@ -18,9 +18,9 @@
 {{ Form::label('', '問題文の言語を選択してください。') }}
 <div>
 {{ Form::radio('lang', 'jp') }}
-    {{ Form::label('lang', '日本語') }}
+    {{ Form::label('', '日本語') }}
 {{ Form::radio('lang', 'en') }}
-    {{ Form::label('lang', '英語') }}
+    {{ Form::label('', '英語') }}
 </div>
 </section>
 

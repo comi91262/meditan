@@ -28,18 +28,18 @@ class MenuController extends Controller
     public function exam(Request $request)
     {
         // TODO ない場合とかしっかり買いて
-        $department = $request->input('department');
+        $departments = $request->input('department');
         $lang = $request->input('lang');
 
-        $section = $this->questionService->createQuestions($lang, $department);
+        $section = $this->questionService->createQuestions($lang, $departments);
         return view('exam', ['section' => $section]);
     }
 
     public function select()
     {
-        $categories = DB::table('terms')->pluck('department');
-        $categories = array_unique($categories->toArray());
-        return view('select', ['departments' => $categories]);
+        $departments = DB::table('terms')->pluck('department');
+        $departments = array_unique($departments->toArray());
+        return view('select', ['departments' => $departments]);
     }
 
     public function history()
