@@ -25,21 +25,37 @@ class MenuController extends Controller
         return view('menu');
     }
 
-    public function exam(Request $request)
-    {
-        // TODO ない場合とかしっかり買いて
-        $departments = $request->input('department');
-        $lang = $request->input('lang');
-
-        $section = $this->questionService->createQuestions($lang, $departments);
-        return view('exam', ['section' => $section]);
-    }
-
     public function select()
     {
         $departments = DB::table('terms')->pluck('department');
         $departments = array_unique($departments->toArray());
         return view('select', ['departments' => $departments]);
+    }
+
+    public function exam(Request $request)
+    {
+        // TODO ない場合とかしっかり買いて
+        $departments = $request->input('departments');
+        $lang = $request->input('lang');
+        $number = $request->input('number');
+
+        switch ($number) {
+            case 'ten':
+                $number = 10;
+                break;
+            case 'twenty':
+                $number = 20;
+                break;
+            case 'all':
+                $number = 1000;
+                break;
+            default:
+                // TODO 別で対応
+                break;
+        }
+
+        $section = $this->questionService->createQuestions($lang, $departments, $number);
+        return view('exam', ['section' => $section]);
     }
 
     public function history()

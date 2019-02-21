@@ -24,6 +24,18 @@
 </div>
 </section>
 
+<section>
+{{ Form::label('', '出題数を選択してください。') }}
+<div>
+{{ Form::radio('number', 'ten') }}
+    {{ Form::label('', '10') }}
+{{ Form::radio('number', 'twenty') }}
+    {{ Form::label('', '20') }}
+{{ Form::radio('number', 'all') }}
+    {{ Form::label('', '全て') }}
+</div>
+</section>
+
 {{ Form::submit('回答開始') }}
 
 {!! Form::close() !!}
