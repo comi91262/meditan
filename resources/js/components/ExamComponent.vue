@@ -1,16 +1,15 @@
 <template>
 <div>
-    <input v-model="message" placeholder="回答を入力してね">
-    <button v-on:click="next">次へ</button>
-    <button v-on:click="answer">回答</button>
-    <button v-on:click="hint">ヒントをみる</button>
-    <span> {{ hint_text }} </span>
-    <div>
-        問題: {{ question }}
-    </div>
-    <div>
-        {{ success_text }}
-    </div>
+  <el-container>
+    <el-header>
+        <h1> 問題: {{ question }} </h1>
+    </el-header>
+    <el-main>
+        <el-input placeholder="回答を入力してね" v-model="message"></el-input>
+        <el-button type="primary" v-on:click="answer" :loading="primary_lording">回答する</el-button>
+        <el-button type="primary" v-on:click="hint" :loading="primary_lording">ヒントをみる</el-button>
+    </el-main>
+  </el-container>
 </div>
 </template>
 
@@ -22,16 +21,14 @@ export default {
             message: '',
             question: '',
             number: 1,
-            success_text: '',
-            hint_text: '',
         }
     },
     created: function () {
         // 最初の問題をロードする
-        this.next();
+        this.load();
     },
     methods: {
-        next: function (event) {
+        load: function (event) {
             axios
                 .get('/api/questions/'+this.section+'/'+this.number)
                 .then(response => {
@@ -46,12 +43,12 @@ export default {
                 .put('/api/questions/'+this.section+'/'+this.number, {'answer': this.message})
                 .then(response => {
                     if (response.data.success == true) {
-                        this.success_text = '正解！'
+                        this.$message('正解！', 'success');
                     } else {
-                        this.success_text = '不正解。正解は' + response.data.answer + 'でした'
+                        this.$message.error('不正解。正解は' + response.data.answer + 'でした');
                     }
                     this.number++;
-                    this.next();
+                    this.load();
                 })
             this.message = '';
         },
@@ -59,7 +56,7 @@ export default {
             axios
                 .get('/api/questions/'+this.section+'/'+this.number + '/hint')
                 .then(response => {
-                    this.hint_text = '頭文字は' + response.data.hint + 'です'
+                    this.$message('頭文字は' + response.data.hint + 'です');
                 })
         },
         result: function() {
