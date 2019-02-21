@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Services\Question\QuestionServiceInterface;
 
@@ -66,16 +67,16 @@ class QuestionController extends Controller
 
         if ($question->answer === $userAnswer) {
             DB::table('questions')
-            ->where(['section' => $section, 'number' => $number])
-            ->update(['success' => true, 'user_answer' => $userAnswer]);
+            ->where(['section' => $section, 'number' => $number ])
+            ->update(['success' => true, 'user_answer' => $userAnswer, 'answer_datetime' => Carbon::now()]);
             // TOOD 結果の種類を増やす
             return [ 'success' => true ];
         } else {
             DB::table('questions')
-            ->where(['section' => $section, 'number' => $number])
-            ->update(['success' => false, 'user_answer' => $userAnswer]);
+            ->where(['section' => $section, 'number' => $number ])
+            ->update(['success' => false, 'user_answer' => $userAnswer, 'answer_datetime' => Carbon::now()]);
 
-            return [ 'success' => false, 'answer' => $question->answer];
+            return [ 'success' => false, 'answer' => $question->answer ];
         }
     }
 
