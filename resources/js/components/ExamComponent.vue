@@ -3,6 +3,8 @@
     <input v-model="message" placeholder="回答を入力してね">
     <button v-on:click="next">次へ</button>
     <button v-on:click="answer">回答</button>
+    <button v-on:click="hint">ヒントをみる</button>
+    <span> {{ hint_text }} </span>
     <div>
         問題: {{ question }}
     </div>
@@ -21,6 +23,7 @@ export default {
             question: '',
             number: 1,
             success_text: '',
+            hint_text: '',
         }
     },
     created: function () {
@@ -51,6 +54,13 @@ export default {
                     this.next();
                 })
             this.message = '';
+        },
+        hint: function(event) {
+            axios
+                .get('/api/questions/'+this.section+'/'+this.number + '/hint')
+                .then(response => {
+                    this.hint_text = '頭文字は' + response.data.hint + 'です'
+                })
         },
         result: function() {
             window.location.href = '/';

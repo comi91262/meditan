@@ -81,15 +81,21 @@ class QuestionController extends Controller
     }
 
     /**
-     * デバッグ用。あとで廃止
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * ヒントの取得
+     * @param string $section
+     * @param string $number
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function showHint($section, $number)
     {
-        $section = $this->service->createQuestions();
+        $question = DB::table('questions')->where(
+            [
+                'section' => $section,
+                'number' => $number,
+            ]
+        )->first();
 
-        return ['section' => $section];
+        $hint = mb_substr($question->answer, 0, 1);
+        return ['hint' => $hint];
     }
 }
