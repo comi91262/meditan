@@ -64,16 +64,19 @@ class QuestionController extends Controller
             ]
         )->first();
 
-
         if ($question->answer === $userAnswer) {
             DB::table('questions')
             ->where(['section' => $section, 'number' => $number])
-            ->update(['success' => true]);
+            ->update(['success' => true, 'user_answer' => $userAnswer]);
             // TOOD 結果の種類を増やす
             return [ 'success' => true ];
-        }
+        } else {
+            DB::table('questions')
+            ->where(['section' => $section, 'number' => $number])
+            ->update(['success' => false, 'user_answer' => $userAnswer]);
 
-        return [ 'success' => false, 'answer' => $question->answer ];
+            return [ 'success' => false, 'answer' => $question->answer];
+        }
     }
 
     /**

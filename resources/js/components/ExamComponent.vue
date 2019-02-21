@@ -39,7 +39,6 @@ export default {
                 })
         },
         answer: function (event) {
-            this.message = '';
             axios
                 .put('/api/questions/'+this.section+'/'+this.number, {'answer': this.message})
                 .then(response => {
@@ -51,6 +50,7 @@ export default {
                     this.number++;
                     this.next();
                 })
+            this.message = '';
         },
         result: function() {
             window.location.href = '/';

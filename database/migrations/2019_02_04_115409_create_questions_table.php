@@ -19,6 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('number')->comment('問題番号');
             $table->string('question', 100)->comment('問題');
             $table->string('answer', 100)->comment('答え');
+            $table->string('user_answer', 100)->nullable()->comment('回答');
             $table->boolean('success')->default(false)->comment('正解したかどうか');
             $table->dateTime('success_datetime')->nullable()->comment('正解した時の日時');
             $table->timestamps();

@@ -11,6 +11,7 @@ $factory->define(App\Models\Question::class, function (Faker $faker) {
         'number' => $faker->numberBetween(),
         'question' => $faker->name,
         'answer' => $faker->name,
+        'user_answer' => $faker->name,
         'success' => false,
         'success_datetime' => $faker->dateTime,
     ];

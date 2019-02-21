@@ -7,7 +7,8 @@
             <td>セクション</td>
             <td>番号</td>
             <td>質問</td>
-            <td>解答</td>
+            <td>正答</td>
+            <td>回答</td>
             <td>正解かどうか</td>
         </tr>
     </thead>
@@ -18,7 +19,8 @@
             <td>{{ $question->number }}</td>
             <td>{{ $question->question }}</td>
             <td>{{ $question->answer }}</td>
-            <td>{{ $question->success }}</td>
+            <td>{{ $question->user_answer }}</td>
+            <td>@if ($question->success == true) ○ @else × @endif </td>
         </tr>
 @endforeach
 </tbody>
