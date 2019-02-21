@@ -73,7 +73,7 @@ class QuestionController extends Controller
             return [ 'success' => true ];
         }
 
-        return [ 'success' => false ];
+        return [ 'success' => false, 'answer' => $question->answer ];
     }
 
     /**

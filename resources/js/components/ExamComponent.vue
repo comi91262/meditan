@@ -46,7 +46,7 @@ export default {
                     if (response.data.success == true) {
                         this.success_text = '正解！'
                     } else {
-                        this.success_text = '不正解'
+                        this.success_text = '不正解。正解は' + response.data.answer + 'でした'
                     }
                     this.number++;
                     this.next();
