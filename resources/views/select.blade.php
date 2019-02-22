@@ -2,6 +2,23 @@
 
 @section('content')
 <h1>問題の選択</h1>
+
+<style>
+.alert {
+    color: #FF0000;
+}
+</style>
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 {!! Form::open(['route' => 'menu.exam']) !!}
 
 <section>
