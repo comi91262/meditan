@@ -20,7 +20,7 @@ class CreateEnglishTermsTable extends Migration
             $table->string('department', 10)->collation('utf8_general_ci')->comment('科');
             $table->index('department');
             $table->index('term');  // 似た単語を引くため
-            $table->unique('term');
+            $table->unique(['term', 'department']);
         });
     }
 

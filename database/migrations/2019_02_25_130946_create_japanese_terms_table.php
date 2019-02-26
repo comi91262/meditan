@@ -19,7 +19,7 @@ class CreateJapaneseTermsTable extends Migration
             $table->string('term', 30)->collation('utf8_general_ci')->comment('日本名');
             $table->string('department', 10)->collation('utf8_general_ci')->comment('科');
             $table->index('department');
-            $table->unique('term');
+            $table->unique(['term', 'department']);
         });
     }
 
