@@ -20,38 +20,21 @@ class QuestionRepository implements QuestionRepositoryInterface
 
     /**
     * @param Term[] $terms
-    * @param string $lang 問題文の言語　
     * @return string
     */
-    public function saveTerms($terms, $lang)
+    public function saveTerms($terms)
     {
         // TODO ユーザー,　単体テストのことを考えて、ファサードをやめる？　
         $section = Uuid::generate()->string;
 
         $bulk = [];
         foreach ($terms as $index => $term) {
-            switch ($lang) {
-                case 'en':
-                    $bulk[] = [
-                        'section' => $section,
-                        'user' =>  Auth::id(),
-                        'number' => $index + 1, // 1 origin
-                        'question' => $term->name_en,
-                        'answer' => $term->name_jp,
-                    ];
-                    break;
-                case 'jp':
-                    $bulk[] = [
-                        'section' => $section,
-                        'user' =>  Auth::id(),
-                        'number' => $index + 1,
-                        'question' => $term->name_jp,
-                        'answer' => $term->name_en,
-                    ];
-                    break;
-                default:
-                    break;
-            }
+            $bulk[] = [
+                'section' => $section,
+                'user' =>  Auth::id(),
+                'number' => $index + 1, // 1 origin
+                'question' => $term->term,
+            ];
         }
 
         $this->question->insert($bulk);

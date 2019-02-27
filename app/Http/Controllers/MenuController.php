@@ -33,8 +33,7 @@ class MenuController extends Controller
 
     public function select()
     {
-        $departments = DB::table('terms')->pluck('department');
-        $departments = array_unique($departments->toArray());
+        $departments = $this->termService->retrieveDepartments();
         return view('select', ['departments' => $departments]);
     }
 

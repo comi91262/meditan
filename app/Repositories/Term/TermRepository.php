@@ -2,22 +2,33 @@
 
 namespace App\Repositories\Term;
 
-use App\Models\Term;
+use App\Models\Term\English;
+use App\Models\Term\Japanese;
 
 class TermRepository implements TermRepositoryInterface
 {
-    protected $term;
+    protected $japaneseTerm;
+    protected $englishTerm;
 
     /**
     * @param object $question
     */
-    public function __construct(Term $term)
+    public function __construct(Japanese $japaneseTerm, English $englishTerm)
     {
-        $this->term = $term;
+        $this->japaneseTerm = $japaneseTerm;
+        $this->englishTerm = $englishTerm;
     }
 
-    public function retrieveRandomizedTerms($departments, $number)
+    public function retrieveRandomizedTerms($departments, $number, $lang)
     {
-        return $this->term->whereIn('department', $departments)->inRandomOrder()->take($number)->get();
+        switch ($lang) {
+            case 'jp':
+                return $this->japaneseTerm->whereIn('department', $departments)->inRandomOrder()->take($number)->get();
+            case 'en':
+                return $this->englishTerm->whereIn('department', $departments)->inRandomOrder()->take($number)->get();
+            default:
+                // TODO 例外
+                break;
+        }
     }
 }

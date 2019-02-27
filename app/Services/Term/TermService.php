@@ -41,6 +41,12 @@ class TermService implements TermServiceInterface
         return $hoge;
     }
 
+    public function retrieveDepartments()
+    {
+        $departments = DB::table('japanese_terms')->pluck('department');
+        return array_unique($departments->toArray());
+    }
+
     public function retrieveCorrectAnswers($term, $lang)
     {
         $hoge = DB::table('japanese_terms')
