@@ -7,18 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Services\Term\TermServiceInterface;
 use App\Services\Question\QuestionServiceInterface;
 
 class MenuController extends Controller
 {
     protected $questionService;
+    protected $termService;
 
     /**
     * @param object $question
     */
-    public function __construct(QuestionServiceInterface $questionService)
-    {
+    public function __construct(
+        QuestionServiceInterface $questionService,
+        TermServiceInterface $termService
+    ) {
         $this->questionService = $questionService;
+        $this->termService =  $termService;
     }
 
     public function index()
@@ -90,7 +95,7 @@ class MenuController extends Controller
 
     public function list()
     {
-        $terms = DB::table('terms')->get();
-        return view('list', ['terms' => $terms]);
+        $terms = $this->termService->retrieveAllTerms();
+        return view('list', ['terms' => $terms ]);
     }
 }

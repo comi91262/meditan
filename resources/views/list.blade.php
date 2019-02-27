@@ -12,9 +12,9 @@
 <tbody>
 @foreach ($terms as $term)
         <tr>
-            <td>{{$term->name_jp}}</td>
-            <td>{{$term->name_en}}</td>
-            <td>{{$term->department}}</td>
+            <td>{{ $term->japaneseTerm }}</td>
+            <td>{{ $term->englishTerm }}</td>
+            <td>{{ $term->department }}</td>
         </tr>
 @endforeach
 </tbody>

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Service;
+namespace App\Services\Term;
 
 interface TermServiceInterface
 {
-    public function retriveAllTerms();
-    public function retriveCorrectAnswers($term, $lang);
+    public function retrieveAllTerms();
+    public function retrieveCorrectAnswers($term, $lang);
 }

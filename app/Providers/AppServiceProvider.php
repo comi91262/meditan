@@ -35,5 +35,9 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\Question\QuestionServiceInterface::class,
             \App\Services\Question\QuestionService::class
         );
+        $this->app->bind(
+            \App\Services\Term\TermServiceInterface::class,
+            \App\Services\Term\TermService::class
+        );
     }
 }
