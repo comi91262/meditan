@@ -2,9 +2,10 @@
 
 namespace App\Services\Question;
 
+use Illuminate\Support\Facades\DB;
+use App\Repositories\Term\TermRepositoryInterface;
 use App\Services\Question\QuestionServiceInterface;
 use App\Repositories\Question\QuestionRepositoryInterface;
-use App\Repositories\Term\TermRepositoryInterface;
 
 class QuestionService implements QuestionServiceInterface
 {
@@ -32,5 +33,10 @@ class QuestionService implements QuestionServiceInterface
     {
         $terms = $this->termRepository->retrieveRandomizedTerms($departments, $number, $lang);
         return $this->questionRepository->saveTerms($terms, $lang);
+    }
+
+    public function retrieveSection($userId)
+    {
+        return DB::table('questions')->where('user', $userId)->latest()->first()->section;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Question;
 
+use Carbon\Carbon;
 use App\Models\Question;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,7 @@ class QuestionRepository implements QuestionRepositoryInterface
                 'number' => $index + 1, // 1 origin
                 'question' => $term->term,
                 'language' => $lang,
+                'created_at' => Carbon::now(),
             ];
         }
 
