@@ -31,6 +31,6 @@ class QuestionService implements QuestionServiceInterface
     public function createQuestions($lang, $departments, $number)
     {
         $terms = $this->termRepository->retrieveRandomizedTerms($departments, $number, $lang);
-        return $this->questionRepository->saveTerms($terms);
+        return $this->questionRepository->saveTerms($terms, $lang);
     }
 }

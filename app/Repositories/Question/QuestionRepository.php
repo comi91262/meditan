@@ -22,10 +22,16 @@ class QuestionRepository implements QuestionRepositoryInterface
     * @param Term[] $terms
     * @return string
     */
-    public function saveTerms($terms)
+    public function saveTerms($terms, $lang)
     {
         // TODO ユーザー,　単体テストのことを考えて、ファサードをやめる？　
         $section = Uuid::generate()->string;
+
+        if ($lang === 'jp') {
+            $lang = 0;
+        } elseif ($lang === 'en') {
+            $lang = 1;
+        }
 
         $bulk = [];
         foreach ($terms as $index => $term) {
@@ -34,6 +40,7 @@ class QuestionRepository implements QuestionRepositoryInterface
                 'user' =>  Auth::id(),
                 'number' => $index + 1, // 1 origin
                 'question' => $term->term,
+                'language' => $lang,
             ];
         }
 

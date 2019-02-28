@@ -6,20 +6,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Services\Question\QuestionServiceInterface;
+use App\Services\Term\TermServiceInterface;
 
 class QuestionController extends Controller
 {
     /**
-    * @var QuestionServiceInterface $question
+    * @var QuestionServiceInterface $questionService
     */
-    private $service;
+    private $questionService;
+
+    /**
+    * @var TermServiceInterface $termService
+    */
+    private $termService;
 
     /**
     * @param object $question
     */
-    public function __construct(QuestionServiceInterface $questionService)
-    {
-        $this->service = $questionService;
+    public function __construct(
+        QuestionServiceInterface $questionService,
+        TermServiceInterface $termService
+    ) {
+        $this->questionService = $questionService;
+        $this->termService = $termService;
     }
 
     /**
@@ -95,7 +104,9 @@ class QuestionController extends Controller
             ]
         )->first();
 
-        $hint = mb_substr($question->answer, 0, 1);
+        $answer = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
+        $hint = mb_substr($answer, 0, 1);
+
         return ['hint' => $hint];
     }
 }

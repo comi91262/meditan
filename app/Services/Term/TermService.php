@@ -49,11 +49,20 @@ class TermService implements TermServiceInterface
 
     public function retrieveCorrectAnswers($term, $lang)
     {
-        $hoge = DB::table('japanese_terms')
+        $queryBuilder = DB::table('japanese_terms')
             ->join('terms', 'japanese_terms.id', '=', 'terms.japanese_term_id')
             ->join('english_terms', 'english_terms.id', '=', 'terms.english_term_id')
             ->select('japanese_terms.term', 'english_terms.term')
-            ->where(['japanese_terms.term' => $term])
-            ->get();
+        ;
+
+        // TODO 定数化
+        if ($lang === 0) {
+            $queryBuilder->where('japanese_terms.term', $term);
+        } elseif ($lang === 1) {
+            $queryBuilder->where('english_terms.term', $term);
+        }
+
+        // 別解がある場合は一つのみを選択
+        return $queryBuilder->first()->term;
     }
 }
