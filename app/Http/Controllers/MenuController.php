@@ -88,7 +88,17 @@ class MenuController extends Controller
             ->select()
             ->where('user', Auth::id())
             ->whereNotNull('answer_datetime')
-            ->get();
+            ->get()
+            ->toArray()
+        ;
+
+        foreach ($questions as $question) {
+            $question->answer = $this->termService->retrieveCorrectAnswers(
+                $question->question,
+                $question->language
+            );
+        }
+
         return view('history', ['questions' => $questions]);
     }
 
