@@ -94,14 +94,13 @@ class MenuController extends Controller
             ->where('user', Auth::id())
             ->whereNotNull('answer_datetime')
             ->get()
-            ->toArray()
         ;
 
         foreach ($questions as $question) {
-            $question->answer = $this->termService->retrieveCorrectAnswers(
+            $question->answer = implode(', ', $this->termService->retrieveCorrectAnswers(
                 $question->question,
                 $question->language
-            );
+            ));
         }
 
         return view('history', ['questions' => $questions]);

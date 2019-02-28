@@ -74,9 +74,15 @@ class QuestionController extends Controller
             ]
         )->first();
 
-        $answer = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
+        $answers = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
+        $correct = false;
+        foreach ($answers as $answer) {
+            if ($userAnswer === $answer) {
+                $correct = true;
+            }
+        }
 
-        if ($answer === $userAnswer) {
+        if ($correct === true) {
             DB::table('questions')
             ->where(['section' => $section, 'number' => $number ])
             ->update(['success' => true, 'user_answer' => $userAnswer, 'answer_datetime' => Carbon::now()]);
@@ -87,7 +93,8 @@ class QuestionController extends Controller
             ->where(['section' => $section, 'number' => $number ])
             ->update(['success' => false, 'user_answer' => $userAnswer, 'answer_datetime' => Carbon::now()]);
 
-            return [ 'success' => false, 'answer' => $answer ];
+            // TODO
+            return [ 'success' => false, 'answer' => implode(', ', $answers) ];
         }
     }
 
@@ -106,8 +113,9 @@ class QuestionController extends Controller
             ]
         )->first();
 
-        $answer = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
-        $hint = mb_substr($answer, 0, 1);
+        // 別解がある場合は一つのみを選択
+        $answers = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
+        $hint = mb_substr($answers[0], 0, 1);
 
         return ['hint' => $hint];
     }
