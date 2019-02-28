@@ -19,27 +19,7 @@
     </div>
 @endif
 
-{!! Form::open(['route' => 'menu.exam_condision']) !!}
-
-<section>
-{{ Form::label('', 'Department を選択してください') }}
-@foreach($departments as $department)
-<div>
-    {{ Form::checkbox('departments[]', $department) }}
-    {{ Form::label('', $department) }}
-</div>
-@endforeach
-</section>
-
-<section>
-{{ Form::label('', '問題文の言語を選択してください。') }}
-<div>
-{{ Form::radio('lang', 'jp') }}
-    {{ Form::label('', '日本語') }}
-{{ Form::radio('lang', 'en') }}
-    {{ Form::label('', '英語') }}
-</div>
-</section>
+{!! Form::open(['route' => 'menu.exam_condition']) !!}
 
 <section>
 {{ Form::label('', '出題数を選択してください。') }}

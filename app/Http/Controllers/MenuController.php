@@ -69,6 +69,57 @@ class MenuController extends Controller
         return view('exam', ['section' => $section]);
     }
 
+    public function selectCondition()
+    {
+        return view('select_condition');
+    }
+
+    public function examCondition(Request $request)
+    {
+        $this->validateSelector2($request);
+
+        $number = $request->input('number');
+
+        switch ($number) {
+            case 'ten':
+                $number = 10;
+                break;
+            case 'twenty':
+                $number = 20;
+                break;
+            case 'all':
+                $number = 1000;
+                break;
+            default:
+                // TODO 別で対応
+                break;
+        }
+
+        $section = $this->questionService->retrieveSection(Auth::id());
+        if ($section !== session('inAnswer')) {
+            $section = $this->questionService->createConditionQuestions($number);
+            session(['inAnswer' => $section]);
+        }
+        return view('exam', ['section' => $section]);
+    }
+
+    /**
+     *
+     */
+    public function validateSelector2($request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'number' => 'required',
+            ],
+            [
+                'required' => ':attribute が必要です.',
+            ]
+        )->validate();
+    }
+
+
     /**
      *
      */

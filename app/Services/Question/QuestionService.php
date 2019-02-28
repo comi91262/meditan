@@ -35,8 +35,20 @@ class QuestionService implements QuestionServiceInterface
         return $this->questionRepository->saveTerms($terms, $lang);
     }
 
+    public function createConditionQuestions($number)
+    {
+        $terms = DB::table('english_terms')->orderBy('term', 'asc')->take($number)->get();
+        return $this->questionRepository->saveTerms($terms, 'en');
+    }
+
     public function retrieveSection($userId)
     {
-        return DB::table('questions')->where('user', $userId)->latest()->first()->section;
+        $question = DB::table('questions')->where('user', $userId)->latest()->first();
+
+        if ($question !== null) {
+            return $question->section;
+        } else {
+            return '';
+        }
     }
 }

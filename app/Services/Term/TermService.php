@@ -57,9 +57,9 @@ class TermService implements TermServiceInterface
 
         // TODO 定数化
         if ($lang === 0) {
-            $terms = $queryBuilder->where('japanese_terms.term', $term)->get('english_terms.term');
+            $terms = $queryBuilder->where('japanese_terms.term', $term)->select('english_terms.term')->get();
         } elseif ($lang === 1) {
-            $terms = $queryBuilder->where('english_terms.term', $term)->get('japanese_terms.term');
+            $terms = $queryBuilder->where('english_terms.term', $term)->select('japanese_terms.term')->get();
         }
 
         $result = [];
