@@ -74,7 +74,9 @@ class QuestionController extends Controller
             ]
         )->first();
 
-        if ($question->answer === $userAnswer) {
+        $answer = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
+
+        if ($answer === $userAnswer) {
             DB::table('questions')
             ->where(['section' => $section, 'number' => $number ])
             ->update(['success' => true, 'user_answer' => $userAnswer, 'answer_datetime' => Carbon::now()]);
@@ -85,7 +87,7 @@ class QuestionController extends Controller
             ->where(['section' => $section, 'number' => $number ])
             ->update(['success' => false, 'user_answer' => $userAnswer, 'answer_datetime' => Carbon::now()]);
 
-            return [ 'success' => false, 'answer' => $question->answer ];
+            return [ 'success' => false, 'answer' => $answer ];
         }
     }
 
