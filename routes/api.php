@@ -13,14 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get(
+    '/user',
+    function (Request $request) {
+        return $request->user();
+    }
+);
 
 Route::get('questions/{section}/{number}', 'QuestionController@show');
 Route::get('questions/{section}/{number}/hint', 'QuestionController@showHint');
-
 Route::put('questions/{section}/{number}', 'QuestionController@update');
 
-// for Debug
-Route::post('questions/create', 'QuestionController@create');
+Route::get('departments', 'DepartmentApiController@index');
+Route::post('user_terms', 'UserTermApiController@create');
+

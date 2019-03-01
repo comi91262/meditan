@@ -13,6 +13,6 @@ $factory->define(App\Models\Question::class, function (Faker $faker) {
         'answer' => $faker->name,
         'user_answer' => $faker->name,
         'success' => false,
-        'success_datetime' => $faker->dateTime,
+        'answer_datetime' => $faker->dateTime,
     ];
 });

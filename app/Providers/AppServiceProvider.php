@@ -39,5 +39,9 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\Term\TermServiceInterface::class,
             \App\Services\Term\TermService::class
         );
+        $this->app->bind(
+            \App\Services\UserTerm\UserTermServiceInterface::class,
+            \App\Services\UserTerm\UserTermService::class
+        );
     }
 }

@@ -19,7 +19,7 @@
     </div>
 @endif
 
-{!! Form::open(['route' => 'menu.exam_condision']) !!}
+{!! Form::open(['route' => 'menu.exam']) !!}
 
 <section>
 {{ Form::label('', 'Department を選択してください') }}

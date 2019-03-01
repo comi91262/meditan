@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Webpatser\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -155,6 +154,12 @@ class MenuController extends Controller
         }
 
         return view('history', ['questions' => $questions]);
+    }
+
+    public function showAdditionTerm()
+    {
+        // Vueに渡すため、文字列化
+        return view('addition_term');
     }
 
     public function list()

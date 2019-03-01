@@ -12,6 +12,9 @@ class User extends Authenticatable
 
     // これを指定しないと、pgsql 実行時、セッション操作で型が合わずエラーになる
     public $incrementing = false;
+
+    public $timestamps = true;
+
     /**
      * The attributes that are mass assignable.
      *
