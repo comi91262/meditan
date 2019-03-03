@@ -38,7 +38,7 @@ class QuestionRepository implements QuestionRepositoryInterface
         foreach ($terms as $index => $term) {
             $bulk[] = [
                 'section' => $section,
-                'iuser' =>  Auth::id(),
+                'user' =>  Auth::id(),
                 'number' => $index + 1, // 1 origin
                 'question' => $term->term,
                 'language' => $lang,
