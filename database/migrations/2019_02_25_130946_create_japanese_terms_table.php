@@ -17,7 +17,7 @@ class CreateJapaneseTermsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('term', 30)->collation('utf8_general_ci')->comment('日本名');
-            $table->string('department', 10)->collation('utf8_general_ci')->comment('科');
+            $table->integer('department')->comment('科')->reference('id')->on('departments');
             $table->index('department');
             $table->unique(['term', 'department']);
         });

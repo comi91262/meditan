@@ -14,8 +14,8 @@
             <el-radio-group v-model="departmentSelection">
                 <el-radio-button v-for="(department, key) in this.departments" 
                                  :key="key" 
-                                 :label="department">
-                                 {{department}}
+                                 :label="department.id">
+                                 {{department.name}}
                 </el-radio-button>
             </el-radio-group>
         </div>
@@ -32,7 +32,6 @@
 export default {
     data: function () {
         return {
-            aaa: [],
             japaneseTerm: '',
             englishTerm: '',
             departments: [],

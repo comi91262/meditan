@@ -44,8 +44,7 @@ class TermService implements TermServiceInterface
 
     public function retrieveDepartments()
     {
-        $departments = DB::table('japanese_terms')->pluck('department');
-        return array_unique($departments->toArray());
+        return DB::table('departments')->get();
     }
 
     public function retrieveCorrectAnswers($term, $lang)

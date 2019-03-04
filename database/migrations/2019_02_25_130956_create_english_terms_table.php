@@ -17,7 +17,7 @@ class CreateEnglishTermsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('term', 50);
-            $table->string('department', 10)->collation('utf8_general_ci')->comment('科');
+            $table->integer('department')->comment('科')->reference('id')->on('departments');
             $table->index('department');
             $table->index('term');  // 似た単語を引くため
             $table->unique(['term', 'department']);

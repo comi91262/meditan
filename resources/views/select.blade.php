@@ -25,8 +25,8 @@
 {{ Form::label('', 'Department を選択してください') }}
 @foreach($departments as $department)
 <div>
-    {{ Form::checkbox('departments[]', $department) }}
-    {{ Form::label('', $department) }}
+    {{ Form::checkbox('departments[]', $department->id) }}
+    {{ Form::label('', $department->name) }}
 </div>
 @endforeach
 </section>
