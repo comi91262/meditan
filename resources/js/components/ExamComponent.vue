@@ -5,7 +5,7 @@
         <h1> 問題: {{ question }} </h1>
     </el-header>
     <el-main>
-        <el-input placeholder="回答を入力してね" v-model="message"></el-input>
+        <el-input placeholder="回答を入力してね" v-on:keyup.enter.native="answer" v-model="message"></el-input>
         <el-button type="primary" v-on:click="answer" :loading="primary_lording">回答する</el-button>
         <el-button type="primary" v-on:click="hint" :loading="primary_lording">ヒントをみる</el-button>
     </el-main>
@@ -21,6 +21,7 @@ export default {
             message: '',
             question: '',
             number: 1,
+            primary_lording: false,
         }
     },
     created: function () {
@@ -39,6 +40,10 @@ export default {
                 })
         },
         answer: function (event) {
+            if (this.message === '') {
+                this.$message.error('回答を入力してください');
+                return;
+            }
             axios
                 .put('/api/questions/'+this.section+'/'+this.number, {'answer': this.message})
                 .then(response => {
