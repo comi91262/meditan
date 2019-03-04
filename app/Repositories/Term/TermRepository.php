@@ -11,21 +11,37 @@ class TermRepository implements TermRepositoryInterface
     protected $englishTerm;
 
     /**
-    * @param object $question
-    */
+     * Constructor
+     * 
+     * @param Japanese $japaneseTerm
+     * @param English $englishTerm
+     */
     public function __construct(Japanese $japaneseTerm, English $englishTerm)
     {
         $this->japaneseTerm = $japaneseTerm;
         $this->englishTerm = $englishTerm;
     }
 
-    public function retrieveRandomizedTerms($departments, $number, $lang)
+    /**
+     *
+     * @param [type] $departments
+     * @param [type] $number
+     * @param [type] $lang
+     * @return void
+     */
+    public function retrieveRandomizedTerms($departments, $number,$lang)
     {
         switch ($lang) {
             case 'jp':
-                return $this->japaneseTerm->whereIn('department', $departments)->inRandomOrder()->take($number)->get();
+                return $this->japaneseTerm->whereIn('department', $departments)
+                    ->inRandomOrder()
+                    ->take($number)
+                    ->get();
             case 'en':
-                return $this->englishTerm->whereIn('department', $departments)->inRandomOrder()->take($number)->get();
+                return $this->englishTerm->whereIn('department', $departments)
+                    ->inRandomOrder()
+                    ->take($number)
+                    ->get();
             default:
                 // TODO 例外
                 break;

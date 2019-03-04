@@ -13,12 +13,22 @@ class TermRepositoryTest extends TestCase
 
     private $repository;
 
+    /**
+     *  Setup
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
         $this->repository = $this->app->make(TermRepository::class);
     }
 
+    /**
+     * TearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         $this->repository = null;
@@ -32,9 +42,11 @@ class TermRepositoryTest extends TestCase
      */
     public function testRetrieveRandomizedTerms()
     {
-        factory(Term::class, 20)->create();
-        $terms = $this->repository->retrieveRandomizedTerms(5, '放射線科');
+        factory(Term::class, 1)->create();
 
-        $this->assertCount(5, $terms);
+        $terms = $this->repository->retrieveRandomizedTerms(['放射線科'], 1, 'en');
+
+        $this->assertCount(1, $terms);
     }
+
 }
