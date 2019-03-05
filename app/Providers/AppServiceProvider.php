@@ -43,5 +43,9 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\UserTerm\UserTermServiceInterface::class,
             \App\Services\UserTerm\UserTermService::class
         );
+        $this->app->bind(
+            \App\Repositories\Department\DepartmentRepositoryInterface::class,
+            \App\Repositories\Department\DepartmentRepository::class
+        );
     }
 }

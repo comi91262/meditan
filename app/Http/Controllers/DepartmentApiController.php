@@ -2,31 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use App\Services\Term\TermServiceInterface;
+use App\Repositories\Department\DepartmentRepositoryInterface;
 
 class DepartmentApiController extends Controller
 {
-    protected $termService;
+    protected $departmentRepository;
 
     /**
-    * @param object $question
-    */
+     * @param object $question
+     */
     public function __construct(
-        TermServiceInterface $termService
+        DepartmentRepositoryInterface $departmentRepository
     ) {
-        $this->termService =  $termService;
+        $this->departmentRepository =  $departmentRepository;
     }
 
     /**
-    *     
-    */
+     *     
+     */
     public function index()
     {
-        $departments = $this->termService->retrieveDepartments();
+        $departments = $this->departmentRepository->retrieveAllDepartments();
+        return ['departments' => $departments];
+    }
+
+    /**
+     *     
+     */
+    public function show()
+    {
+        $departments = $this->departmentRepository->retrieveDepartment();
         return ['departments' => $departments];
     }
 

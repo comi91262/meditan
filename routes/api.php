@@ -24,6 +24,8 @@ Route::get('questions/{section}/{number}', 'QuestionController@show');
 Route::get('questions/{section}/{number}/hint', 'QuestionController@showHint');
 Route::put('questions/{section}/{number}', 'QuestionController@update');
 
+Route::get('terms/_department/{id}', 'TermApiController@show');
+
 Route::get('departments', 'DepartmentApiController@index');
 Route::post('user_terms', 'UserTermApiController@create');
 

@@ -164,7 +164,6 @@ class MenuController extends Controller
 
     public function list()
     {
-        $terms = $this->termService->retrieveAllTerms();
-        return view('list', ['terms' => $terms ]);
+        return view('list');
     }
 }
