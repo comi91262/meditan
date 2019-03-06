@@ -23,17 +23,10 @@ class QuestionRepository implements QuestionRepositoryInterface
     * @param Term[] $terms
     * @return string
     */
-    public function saveTerms($terms, $lang)
+    public function saveTerms(array $terms, $lang)
     {
         // TODO ユーザー,　単体テストのことを考えて、ファサードをやめる？　
         $section = Uuid::generate()->string;
-
-        if ($lang === 'jp') {
-            $lang = 0;
-        } elseif ($lang === 'en') {
-            $lang = 1;
-        }
-
         $bulk = [];
         foreach ($terms as $index => $term) {
             $bulk[] = [

@@ -4,6 +4,7 @@ namespace App\Repositories\Term;
 
 use App\Models\Term\English;
 use App\Models\Term\Japanese;
+use Illuminate\Support\Facades\Config;
 
 class TermRepository implements TermRepositoryInterface
 {
@@ -24,20 +25,19 @@ class TermRepository implements TermRepositoryInterface
 
     /**
      *
-     * @param [type] $departments
-     * @param [type] $number
-     * @param [type] $lang
-     * @return void
+     * @param string[] $departments 科（複数）
+     * @param int $number (数)
+     * @param int|string $lang (言語)
      */
-    public function retrieveRandomizedTerms($departments, $number,$lang)
+    public function retrieveRandomizedTerms($departments, $number, $lang)
     {
         switch ($lang) {
-            case 'jp':
+            case Config::get('constants.language.japanese'):
                 return $this->japaneseTerm->whereIn('department', $departments)
                     ->inRandomOrder()
                     ->take($number)
                     ->get();
-            case 'en':
+            case Config::get('constants.language.english'):
                 return $this->englishTerm->whereIn('department', $departments)
                     ->inRandomOrder()
                     ->take($number)

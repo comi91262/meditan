@@ -34,9 +34,9 @@
 <section>
 {{ Form::label('', '問題文の言語を選択してください。') }}
 <div>
-{{ Form::radio('lang', 'jp') }}
+{{ Form::radio('lang', Config::get('constants.language.japanese')) }}
     {{ Form::label('', '日本語') }}
-{{ Form::radio('lang', 'en') }}
+{{ Form::radio('lang', Config::get('constants.language.english')) }}
     {{ Form::label('', '英語') }}
 </div>
 </section>
