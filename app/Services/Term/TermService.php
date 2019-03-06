@@ -67,6 +67,13 @@ class TermService implements TermServiceInterface
         return DB::table('departments')->get();
     }
 
+    /**
+     * 問題に対する解答を検索する
+     *
+     * @param string $term
+     * @param int $lang
+     * @return string[] 
+     */
     public function retrieveCorrectAnswers($term, $lang)
     {
         $queryBuilder = DB::table('japanese_terms')
@@ -78,19 +85,16 @@ class TermService implements TermServiceInterface
             $terms = $queryBuilder
                 ->where('japanese_terms.term', $term)
                 ->select('english_terms.term')
-                ->get();
+                ->pluck('term')
+                ->toArray();
         } elseif ($lang === Config::get('constants.language.english')) {
             $terms = $queryBuilder
                 ->where('english_terms.term', $term)
                 ->select('japanese_terms.term')
-                ->get();
+                ->pluck('term')
+                ->toArray();
         }
 
-        $result = [];
-        foreach ($terms as $term) {
-            $result[] = $term->term;
-        }
-
-        return $result;
+        return $terms;
     }
 }

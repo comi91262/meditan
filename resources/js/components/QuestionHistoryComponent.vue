@@ -1,0 +1,74 @@
+<template>
+  <el-container>
+    <el-header>
+        <h1>回答履歴</h1>
+    </el-header>
+    <el-main>
+        <el-table
+            :data="questions"
+            style="width: 100%">
+            <el-table-column
+                prop="section"
+                label="セクション"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="number"
+                label="番号"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="question"
+                label="問題"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="answer"
+                label="正答"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="user_answer"
+                label="回答"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="answer_datetime"
+                label="回答日時"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="success"
+                label="正解かどうか"
+                width="180">
+            </el-table-column>
+        </el-table>
+    </el-main>
+  </el-container>
+</template>
+
+<script>
+export default {
+    props: [ 'user-id' ],
+    data: function () {
+        return {
+            questions: [],
+            primary_lording: false,
+        }
+    },
+    created: function () {
+        this.getHistory();
+    },
+    methods: {
+        getHistory: function (event) {
+            axios
+                .get('/api/questions/_user/' + this.userId)
+                .then(response => {
+                    this.questions = response.data.questions;
+                })
+                .catch(error => {
+                })
+        },
+    }
+}
+</script>

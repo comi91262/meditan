@@ -31,6 +31,11 @@ class QuestionController extends Controller
         $this->termService = $termService;
     }
 
+    public function index($userId)
+    {
+        return ['questions' => $this->questionService->retrieveAllQuestions($userId)];
+    }
+
     /**
      * TODO 引数の検証
      * TODO 認証の検証

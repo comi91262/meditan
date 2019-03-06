@@ -13,7 +13,7 @@ class TermRepository implements TermRepositoryInterface
 
     /**
      * Constructor
-     * 
+     *
      * @param Japanese $japaneseTerm
      * @param English $englishTerm
      */

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Services\Term\TermServiceInterface;
@@ -153,26 +152,11 @@ class MenuController extends Controller
 
     public function history()
     {
-        $questions = DB::table('questions')
-            ->select()
-            ->where('user', Auth::id())
-            ->whereNotNull('answer_datetime')
-            ->get()
-        ;
-
-        foreach ($questions as $question) {
-            $question->answer = implode(', ', $this->termService->retrieveCorrectAnswers(
-                $question->question,
-                $question->language
-            ));
-        }
-
-        return view('history', ['questions' => $questions]);
+        return view('history');
     }
 
     public function showAdditionTerm()
     {
-        // Vueに渡すため、文字列化
         return view('addition_term');
     }
 
