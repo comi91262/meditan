@@ -9,6 +9,7 @@
             <td>質問</td>
             <td>正答</td>
             <td>回答</td>
+            <td>回答日時</td>
             <td>正解かどうか</td>
         </tr>
     </thead>
@@ -20,6 +21,7 @@
             <td>{{ $question->question }}</td>
             <td>{{ $question->answer }}</td>
             <td>{{ $question->user_answer }}</td>
+            <td>{{ $question->answer_datetime }}</td>
             <td>@if ($question->success == true) ○ @else × @endif </td>
         </tr>
 @endforeach
