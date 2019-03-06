@@ -18,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/exam', 'MenuController@exam')->name('menu.exam');
     Route::get('/select_condition', 'MenuController@selectCondition')->name('menu.select_condition');
     Route::post('/exam_condition', 'MenuController@examCondition')->name('menu.exam_condition');
+    Route::get('/exam_retry', 'MenuController@examRetry')->name('menu.exam_retry');
     Route::get('/history', 'MenuController@history')->name('menu.history');
     Route::get('/add_term', 'MenuController@showAdditionTerm')->name('menu.show_add_term');
     Route::get('/list', 'MenuController@list')->name('menu.list');

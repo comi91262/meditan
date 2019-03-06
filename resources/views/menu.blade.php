@@ -8,6 +8,9 @@
     <a href={{ route('menu.select_condition') }}>似た単語テスト(テスト運用中)</a>
 </div>
 <div>
+    <a href={{ route('menu.exam_retry') }}>やり直しテスト(テスト運用中)</a>
+</div>
+<div>
     <a href={{ route('menu.history') }}>テスト履歴へ</a>
 </div>
 <div>
