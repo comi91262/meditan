@@ -102,6 +102,11 @@ class MenuController extends Controller
         return view('exam', ['section' => $section]);
     }
 
+    public function selectRetry()
+    {
+        return view('select_retry');
+    }
+
     /**
      *
      */
@@ -118,6 +123,15 @@ class MenuController extends Controller
         )->validate();
     }
 
+    public function examRetry(Request $request)
+    {
+        $section = $this->questionService->retrieveSection(Auth::id());
+        if ($section !== session('inAnswer')) {
+            $section = $this->questionService->createConditionQuestions(20);
+            session(['inAnswer' => $section]);
+        }
+        return view('exam', ['section' => $section]);
+    }
 
     /**
      *
