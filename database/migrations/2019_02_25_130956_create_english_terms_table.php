@@ -15,7 +15,6 @@ class CreateEnglishTermsTable extends Migration
     {
         Schema::create('english_terms', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('term', 50);
             $table->integer('department')->comment('科')->reference('id')->on('departments');
             $table->index('department');

@@ -38,6 +38,7 @@ class QuestionRepository implements QuestionRepositoryInterface
                 'question' => $term,
                 'language' => $lang,
                 'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ];
         }
 

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class English extends Model
 {
+    public $timestamps = false;
+
     /**
      * モデルと関連しているテーブル
      *

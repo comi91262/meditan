@@ -2,11 +2,10 @@
 
 namespace App\Services\UserTerm;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Services\UserTerm\UserTermServiceInterface;
-
-// use App\Repositories\Term\TermRepositoryInterface;
 
 class UserTermService implements UserTermServiceInterface
 {
@@ -26,6 +25,8 @@ class UserTermService implements UserTermServiceInterface
                 'term_jp' => $japaneseTerm,
                 'term_en' => $englishTerm,
                 'department' => $department,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         );
     }

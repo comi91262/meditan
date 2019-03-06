@@ -15,7 +15,6 @@ class CreateJapaneseTermsTable extends Migration
     {
         Schema::create('japanese_terms', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('term', 30)->collation('utf8_general_ci')->comment('日本名');
             $table->integer('department')->comment('科')->reference('id')->on('departments');
             $table->index('department');
