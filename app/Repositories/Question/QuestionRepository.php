@@ -20,8 +20,10 @@ class QuestionRepository implements QuestionRepositoryInterface
     }
 
     /**
-    * @param Term[] $terms
-    * @return string
+     *　単語の配列から問題を生成するメソッド
+     * 
+     * @param string[] $terms
+     * @return string
     */
     public function saveTerms(array $terms, $lang)
     {
@@ -33,7 +35,7 @@ class QuestionRepository implements QuestionRepositoryInterface
                 'section' => $section,
                 'user' =>  Auth::id(),
                 'number' => $index + 1, // 1 origin
-                'question' => $term->term,
+                'question' => $term,
                 'language' => $lang,
                 'created_at' => Carbon::now(),
             ];

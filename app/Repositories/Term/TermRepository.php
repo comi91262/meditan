@@ -36,15 +36,17 @@ class TermRepository implements TermRepositoryInterface
                 return $this->japaneseTerm->whereIn('department', $departments)
                     ->inRandomOrder()
                     ->take($number)
-                    ->get();
+                    ->pluck('term')
+                    ->toArray();
             case Config::get('constants.language.english'):
                 return $this->englishTerm->whereIn('department', $departments)
                     ->inRandomOrder()
                     ->take($number)
-                    ->get();
+                    ->pluck('term')
+                    ->toArray();
             default:
-                // TODO 例外
-                break;
+                return [];
         }
+
     }
 }

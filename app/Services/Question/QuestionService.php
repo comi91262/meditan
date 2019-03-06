@@ -3,6 +3,8 @@
 namespace App\Services\Question;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Config;
 use App\Repositories\Term\TermRepositoryInterface;
 use App\Services\Question\QuestionServiceInterface;
 use App\Repositories\Question\QuestionRepositoryInterface;
@@ -13,8 +15,8 @@ class QuestionService implements QuestionServiceInterface
     protected $termRepository;
 
     /**
-    * @param object $question
-    */
+     * @param object $question
+     */
     public function __construct(
         QuestionRepositoryInterface $questionRepository,
         TermRepositoryInterface $termRepository
@@ -24,11 +26,11 @@ class QuestionService implements QuestionServiceInterface
     }
 
     /**
-    * @param string 問題文の言語
-    * @param string ジャンル
-    * @param int    問題数
-    * @return string セクション番号
-    */
+     * @param string 問題文の言語
+     * @param string ジャンル
+     * @param int    問題数
+     * @return string セクション番号
+     */
     public function createQuestions($lang, $departments, $number)
     {
         $terms = $this->termRepository->retrieveRandomizedTerms($departments, $number, $lang);
@@ -37,8 +39,8 @@ class QuestionService implements QuestionServiceInterface
 
     public function createConditionQuestions($number)
     {
-        $terms = DB::table('english_terms')->orderBy('term', 'asc')->take($number)->get();
-        return $this->questionRepository->saveTerms($terms, 'en');
+        $terms = DB::table('english_terms')->orderBy('term', 'asc')->take($number)->pluck('term')->toArray();
+        return $this->questionRepository->saveTerms($terms, Config::get('constants.language.english'));
     }
 
     public function retrieveSection($userId)
