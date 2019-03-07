@@ -8,8 +8,6 @@ use App\Repositories\Term\TermRepositoryInterface;
 use App\Repositories\Question\QuestionRepositoryInterface;
 use App\Repositories\Department\DepartmentRepositoryInterface;
 
-// use App\Repositories\Term\TermRepositoryInterface;
-
 class TermService implements TermServiceInterface
 {
     protected $questionRepository;
@@ -62,39 +60,35 @@ class TermService implements TermServiceInterface
 
     }
 
-    public function retrieveDepartments()
-    {
-        return DB::table('departments')->get();
-    }
-
     /**
      * 問題に対する解答を検索する
      *
      * @param string $term
      * @param int $lang
-     * @return string[] 
+     * @return string[]
      */
-    public function retrieveCorrectAnswers($term, $lang)
+    public function retrieveCorrectAnswers($term, $lang): array
     {
         $queryBuilder = DB::table('japanese_terms')
             ->join('terms', 'japanese_terms.id', '=', 'terms.japanese_term_id')
             ->join('english_terms', 'english_terms.id', '=', 'terms.english_term_id')
             ->select('japanese_terms.term', 'english_terms.term');
 
-        if ($lang === Config::get('constants.language.japanese')) {
-            $terms = $queryBuilder
-                ->where('japanese_terms.term', $term)
-                ->select('english_terms.term')
-                ->pluck('term')
-                ->toArray();
-        } elseif ($lang === Config::get('constants.language.english')) {
-            $terms = $queryBuilder
-                ->where('english_terms.term', $term)
-                ->select('japanese_terms.term')
-                ->pluck('term')
-                ->toArray();
+        switch ($lang) {
+            case Config::get('constants.language.japanese'):
+                return $queryBuilder
+                    ->where('japanese_terms.term', $term)
+                    ->select('english_terms.term')
+                    ->pluck('term')
+                    ->toArray();
+            case Config::get('constants.language.english'):
+                return $queryBuilder
+                    ->where('english_terms.term', $term)
+                    ->select('japanese_terms.term')
+                    ->pluck('term')
+                    ->toArray();
+            default:
+                return [];
         }
-
-        return $terms;
     }
 }

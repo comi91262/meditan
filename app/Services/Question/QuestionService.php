@@ -13,6 +13,10 @@ class QuestionService implements QuestionServiceInterface
 {
     protected $questionRepository;
     protected $termRepository;
+
+    /**
+     * @var TermServiceInterface
+     */
     protected $termService;
 
     /**
@@ -26,6 +30,24 @@ class QuestionService implements QuestionServiceInterface
         $this->questionRepository = $questionRepository;
         $this->termService = $termService;
         $this->termRepository = $termRepository;
+    }
+
+
+    /**
+     * ユーザーの回答が正解かどうかを調べて返す
+     * 解答も返す
+     *
+     * @param string $section
+     * @param string $number
+     * @param string $userAnswer
+     * @return (boolean, string)
+     */
+    public function isCorrect($section, $number, $userAnswer)
+    {
+        $question = $this->questionRepository->retrieveQuestion($section, $number);
+        $answers = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
+
+        return [in_array($userAnswer, $answers), $answers];
     }
 
     /**

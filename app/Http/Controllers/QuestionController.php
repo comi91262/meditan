@@ -21,8 +21,8 @@ class QuestionController extends Controller
     private $termService;
 
     /**
-    * @param object $question
-    */
+     * @param object $question
+     */
     public function __construct(
         QuestionServiceInterface $questionService,
         TermServiceInterface $termService
@@ -72,35 +72,20 @@ class QuestionController extends Controller
     public function update(Request $request, $section, $number)
     {
         $userAnswer = $request->input('answer');
-        $question = DB::table('questions')->where(
-            [
-                'section' => $section,
-                'number' => $number,
-            ]
-        )->first();
 
-        $answers = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
-        $correct = false;
-        foreach ($answers as $answer) {
-            if ($userAnswer === $answer) {
-                $correct = true;
-            }
-        }
+        list ($isSuccess, $correctAnswers) =  $this->questionService->isCorrect($section, $number, $userAnswer);
 
-        if ($correct === true) {
-            DB::table('questions')
-            ->where(['section' => $section, 'number' => $number ])
-            ->update(['success' => true, 'user_answer' => $userAnswer, 'answer_datetime' => Carbon::now()]);
-            // TOOD 結果の種類を増やす
-            return [ 'success' => true ];
-        } else {
-            DB::table('questions')
-            ->where(['section' => $section, 'number' => $number ])
-            ->update(['success' => false, 'user_answer' => $userAnswer, 'answer_datetime' => Carbon::now()]);
+        DB::table('questions')
+            ->where(['section' => $section, 'number' => $number])
+            ->update(
+                [
+                    'success' => $isSuccess,
+                    'user_answer' => $userAnswer,
+                    'answer_datetime' => Carbon::now()
+                ]
+            );
 
-            // TODO
-            return [ 'success' => false, 'answer' => implode(', ', $answers) ];
-        }
+        return ['success' => $isSuccess, 'answer' => implode(', ', $correctAnswers)];
     }
 
     /**

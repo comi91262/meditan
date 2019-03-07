@@ -5,7 +5,9 @@ namespace App\Repositories\Question;
 use Carbon\Carbon;
 use App\Models\Question;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class QuestionRepository implements QuestionRepositoryInterface
 {
@@ -20,8 +22,25 @@ class QuestionRepository implements QuestionRepositoryInterface
     }
 
     /**
+     * 問題を取得する ($section, $number) は主キー
+     *
+     * @param string $section
+     * @param string $number
+     * @return Model
+     */
+    public function retrieveQuestion($section, $number)
+    {
+        return DB::table('questions')->where(
+            [
+                'section' => $section,
+                'number' => $number,
+            ]
+        )->first();
+    }
+
+    /**
      *　単語の配列から問題を生成するメソッド
-     * 
+     *
      * @param string[] $terms
      * @return string
     */

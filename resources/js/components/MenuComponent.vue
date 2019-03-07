@@ -23,10 +23,7 @@
       <el-menu-item index="3">
         <span><a href="/list">単語の一覧を表示</a></span>
       </el-menu-item>
-      <el-menu-item index="3">
-        <span><a href="/list">単語の一覧を表示</a></span>
-      </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="4">
         <span><a href="/add_term">単語追加(テスト運用中)</a></span>
       </el-menu-item>
     </el-menu>

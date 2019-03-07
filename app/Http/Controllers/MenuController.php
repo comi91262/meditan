@@ -7,21 +7,25 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Services\Term\TermServiceInterface;
 use App\Services\Question\QuestionServiceInterface;
+use App\Repositories\Department\DepartmentRepositoryInterface;
 
 class MenuController extends Controller
 {
     protected $questionService;
     protected $termService;
+    protected $departmentRepository;
 
     /**
     * @param object $question
     */
     public function __construct(
         QuestionServiceInterface $questionService,
-        TermServiceInterface $termService
+        TermServiceInterface $termService,
+        DepartmentRepositoryInterface $departmentRepository
     ) {
         $this->questionService = $questionService;
         $this->termService =  $termService;
+        $this->departmentRepository = $departmentRepository;
     }
 
     public function index()
@@ -32,7 +36,7 @@ class MenuController extends Controller
 
     public function select()
     {
-        $departments = $this->termService->retrieveDepartments();
+        $departments = $this->departmentRepository->retrieveAllDepartments();
         return view('select', ['departments' => $departments]);
     }
 
