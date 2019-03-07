@@ -71,11 +71,6 @@ class QuestionService implements QuestionServiceInterface
         foreach ($questions as $question) {
             $answers = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
             $question->answer = implode(', ', $answers);
-            if ($question->success === true) {
-                $question->success = '○';
-            } else {
-                $question->success = '×';
-            }
         }
 
         return $questions;
