@@ -8,13 +8,8 @@
             :data="questions"
             style="width: 100%">
             <el-table-column
-                prop="section"
-                label="セクション"
-                width="180">
-            </el-table-column>
-            <el-table-column
-                prop="number"
-                label="番号"
+                prop="answer_datetime"
+                label="回答日時"
                 width="180">
             </el-table-column>
             <el-table-column
@@ -30,11 +25,6 @@
             <el-table-column
                 prop="user_answer"
                 label="回答"
-                width="180">
-            </el-table-column>
-            <el-table-column
-                prop="answer_datetime"
-                label="回答日時"
                 width="180">
             </el-table-column>
             <el-table-column

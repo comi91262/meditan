@@ -56,7 +56,7 @@ class QuestionService implements QuestionServiceInterface
             return '';
         }
     }
-    
+
     public function retrieveAllQuestions($userId)
     {
         $questions = DB::table('questions')
