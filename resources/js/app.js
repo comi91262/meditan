@@ -35,6 +35,7 @@ Vue.use(ElementUI, { locale })
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('menu-component', require('./components/MenuComponent.vue').default);
 Vue.component('exam-component', require('./components/ExamComponent.vue').default);
 Vue.component('addition-term-component', require('./components/AdditionTermComponent.vue').default);
 Vue.component('all-terms-component', require('./components/AllTermsComponent.vue').default);
