@@ -65,7 +65,17 @@ export default {
                 })
         },
         result: function() {
-            window.location.href = '/';
+            axios
+                .get('/api/questions/'+this.section+'/count')
+                .then(response => {
+                    var message = response.data.message;
+                    this.$alert(message, '回答終了しました', {
+                        confirmButtonText: 'OK',
+                        callback: action => {
+                            window.location.href = '/';
+                        }
+                    });
+                })
         }
     }
 }

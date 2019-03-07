@@ -124,4 +124,24 @@ class QuestionController extends Controller
 
         return ['hint' => $hint];
     }
+
+    public function showSuccessCount($section)
+    {
+        $questions = DB::table('questions')->where(
+            [
+                'section' => $section
+            ]
+        )->get();
+
+        $successCount = 0;
+        foreach ($questions as $question) {
+            if ($question->success === true) {
+                $successCount += 1;
+            }
+        }
+
+        $total = count($questions);
+
+        return ['message' => "${total}問中${successCount}問正解でした"];
+    }
 }
