@@ -53,7 +53,7 @@
 </div>
 </section>
 
-{{ Form::submit('回答開始') }}
+{{ Form::submit('回答開始', ['style' => 'width: 300px; height: 200px']) }}
 
 {!! Form::close() !!}
 @endsection
