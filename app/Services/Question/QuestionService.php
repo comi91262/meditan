@@ -63,6 +63,7 @@ class QuestionService implements QuestionServiceInterface
             ->select()
             ->where('user', $userId)
             ->whereNotNull('answer_datetime')
+            ->orderByDesc('answer_datetime')
             ->get()
         ;
 
