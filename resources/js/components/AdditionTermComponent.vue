@@ -12,8 +12,8 @@
                 カテゴリーを選択してください
             </h2>
             <el-radio-group v-model="departmentSelection">
-                <el-radio-button v-for="(department, key) in this.departments" 
-                                 :key="key" 
+                <el-radio-button v-for="(department, key) in this.departments"
+                                 :key="key"
                                  :label="department.id">
                                  {{department.name}}
                 </el-radio-button>
@@ -23,6 +23,33 @@
         <div>
             現在、単語を重複して入力できません。ごめんね。
         </div>
+        <el-table
+            :data="terms"
+            style="width: 100%">
+            <el-table-column
+                prop="term_jp"
+                label="日本語"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="term_en"
+                label="英語"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="department"
+                label="カテゴリ"
+                width="180">
+            </el-table-column>
+            <el-table-column>
+                <template slot-scope="scope">
+                 <el-button
+                   size="mini"
+                   type="danger"
+                   @click="handleDelete(scope.$index, terms)">Delete</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
     </el-main>
   </el-container>
 </div>
@@ -30,6 +57,7 @@
 
 <script>
 export default {
+    props: ['user-id'],
     data: function () {
         return {
             japaneseTerm: '',
@@ -37,22 +65,32 @@ export default {
             departments: [],
             departmentSelection: '',
             primary_lording: false,
+            terms: [],
         }
     },
     created: function () {
         this.getDepartments();
+        this.getUserTerms();
     },
     methods: {
         register: function (event) {
             axios
-                .post('/api/user_terms', {
+                .post('/api/user_terms/_user/' + this.userId, {
                     'japaneseTerm': this.japaneseTerm,
                     'englishTerm': this.englishTerm,
                     'department': this.departmentSelection,
                 })
                 .then(response => {
+                    let term = response.data.term;
+                    this.terms.push({
+                        id: term.id,
+                        term_jp: term.term_jp,
+                        term_en: term.term_en,
+                        department: term.department,
+                    });
                     this.japaneseTerm = '';
                     this.englishTerm = '';
+
                     this.$message('登録完了', 'success');
                 })
                 .catch(error => {
@@ -65,7 +103,7 @@ export default {
                     }
                 })
         },
-        getDepartments: function (event) {
+        getDepartments: function () {
             axios
                 .get('/api/departments')
                 .then(response => {
@@ -73,7 +111,28 @@ export default {
                 })
                 .catch(error => {
                 })
-        }
+        },
+        getUserTerms: function () {
+            axios
+                .get('/api/user_terms/_user/' + this.userId)
+                .then(response => {
+                    this.terms = response.data.terms;
+                })
+                .catch(error => {
+                })
+
+        },
+        handleDelete(index, rows) {
+            let id = rows[index].id;
+            axios
+                .delete('/api/user_terms/' + id + '/_user/' + this.userId)
+                .then(response => {
+                    this.$message('単語を削除しました', 'success');
+                    rows.splice(index, 1);
+                })
+                .catch(error => {
+                })
+         }
     }
 }
 </script>

@@ -12,7 +12,6 @@ class UserTermApiController extends Controller
 
     /**
      * Constructor
-     * 
      * @param UserTermServiceInterface $userTermService
      */
     public function __construct(
@@ -22,9 +21,19 @@ class UserTermApiController extends Controller
     }
 
     /**
-     * 
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function index($userId)
+    {
+        return ['terms' => $this->userTermService->retrieveAllUserTerms($userId)];
+    }
+
+    /**
+     * TODO ユーザーライクにjapaneseTermは日本語のみ englishTerm は英語のみの登録にするか
+     */
+    public function create(Request $request, $userId)
     {
         $validInput = $this->validateInput($request->all());
 
@@ -32,13 +41,14 @@ class UserTermApiController extends Controller
         $englishTerm = $request->input('englishTerm');
         $department = $request->input('department');
 
-        $this->userTermService->createUserTermSet(
+        $term = $this->userTermService->createUserTermSet(
+            $userId,
             $japaneseTerm,
             $englishTerm,
             $department
         );
 
-        return [];
+        return ['term' => $term];
     }
 
     /**
@@ -58,6 +68,31 @@ class UserTermApiController extends Controller
             ]
         )->validate();
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id, $userId)
+    {
+        $japaneseTerm = $request->input('japaneseTerm');
+        $englishTerm = $request->input('englishTerm');
+        $department = $request->input('department');
+
+        $this->userTermService->updateUserTerm($id, $userId, $japaneseTerm, $englishTerm, $department);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id, $userId)
+    {
+        $this->userTermService->deleteUserTerm($id, $userId);
+    }
 }
-
-

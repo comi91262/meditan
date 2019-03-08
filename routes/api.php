@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,13 +11,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get(
-    '/user',
-    function (Request $request) {
-        return $request->user();
-    }
-);
-
 Route::get('questions/_user/{userId}', 'QuestionController@index');
 Route::get('questions/{section}/count', 'QuestionController@showSuccessCount');
 Route::get('questions/{section}/{number}', 'QuestionController@show');
@@ -27,6 +18,13 @@ Route::get('questions/{section}/{number}/hint', 'QuestionController@showHint');
 Route::put('questions/{section}/{number}', 'QuestionController@update');
 
 Route::get('terms/_department/{id}', 'TermApiController@show');
-
 Route::get('departments', 'DepartmentApiController@index');
-Route::post('user_terms', 'UserTermApiController@create');
+
+Route::get('user_terms/_user/{userId}', 'UserTermApiController@index');
+Route::post('user_terms/_user/{userId}', 'UserTermApiController@create');
+Route::delete('user_terms/{id}/_user/{userId}', 'UserTermApiController@destroy');
+
+
+// TODO laravel airport を試す。
+// Route::middleware(['auth:api'])->group(function () {
+// });

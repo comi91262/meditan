@@ -2,9 +2,9 @@
 
 namespace App\Services\UserTerm;
 
+use App\Models\UserTerm;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Services\UserTerm\UserTermServiceInterface;
 
 class UserTermService implements UserTermServiceInterface
@@ -17,18 +17,52 @@ class UserTermService implements UserTermServiceInterface
     {
     }
 
-    public function createUserTermSet($japaneseTerm, $englishTerm, $department)
+    public function retrieveAllUserTerms($userId)
     {
-        DB::table('user_terms')->insert(
+        return DB::table('user_terms')
+            ->join('departments', 'user_terms.department', '=', 'departments.id')
+            ->select(
+                'user_terms.id',
+                'term_jp',
+                'term_en',
+                'departments.name as department'
+            )
+            ->where('user_terms.user', $userId)
+            ->latest()
+            ->get();
+    }
+
+    public function createUserTermSet($userId, $japaneseTerm, $englishTerm, $department)
+    {
+        // 例外をキャッチして、ログをはかして、例外を投げる
+        // IDが欲しいため、モデルからインサートする。
+        $term = new UserTerm();
+        $term->user = $userId;
+        $term->term_jp = $japaneseTerm;
+        $term->term_en = $englishTerm;
+        $term->department = $department;
+        $term->save();
+
+        return $term;
+    }
+
+    /**
+     *  とりあえず使わない 
+     */
+    public function updateUserTerm($id, $userId, $japaneseTerm, $englishTerm, $department)
+    {
+        DB::table('user_terms')->where('user', $userId)->update(
             [
-                'user' => Auth::id(),
                 'term_jp' => $japaneseTerm,
                 'term_en' => $englishTerm,
                 'department' => $department,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
             ]
         );
+    }
+
+    public function deleteUserTerm($id, $userId)
+    {
+        DB::table('user_terms')->where('user', $userId)->delete();
     }
 }
 

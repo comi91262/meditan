@@ -4,5 +4,8 @@ namespace App\Services\UserTerm;
 
 interface UserTermServiceInterface
 {
-    public function createUserTermSet($japaneseTerm, $englishTerm, $department);
+    public function retrieveAllUserTerms($userId);
+    public function createUserTermSet($userId, $japaneseTerm, $englishTerm, $department);
+    public function updateUserTerm($id, $userId, $japaneseTerm, $englishTerm, $department);
+    public function deleteUserTerm($id, $userId);
 }

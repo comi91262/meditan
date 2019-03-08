@@ -18,7 +18,7 @@ class CreateUserTermsTable extends Migration
             $table->uuid('user')->comment('回答者')->index()->reference('id')->on('users');
             $table->string('term_en', 50)->comment('英語');
             $table->string('term_jp', 30)->comment('日本語')->collation('utf8_general_ci');
-            $table->string('department', 10)->collation('utf8_general_ci');
+            $table->integer('department')->comment('科')->reference('id')->on('departments');
             $table->index(['department', 'term_en']);
             $table->index(['department', 'term_jp']);
             $table->unique('term_en');
