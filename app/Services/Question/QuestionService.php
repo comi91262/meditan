@@ -4,6 +4,7 @@ namespace App\Services\Question;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use App\Repositories\Term\TermRepositoryInterface;
 use App\Services\Question\QuestionServiceInterface;
 use App\Repositories\Question\QuestionRepositoryInterface;
@@ -11,7 +12,14 @@ use App\Services\Term\TermServiceInterface;
 
 class QuestionService implements QuestionServiceInterface
 {
+    /**
+     * @var QuestionRepositoryInterface
+     */
     protected $questionRepository;
+
+    /**
+     * @var TermRepositoryInterface
+     */
     protected $termRepository;
 
     /**
@@ -59,7 +67,13 @@ class QuestionService implements QuestionServiceInterface
     public function createQuestions($lang, $departments, $number)
     {
         $terms = $this->termRepository->retrieveRandomizedTerms($departments, $number, $lang);
-        return $this->questionRepository->saveTerms($terms, $lang);
+        return $this->questionRepository->saveTerms($terms);
+    }
+
+    public function createRetryQuestions()
+    {
+        $terms = $this->questionRepository->retrieveLatestWrongQuestions();
+        return $this->questionRepository->saveTerms($terms);
     }
 
     public function createConditionQuestions($number)

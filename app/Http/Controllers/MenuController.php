@@ -130,7 +130,7 @@ class MenuController extends Controller
     {
         $section = $this->questionService->retrieveSection(Auth::id());
         if ($section !== session('inAnswer')) {
-            $section = $this->questionService->createConditionQuestions(20);
+            $section = $this->questionService->createRetryQuestions();
             session(['inAnswer' => $section]);
         }
         return view('exam', ['section' => $section]);
