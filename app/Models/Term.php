@@ -14,4 +14,14 @@ class Term extends Model
      * @var string
      */
     protected $table = 'terms';
+
+    public function japaneseTerms()
+    {
+        return $this->hasMany('App\Models\Term\Japanese');
+    }
+
+    public function englishTerms()
+    {
+        return $this->hasMany('App\Models\Term\English');
+    }
 }

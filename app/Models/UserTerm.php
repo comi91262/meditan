@@ -17,4 +17,14 @@ class UserTerm extends Model
         'id', 'term_jp', 'term_en', 'department',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department', 'id');
+    }
+
 }

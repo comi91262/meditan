@@ -15,4 +15,23 @@ class Japanese extends Model
      */
     protected $table = 'japanese_terms';
 
+    /**
+     *
+     */
+    public function englishTerms()
+    {
+        return $this->belongsToMany('App\Models\Term\English', 'terms');
+    }
+
+    /**
+     */
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department');
+    }
+
+    public function term()
+    {
+        return $this->belongsTo('App\Models\Term');
+    }
 }
