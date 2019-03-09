@@ -41,7 +41,7 @@ export default {
             primary_lording: false,
             tabPosition: 'left',
             id: "1",
-            terms: {},
+            terms: [],
         }
     },
     created: function () {
