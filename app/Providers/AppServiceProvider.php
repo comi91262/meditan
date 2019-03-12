@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Laravel\Passport\Passport;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -47,5 +48,8 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Department\DepartmentRepositoryInterface::class,
             \App\Repositories\Department\DepartmentRepository::class
         );
+
+        // laravel passport によるマイグレーションを防ぐ
+        Passport::ignoreMigrations();
     }
 }

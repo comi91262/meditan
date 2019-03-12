@@ -40,6 +40,7 @@ Vue.component('exam-component', require('./components/ExamComponent.vue').defaul
 Vue.component('addition-term-component', require('./components/AdditionTermComponent.vue').default);
 Vue.component('all-terms-component', require('./components/AllTermsComponent.vue').default);
 Vue.component('question-history-component', require('./components/QuestionHistoryComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     // これを指定しないと、pgsql 実行時、セッション操作で型が合わずエラーになる
     public $incrementing = false;
