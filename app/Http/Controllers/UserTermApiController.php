@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Services\UserTerm\UserTermServiceInterface;
 
@@ -35,20 +36,25 @@ class UserTermApiController extends Controller
      */
     public function create(Request $request, $userId)
     {
-        $validInput = $this->validateInput($request->all());
+        try {
+            // 空白チェック
+            $validInput = $this->validateInput($request->all());
+        } catch (\Exception $exception) {
+            return ['result' => null, 'message' => '空白を埋めてください'];
+        }
 
-        $japaneseTerm = $request->input('japaneseTerm');
-        $englishTerm = $request->input('englishTerm');
-        $department = $request->input('department');
+        if ($userId === $request->user()) {
+            return ['result' => null, 'message' => '予期しないエラーです'];
+        }
 
-        $term = $this->userTermService->createUserTermSet(
+        $result = $this->userTermService->createUserTermSet(
             $userId,
-            $japaneseTerm,
-            $englishTerm,
-            $department
+            $validInput['japaneseTerm'],
+            $validInput['englishTerm'],
+            $validInput['department']
         );
 
-        return ['term' => $term];
+        return $result; // ['result' => term, 'message' => ''];
     }
 
     /**

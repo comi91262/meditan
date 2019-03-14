@@ -57,7 +57,22 @@ class TermService implements TermServiceInterface
             )
             ->where('japanese_terms.department', $id)
             ->get();
+    }
 
+    // 登録する単語すでに登録されているかを調べる
+    public function checkDuplication($term) : bool
+    {
+        if (strlen($term) !== mb_strlen($term)) {  // 日本語
+            return DB::table('japanese_terms')
+                ->select('term')
+                ->where('term', $term)
+                ->count() > 0;
+        } else {
+            return DB::table('english_terms')
+                ->select('term')
+                ->where('term', $term)
+                ->count() > 0;
+        }
     }
 
     /**

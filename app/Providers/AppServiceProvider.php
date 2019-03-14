@@ -48,6 +48,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Department\DepartmentRepositoryInterface::class,
             \App\Repositories\Department\DepartmentRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\UserTerm\UserTermRepositoryInterface::class,
+            \App\Repositories\UserTerm\UserTermRepository::class
+        );
 
         // laravel passport によるマイグレーションを防ぐ
         Passport::ignoreMigrations();

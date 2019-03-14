@@ -20,9 +20,6 @@
             </el-radio-group>
         </div>
         <el-button type="primary" v-on:click="register" :loading="primary_lording">登録</el-button>
-        <div>
-            現在、単語を重複して入力できません。ごめんね。
-        </div>
         <el-table
             :data="terms"
             style="width: 100%">
@@ -81,26 +78,23 @@ export default {
                     'department': this.departmentSelection,
                 })
                 .then(response => {
-                    let term = response.data.term;
-                    this.terms.push({
-                        id: term.id,
-                        term_jp: term.term_jp,
-                        term_en: term.term_en,
-                        department: term.department,
-                    });
-                    this.japaneseTerm = '';
-                    this.englishTerm = '';
-
-                    this.$message('登録完了', 'success');
+                    if (response.data.result !== null) {
+                        let term = response.data.result;
+                        this.terms.push({
+                            id: term.id,
+                            term_jp: term.term_jp,
+                            term_en: term.term_en,
+                            department: term.department,
+                        });
+                        this.japaneseTerm = '';
+                        this.englishTerm = '';
+                        this.$message('登録完了', 'success');
+                    } else {
+                        this.$message.error(response.data.message);
+                    }
                 })
                 .catch(error => {
-                    if (error.response.status === 422) {
-                        // TODO メッセージはサーバーで作る
-                        // TODO TODO コメントを消す
-                        this.$message.error('空欄を埋めてね');
-                    } else if (error.response.status === 500) {
-                        this.$message.error('その単語は登録済みです');
-                    }
+                    this.$message.error('通信エラーです。もう一度試してください');
                 })
         },
         getDepartments: function () {

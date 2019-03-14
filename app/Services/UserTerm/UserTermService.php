@@ -2,19 +2,29 @@
 
 namespace App\Services\UserTerm;
 
-use App\Models\UserTerm;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Services\Term\TermServiceInterface;
 use App\Services\UserTerm\UserTermServiceInterface;
+use App\Repositories\Department\DepartmentRepository;
+use App\Repositories\UserTerm\UserTermRepositoryInterface;
 
 class UserTermService implements UserTermServiceInterface
 {
+    private $userTermRepository;
+    private $termService;
+    private $departmentRepository;
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct(
+        UserTermRepositoryInterface $userTermRepository,
+        TermServiceInterface $termService,
+        DepartmentRepository $departmentRepository
+    ) {
+        $this->userTermRepository = $userTermRepository;
+        $this->termService = $termService;
+        $this->departmentRepository = $departmentRepository;
     }
 
     public function retrieveAllUserTerms($userId)
@@ -34,20 +44,37 @@ class UserTermService implements UserTermServiceInterface
 
     public function createUserTermSet($userId, $japaneseTerm, $englishTerm, $department)
     {
-        // 例外をキャッチして、ログをはかして、例外を投げる
-        // IDが欲しいため、モデルからインサートする。
-        $term = new UserTerm();
-        $term->user = $userId;
-        $term->term_jp = $japaneseTerm;
-        $term->term_en = $englishTerm;
-        $term->department = $department;
-        $term->save();
+        if ($this->termService->checkDuplication($japaneseTerm)) {
+            return ['result' => null, 'message' => 'その日本語は登録済みです'];
+        }
 
-        return $term;
+        if ($this->termService->checkDuplication($englishTerm)) {
+            return ['result' => null, 'message' => 'その英語は登録済みです'];
+        }
+
+        try {
+            $term = $this->userTermRepository->saveUserTerm(
+                $userId,
+                $japaneseTerm,
+                $englishTerm,
+                $department
+            );
+            $department = $this->departmentRepository->retrieveDepartment($term->department);
+            $term->department = $department->name;
+
+            return ['result' => $term, 'message' => ''];
+        } catch (\Exception $exception) {
+            // TOOD ログはき
+            if ($exception->errorInfo[1] === 1062) {
+                return ['result' => null, 'message' => '同じカテゴリに同じ日本語、あるいは英語を登録することはできません'];
+            } else {
+                return ['result' => null, 'message' => '予期しないエラーが起きました。もう一度試してみてください'];
+            }
+        }
     }
 
     /**
-     *  とりあえず使わない 
+     *  とりあえず使わない
      */
     public function updateUserTerm($id, $userId, $japaneseTerm, $englishTerm, $department)
     {
