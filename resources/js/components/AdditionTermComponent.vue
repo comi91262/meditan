@@ -94,7 +94,11 @@ export default {
                     }
                 })
                 .catch(error => {
-                    this.$message.error('通信エラーです。もう一度試してください');
+                    if (error.response.status === 401) {
+                        this.$message.error('認証エラーです。もう一度ログインください');
+                    } else {
+                        this.$message.error('通信エラーです。もう一度試してください');
+                    }
                 })
         },
         getDepartments: function () {
