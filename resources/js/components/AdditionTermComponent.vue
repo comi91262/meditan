@@ -72,7 +72,7 @@ export default {
     methods: {
         register: function (event) {
             axios
-                .post('/api/user_terms/_user/' + this.userId, {
+                .post('/api/user_terms', {
                     'japaneseTerm': this.japaneseTerm,
                     'englishTerm': this.englishTerm,
                     'department': this.departmentSelection,
@@ -112,7 +112,7 @@ export default {
         },
         getUserTerms: function () {
             axios
-                .get('/api/user_terms/_user/' + this.userId)
+                .get('/api/user_terms')
                 .then(response => {
                     this.terms = response.data.terms;
                 })
@@ -123,7 +123,7 @@ export default {
         handleDelete(index, rows) {
             let id = rows[index].id;
             axios
-                .delete('/api/user_terms/' + id + '/_user/' + this.userId)
+                .delete('/api/user_terms/' + id)
                 .then(response => {
                     this.$message('単語を削除しました', 'success');
                     rows.splice(index, 1);

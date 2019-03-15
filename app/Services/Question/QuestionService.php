@@ -5,7 +5,6 @@ namespace App\Services\Question;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
-use App\Repositories\Term\TermRepositoryInterface;
 use App\Services\Question\QuestionServiceInterface;
 use App\Repositories\Question\QuestionRepositoryInterface;
 use App\Services\Term\TermServiceInterface;

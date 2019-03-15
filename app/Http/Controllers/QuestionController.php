@@ -31,9 +31,9 @@ class QuestionController extends Controller
         $this->termService = $termService;
     }
 
-    public function index($userId)
+    public function index(Request $request)
     {
-        return ['questions' => $this->questionService->retrieveAllQuestions($userId)];
+        return ['questions' => $this->questionService->retrieveAllQuestions($request->user()->id)];
     }
 
     /**

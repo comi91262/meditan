@@ -35,7 +35,6 @@
 
 <script>
 export default {
-    props: [ 'user-id' ],
     data: function () {
         return {
             questions: [],
@@ -48,7 +47,7 @@ export default {
     methods: {
         getHistory: function (event) {
             axios
-                .get('/api/questions/_user/' + this.userId)
+                .get('/api/questions')
                 .then(response => {
                     this.questions = response.data.questions;
                 })

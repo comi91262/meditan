@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use App\Services\UserTerm\UserTermServiceInterface;
 
 class UserTermApiController extends Controller
@@ -26,29 +27,29 @@ class UserTermApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($userId)
+    public function index(Request $request)
     {
-        return ['terms' => $this->userTermService->retrieveAllUserTerms($userId)];
+        return ['terms' => $this->userTermService->retrieveAllUserTerms($request->user()->id)];
     }
 
     /**
      * TODO ユーザーライクにjapaneseTermは日本語のみ englishTerm は英語のみの登録にするか
      */
-    public function create(Request $request, $userId)
+    public function create(Request $request)
     {
         try {
             // 空白チェック
             $validInput = $this->validateInput($request->all());
-        } catch (\Exception $exception) {
-            return ['result' => null, 'message' => '空白を埋めてください'];
-        }
-
-        if ($userId === $request->user()) {
-            return ['result' => null, 'message' => '予期しないエラーです'];
+        } catch (ValidationException $exception) {
+            $displayedMessage = '';
+            foreach ($exception->validator->getMessageBag()->all() as $message) {
+                $displayedMessage = $message;
+            }
+            return ['result' => null, 'message' => $displayedMessage];
         }
 
         $result = $this->userTermService->createUserTermSet(
-            $userId,
+            $request->user()->id,
             $validInput['japaneseTerm'],
             $validInput['englishTerm'],
             $validInput['department']
@@ -70,7 +71,9 @@ class UserTermApiController extends Controller
                 'department' => 'required',
             ],
             [
-                'required' => ':attribute が必要です.',
+                'japaneseTerm.required' => '日本語を入力してください',
+                'englishTerm.required' => '英語を入力してください',
+                'department.required' => 'カテゴリを入力してください',
             ]
         )->validate();
     }
@@ -82,13 +85,13 @@ class UserTermApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $userId)
+    public function update(Request $request, $id)
     {
         $japaneseTerm = $request->input('japaneseTerm');
         $englishTerm = $request->input('englishTerm');
         $department = $request->input('department');
 
-        $this->userTermService->updateUserTerm($id, $userId, $japaneseTerm, $englishTerm, $department);
+        $this->userTermService->updateUserTerm($id, $request->user()->id, $japaneseTerm, $englishTerm, $department);
     }
 
     /**
@@ -97,8 +100,8 @@ class UserTermApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $userId)
+    public function destroy(Request $request, $id)
     {
-        $this->userTermService->deleteUserTerm($id, $userId);
+        $this->userTermService->deleteUserTerm($id, $request->user()->id);
     }
 }
