@@ -18,11 +18,6 @@ class QuestionService implements QuestionServiceInterface
     protected $questionRepository;
 
     /**
-     * @var TermRepositoryInterface
-     */
-    protected $termRepository;
-
-    /**
      * @var TermServiceInterface
      */
     protected $termService;
@@ -32,12 +27,10 @@ class QuestionService implements QuestionServiceInterface
      */
     public function __construct(
         TermServiceInterface $termService,
-        QuestionRepositoryInterface $questionRepository,
-        TermRepositoryInterface $termRepository
+        QuestionRepositoryInterface $questionRepository
     ) {
         $this->questionRepository = $questionRepository;
         $this->termService = $termService;
-        $this->termRepository = $termRepository;
     }
 
 
@@ -66,7 +59,7 @@ class QuestionService implements QuestionServiceInterface
      */
     public function createQuestions($lang, $departments, $number)
     {
-        $terms = $this->termRepository->retrieveRandomizedTerms($departments, $number, $lang);
+        $terms = $this->termService->retrieveRandomizedTerms($departments, $number, $lang);
         return $this->questionRepository->saveTerms($terms);
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use App\Repositories\Term\TermRepositoryInterface;
 use App\Repositories\Question\QuestionRepositoryInterface;
+use App\Repositories\UserTerm\UserTermRepositoryInterface;
 use App\Repositories\Department\DepartmentRepositoryInterface;
 
 class TermService implements TermServiceInterface
@@ -13,6 +14,7 @@ class TermService implements TermServiceInterface
     protected $questionRepository;
     protected $termRepository;
     protected $departmentRepository;
+    protected $userTermRepository;
 
     /**
     * @param object $question
@@ -20,11 +22,13 @@ class TermService implements TermServiceInterface
     public function __construct(
         QuestionRepositoryInterface $questionRepository,
         TermRepositoryInterface $termRepository,
-        DepartmentRepositoryInterface $departmentRepository
+        DepartmentRepositoryInterface $departmentRepository,
+        UserTermRepositoryInterface $userTermRepository
     ) {
         $this->questionRepository = $questionRepository;
         $this->termRepository = $termRepository;
         $this->departmentRepository = $departmentRepository;
+        $this->userTermRepository = $userTermRepository;
     }
 
     public function retrieveAllTerms()
@@ -38,6 +42,16 @@ class TermService implements TermServiceInterface
                 'english_terms.term as englishTerm'
             )
             ->get();
+    }
+
+    public function retrieveRandomizedTerms($departments, $number, $lang)
+    {
+        $terms = $this->termRepository->retrieveRandomizedTerms($departments, $number, $lang);
+        $userTerms  = $this->userTermRepository->retrieveRandomizedTerms($departments, $number, $lang);
+
+        $terms = array_merge($terms, $userTerms);
+        shuffle($terms);
+        return array_slice($terms, 0, $number);
     }
 
     /**

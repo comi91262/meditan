@@ -47,6 +47,5 @@ class TermRepository implements TermRepositoryInterface
             default:
                 return [];
         }
-
     }
 }
