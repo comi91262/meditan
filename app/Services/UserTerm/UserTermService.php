@@ -87,9 +87,19 @@ class UserTermService implements UserTermServiceInterface
         );
     }
 
+    /**
+     * 単語を削除する
+     *
+     * @param string $id
+     * @param string $userId
+     * @return void
+     */
     public function deleteUserTerm($id, $userId)
     {
-        DB::table('user_terms')->where('user', $userId)->delete();
+        DB::table('user_terms')
+            ->where(['id' => $id, 'user' => $userId])
+            ->delete()
+        ;
     }
 }
 
