@@ -8,21 +8,22 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-// あとで
-// import VueRouter from 'vue-router'
 
+import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/ja';
 
-// Vue.use(VueRouter);
+Vue.use(VueRouter);
 Vue.use(ElementUI, { locale })
 
-// vue-routerのインスタンス化、オプションroutesでアクセスされるパスとその時に表示するComponentを指定
-// const router = new VueRouter({
-//     mode: 'history', // TODO ?
-//     routes: [ { path: '/', component: require('./components/AllTermsComponent.vue') }, ]
-//    });
+const router = new VueRouter({
+    mode: 'history', // TODO ?
+    routes: [
+        { path: '/', name: 'menu', component: require('./components/MenuComponent.vue').default },
+        { path: '/history', name: 'history', component: require('./components/QuestionHistoryComponent.vue').default },
+    ]
+});
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,11 +36,9 @@ Vue.use(ElementUI, { locale })
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('menu-component', require('./components/MenuComponent.vue').default);
 Vue.component('exam-component', require('./components/ExamComponent.vue').default);
 Vue.component('addition-term-component', require('./components/AdditionTermComponent.vue').default);
 Vue.component('all-terms-component', require('./components/AllTermsComponent.vue').default);
-Vue.component('question-history-component', require('./components/QuestionHistoryComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -48,5 +47,6 @@ Vue.component('question-history-component', require('./components/QuestionHistor
  */
 
 const app = new Vue({
+    router,
     el: '#app'
 });

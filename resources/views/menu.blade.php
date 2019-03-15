@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="app">
-    <menu-component></exam-component>
+    <router-view></router-view>
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
-@endsection
+@endsection 

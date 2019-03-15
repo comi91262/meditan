@@ -154,11 +154,6 @@ class MenuController extends Controller
         )->validate();
     }
 
-    public function history()
-    {
-        return view('history');
-    }
-
     public function showAdditionTerm()
     {
         return view('addition_term');

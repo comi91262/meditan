@@ -39,7 +39,6 @@
       handleClose(key, keyPath) {
       },
       jumpPage(key, keyPath) {
-        console.log(key);
         switch (key) {
           case "1-1":
             location.href = '/select';
@@ -48,7 +47,7 @@
             location.href = '/exam_retry';
             break;
           case "2":
-            location.href = '/history';
+            this.$router.push({ path: '/history' });
             break;
           case "3":
             location.href = '/list';
