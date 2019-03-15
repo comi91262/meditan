@@ -22,6 +22,7 @@ const router = new VueRouter({
     routes: [
         { path: '/', name: 'menu', component: require('./components/MenuComponent.vue').default },
         { path: '/history', name: 'history', component: require('./components/QuestionHistoryComponent.vue').default },
+        { path: '/list', name: 'list', component: require('./components/AllTermsComponent.vue').default },
     ]
 });
 
@@ -38,7 +39,6 @@ const router = new VueRouter({
 
 Vue.component('exam-component', require('./components/ExamComponent.vue').default);
 Vue.component('addition-term-component', require('./components/AdditionTermComponent.vue').default);
-Vue.component('all-terms-component', require('./components/AllTermsComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

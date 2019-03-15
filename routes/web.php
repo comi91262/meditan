@@ -20,7 +20,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/exam_condition', 'MenuController@examCondition')->name('menu.exam_condition');
     Route::get('/exam_retry', 'MenuController@examRetry')->name('menu.exam_retry');
     Route::get('/add_term', 'MenuController@showAdditionTerm')->name('menu.show_add_term');
-    Route::get('/list', 'MenuController@list')->name('menu.list');
 });
 
 Auth::routes();

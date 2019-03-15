@@ -158,9 +158,4 @@ class MenuController extends Controller
     {
         return view('addition_term');
     }
-
-    public function list()
-    {
-        return view('list');
-    }
 }

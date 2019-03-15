@@ -50,7 +50,7 @@
             this.$router.push({ path: '/history' });
             break;
           case "3":
-            location.href = '/list';
+            this.$router.push({ path: '/list' });
             break;
           case "4":
             location.href = '/add_term';
