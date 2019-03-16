@@ -21,7 +21,6 @@ class UserTermRepository implements UserTermRepositoryInterface
 
     public function retrieveRandomizedTerms($departments, $number, $lang)
     {
-        echo var_export($departments, true);
         $userTerms = $this->userTerm->whereIn('department', $departments)
             ->inRandomOrder()
             ->take($number)

@@ -10,6 +10,16 @@
         <el-button type="primary" v-on:click="hint" :loading="primary_lording">ヒントをみる</el-button>
     </el-main>
   </el-container>
+  <el-dialog
+    title="回答終了"
+    :visible.sync="dialogVisible"
+    width="30%"
+    :before-close="handleClose">
+    <span>{{ endText }}</span>
+    <span slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="end">OK</el-button>
+    </span>
+  </el-dialog>
 </div>
 </template>
 
@@ -22,6 +32,8 @@ export default {
             question: '',
             number: 1,
             primary_lording: false,
+            dialogVisible: false,
+            endText: '',
         }
     },
     created: function () {
@@ -68,14 +80,12 @@ export default {
             axios
                 .get('/api/questions/'+this.section+'/count')
                 .then(response => {
-                    var message = response.data.message;
-                    this.$alert(message, '回答終了しました', {
-                        confirmButtonText: 'OK',
-                        callback: action => {
-                            window.location.href = '/';
-                        }
-                    });
+                    this.endText = response.data.message;
+                    this.dialogVisible = true;
                 })
+        },
+        end: function() {
+            window.location.href = '/';
         }
     }
 }
