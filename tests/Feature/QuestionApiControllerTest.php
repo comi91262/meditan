@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\User;
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Question;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Repositories\Question\QuestionRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class QuestionControllerTest extends TestCase
+class QuestionApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 

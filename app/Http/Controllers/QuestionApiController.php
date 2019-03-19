@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Services\Question\QuestionServiceInterface;
 use App\Services\Term\TermServiceInterface;
 
-class QuestionController extends Controller
+class QuestionApiController extends Controller
 {
     /**
     * @var QuestionServiceInterface $questionService

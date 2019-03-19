@@ -12,11 +12,11 @@
 */
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::get('questions', 'QuestionController@index');
-    Route::get('questions/{section}/count', 'QuestionController@showSuccessCount');
-    Route::get('questions/{section}/{number}', 'QuestionController@show');
-    Route::get('questions/{section}/{number}/hint', 'QuestionController@showHint');
-    Route::put('questions/{section}/{number}', 'QuestionController@update');
+    Route::get('questions', 'QuestionApiController@index');
+    Route::get('questions/{section}/count', 'QuestionApiController@showSuccessCount');
+    Route::get('questions/{section}/{number}', 'QuestionApiController@show');
+    Route::get('questions/{section}/{number}/hint', 'QuestionApiController@showHint');
+    Route::put('questions/{section}/{number}', 'QuestionApiController@update');
     Route::get('terms/_department/{id}', 'TermApiController@show');
     Route::get('departments', 'DepartmentApiController@index');
     Route::get('user_terms', 'UserTermApiController@index');
