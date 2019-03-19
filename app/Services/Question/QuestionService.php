@@ -74,7 +74,43 @@ class QuestionService implements QuestionServiceInterface
         return $this->questionRepository->saveTerms($terms, Config::get('constants.language.english'));
     }
 
-    public function retrieveSection($userId)
+    public function retrieveSetOfAssociatedSection($section)
+    {
+        $questions = DB::table('questions')->where(
+            [
+                'section' => $section,
+            ]
+        )->get();
+
+        $successCount = 0;
+        $failureCount = 0;
+        $noAnswerCount = 0;
+        foreach ($questions as $question) {
+            if ($question->answer_datetime === null) {
+                $noAnswerCount += 1;
+                continue;
+            }
+            if ($question->success === 1) {
+                $successCount += 1;
+                continue;
+            }
+            if ($question->success === 0) {
+                $failureCount += 1;
+                continue;
+            }
+        }
+
+        $total =  $successCount + $failureCount + $noAnswerCount;
+
+        return [
+            'total' => $total,
+            'success' => $successCount,
+            'failure' => $failureCount,
+            'answered' => $total - $noAnswerCount,
+        ];
+    }
+
+    public function retrieveLatestSection($userId)
     {
         $question = DB::table('questions')->where('user', $userId)->latest()->first();
 

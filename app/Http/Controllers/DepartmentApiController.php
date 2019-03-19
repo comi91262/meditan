@@ -18,7 +18,7 @@ class DepartmentApiController extends Controller
     }
 
     /**
-     *     
+     *
      */
     public function index()
     {
@@ -27,7 +27,7 @@ class DepartmentApiController extends Controller
     }
 
     /**
-     *     
+     *
      */
     public function show()
     {

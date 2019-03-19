@@ -63,7 +63,7 @@ class MenuController extends Controller
                 break;
         }
 
-        $section = $this->questionService->retrieveSection(Auth::id());
+        $section = $this->questionService->retrieveLatestSection(Auth::id());
         if ($section !== session('inAnswer')) {
             $section = $this->questionService->createQuestions($lang, $departments, $number);
             session(['inAnswer' => $section]);
@@ -97,7 +97,7 @@ class MenuController extends Controller
                 break;
         }
 
-        $section = $this->questionService->retrieveSection(Auth::id());
+        $section = $this->questionService->retrieveLatestSection(Auth::id());
         if ($section !== session('inAnswer')) {
             $section = $this->questionService->createConditionQuestions($number);
             session(['inAnswer' => $section]);
@@ -128,7 +128,7 @@ class MenuController extends Controller
 
     public function examRetry(Request $request)
     {
-        $section = $this->questionService->retrieveSection(Auth::id());
+        $section = $this->questionService->retrieveLatestSection(Auth::id());
         if ($section !== session('inAnswer')) {
             $section = $this->questionService->createRetryQuestions();
             session(['inAnswer' => $section]);

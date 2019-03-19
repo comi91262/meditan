@@ -1,26 +1,22 @@
 <template>
-<div>
-  <el-container>
-    <el-header>
-        <h1> 問題: {{ question }} </h1>
-    </el-header>
-    <el-main>
+  <div>
+    <el-container>
+      <el-header>
+        <h1>問題: {{ question }}</h1>
+      </el-header>
+      <el-main>
         <el-input placeholder="回答を入力してね" v-on:keyup.enter.native="answer" v-model="message"></el-input>
         <el-button type="primary" v-on:click="answer" :loading="primary_lording">回答する</el-button>
         <el-button type="primary" v-on:click="hint" :loading="primary_lording">ヒントをみる</el-button>
-    </el-main>
-  </el-container>
-  <el-dialog
-    title="回答終了"
-    :visible.sync="dialogVisible"
-    width="30%"
-    :before-close="handleClose">
-    <span>{{ endText }}</span>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="end">OK</el-button>
-    </span>
-  </el-dialog>
-</div>
+      </el-main>
+    </el-container>
+    <el-dialog title="回答終了" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+      <span>{{ endText }}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="end">OK</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -46,9 +42,6 @@ export default {
                 .get('/api/questions/'+this.section+'/'+this.number)
                 .then(response => {
                     this.question = response.data.question;
-                })
-                .catch(error => {
-                    this.result();
                 })
         },
         answer: function (event) {
@@ -78,9 +71,11 @@ export default {
         },
         result: function() {
             axios
-                .get('/api/questions/'+this.section+'/count')
+                .get('/api/questions/'+this.section+'/result')
                 .then(response => {
-                    this.endText = response.data.message;
+                    let total = response.data.total;
+                    let success = response.data.success;
+                    this.endText = total + '問中、' + success + '問正解でした';
                     this.dialogVisible = true;
                 })
         },

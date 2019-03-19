@@ -110,23 +110,20 @@ class QuestionApiController extends Controller
         return ['hint' => $hint];
     }
 
-    public function showSuccessCount($section)
+    // TODO メソッド名があいまい
+    public function showResult($section)
     {
-        $questions = DB::table('questions')->where(
-            [
-                'section' => $section
-            ]
-        )->get();
+        return $this->questionService->retrieveSetOfAssociatedSection($section);
+    }
 
-        $successCount = 0;
-        foreach ($questions as $question) {
-            if ($question->success === true) {
-                $successCount += 1;
-            }
-        }
+    public function showAnsweredCount($section)
+    {
+        $aggregation = $this->questionService->retrieveSetOfAssociatedSection($section);
+        return ['answerCount' => $aggregation['answer']];
+    }
 
-        $total = count($questions);
-
-        return ['message' => "${total}問中${successCount}問正解でした"];
+    public function showSection(Request $request)
+    {
+        return ['section' => $this->questionService->retrieveLatestSection($request->user()->id)];
     }
 }
