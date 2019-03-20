@@ -21,9 +21,9 @@
 
 <script>
 export default {
-    props: ['section'],
     data: function () {
         return {
+            section: '',
             message: '',
             question: '',
             number: 1,
@@ -32,17 +32,39 @@ export default {
             endText: '',
         }
     },
-    created: function () {
-        // 最初の問題をロードする
-        this.load();
+    created: async function () {
+        await this.loadSection();
+        await this.loadNumber();
+        await this.loadQuestion();
     },
     methods: {
-        load: function (event) {
-            axios
-                .get('/api/questions/'+this.section+'/'+this.number)
-                .then(response => {
-                    this.question = response.data.question;
-                })
+        loadSection: async function() {
+            try {
+                const response = await axios.get('/api/sections');
+                this.section = response.data.section;
+            } catch (error) {
+                // TODO
+                console.error(error);
+            }
+        },
+        loadNumber: async function() {
+            try {
+                const response = await axios.get('/api/questions/' + this.section + '/answered');
+                this.number = response.data.answeredCount + 1;
+            } catch (error) {
+                // TODO
+                console.error(error);
+            }
+        },
+        loadQuestion: async function (event) {
+            try {
+                const response = await axios.get('/api/questions/'+this.section+'/'+this.number)
+                this.question = response.data.question;
+            } catch (error) {
+                if (error.response.status === 404) {
+                    this.result();
+                }
+            }
         },
         answer: function (event) {
             if (this.message === '') {
@@ -58,7 +80,7 @@ export default {
                         this.$message.error('不正解。正解は' + response.data.answer + 'でした');
                     }
                     this.number++;
-                    this.load();
+                    this.loadQuestion();
                 })
             this.message = '';
         },

@@ -53,7 +53,6 @@ class QuestionApiController extends Controller
             ]
         )->first();
 
-        // TODO とりあえずこれ以上出題はないと解釈する
         if (null === $question) {
             return response()->json(['message' => 'not found'], 404);
         }
@@ -119,7 +118,7 @@ class QuestionApiController extends Controller
     public function showAnsweredCount($section)
     {
         $aggregation = $this->questionService->retrieveSetOfAssociatedSection($section);
-        return ['answerCount' => $aggregation['answer']];
+        return ['answeredCount' => $aggregation['answered']];
     }
 
     public function showSection(Request $request)
