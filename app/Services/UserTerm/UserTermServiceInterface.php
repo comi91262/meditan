@@ -8,4 +8,5 @@ interface UserTermServiceInterface
     public function createUserTermSet($userId, $japaneseTerm, $englishTerm, $department);
     public function updateUserTerm($id, $userId, $japaneseTerm, $englishTerm, $department);
     public function deleteUserTerm($id, $userId);
+    public function retrieveCorrectAnswers($term, $lang): array;
 }

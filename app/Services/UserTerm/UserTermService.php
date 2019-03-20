@@ -3,6 +3,7 @@
 namespace App\Services\UserTerm;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 use App\Services\Term\TermServiceInterface;
 use App\Services\UserTerm\UserTermServiceInterface;
 use App\Repositories\Department\DepartmentRepository;
@@ -100,6 +101,31 @@ class UserTermService implements UserTermServiceInterface
             ->where(['id' => $id, 'user' => $userId])
             ->delete()
         ;
+    }
+
+    /**
+     * 問題に対する解答を検索する
+     *
+     * @param string $term
+     * @param int $lang
+     * @return string[]
+     */
+    public function retrieveCorrectAnswers($term, $lang): array
+    {
+        switch ($lang) {
+            case Config::get('constants.language.japanese'):
+                return DB::table('user_terms')
+                    ->where('term_jp', $term)
+                    ->pluck('term_jp')
+                    ->toArray();
+            case Config::get('constants.language.english'):
+                return  DB::table('user_terms')
+                    ->where('term_en', $term)
+                    ->pluck('term_en')
+                    ->toArray();
+            default:
+                return [];
+        }
     }
 }
 

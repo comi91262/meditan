@@ -3,11 +3,12 @@
 namespace App\Services\Question;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
-use App\Services\Question\QuestionServiceInterface;
-use App\Repositories\Question\QuestionRepositoryInterface;
+use Illuminate\Support\Facades\Config;
 use App\Services\Term\TermServiceInterface;
+use App\Services\Question\QuestionServiceInterface;
+use App\Services\UserTerm\UserTermServiceInterface;
+use App\Repositories\Question\QuestionRepositoryInterface;
 
 class QuestionService implements QuestionServiceInterface
 {
@@ -22,14 +23,21 @@ class QuestionService implements QuestionServiceInterface
     protected $termService;
 
     /**
+     * @var UserTermServiceInterface
+     */
+    protected $userTermService;
+
+    /**
      * @param object $question
      */
     public function __construct(
         TermServiceInterface $termService,
+        UserTermServiceInterface $userTermService,
         QuestionRepositoryInterface $questionRepository
     ) {
         $this->questionRepository = $questionRepository;
         $this->termService = $termService;
+        $this->userTermService = $userTermService;
     }
 
 
@@ -45,9 +53,19 @@ class QuestionService implements QuestionServiceInterface
     public function isCorrect($section, $number, $userAnswer)
     {
         $question = $this->questionRepository->retrieveQuestion($section, $number);
-        $answers = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
+        $defaultAnswers = $this->termService->retrieveCorrectAnswers($question->question, $question->language);
 
-        return [in_array($userAnswer, $answers), $answers];
+        if (in_array($userAnswer, $defaultAnswers)) {
+            return [true, $defaultAnswers];
+        }
+
+        $usersAnswers = $this->userTermService->retrieveCorrectAnswers($question->question, $question->language);
+
+        if (in_array($userAnswer, $usersAnswers)) {
+            return [true, $usersAnswers];
+        }
+
+        return [false, array_merge($defaultAnswers, $usersAnswers)];
     }
 
     /**
