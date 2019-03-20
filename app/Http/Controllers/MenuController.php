@@ -30,7 +30,6 @@ class MenuController extends Controller
 
     public function index()
     {
-        session()->forget('inAnswer');
         return view('menu');
     }
 
@@ -64,9 +63,8 @@ class MenuController extends Controller
         }
 
         $section = $this->questionService->retrieveLatestSection(Auth::id());
-        if ($section !== session('inAnswer')) {
+        if ($section === '') {
             $section = $this->questionService->createQuestions($lang, $departments, $number);
-            session(['inAnswer' => $section]);
         }
         return view('exam', ['section' => $section]);
     }
@@ -98,9 +96,8 @@ class MenuController extends Controller
         }
 
         $section = $this->questionService->retrieveLatestSection(Auth::id());
-        if ($section !== session('inAnswer')) {
+        if ($section === '') {
             $section = $this->questionService->createConditionQuestions($number);
-            session(['inAnswer' => $section]);
         }
         return view('exam', ['section' => $section]);
     }
@@ -129,9 +126,8 @@ class MenuController extends Controller
     public function examRetry(Request $request)
     {
         $section = $this->questionService->retrieveLatestSection(Auth::id());
-        if ($section !== session('inAnswer')) {
+        if ($section === '') {
             $section = $this->questionService->createRetryQuestions();
-            session(['inAnswer' => $section]);
         }
         return view('exam', ['section' => $section]);
     }

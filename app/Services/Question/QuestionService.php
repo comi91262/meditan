@@ -110,11 +110,28 @@ class QuestionService implements QuestionServiceInterface
         ];
     }
 
+    /**
+     * 未回答のものがある最新のセクション番号を取得する。
+     * ただし、ユーザーが意図的に中断ができるようになる(questionsの中に未回答だが回答する必要のないものが混ざる)
+     * ことを想定してはじめに最新の問題を取得し、その問題が回答済みかどうかで未回答のものがあるかを判断して取得する
+     *
+     * @param string $userId
+     * @return string
+     */
     public function retrieveLatestSection($userId)
     {
-        $question = DB::table('questions')->where('user', $userId)->latest()->first();
+        $question = DB::table('questions')
+            ->where('user', $userId)
+            ->orderBy('created_at', 'desc')
+            ->orderBy('number', 'desc')
+            ->first()
+            ;
 
-        if ($question !== null) {
+        if ($question === null) {
+            return '';
+        }
+
+        if ($question->answer_datetime === null) {
             return $question->section;
         } else {
             return '';
