@@ -29,7 +29,8 @@ const router = new VueRouter({
     },
     { path: '/exam', name: 'exam', component: require('./components/ExamComponent.vue').default },
     { path: '/history', name: 'history', component: require('./components/QuestionHistoryComponent.vue').default },
-    { path: '/list', name: 'list', component: require('./components/AllTermsComponent.vue').default }
+    { path: '/list', name: 'list', component: require('./components/AllTermsComponent.vue').default },
+    { path: '/addition_term', component: require('./components/AdditionTermComponent.vue').default }
   ]
 });
 
@@ -43,8 +44,6 @@ const router = new VueRouter({
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component('addition-term-component', require('./components/AdditionTermComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

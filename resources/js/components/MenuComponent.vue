@@ -68,7 +68,7 @@
             this.$router.push({ path: '/list' });
             break;
           case "4":
-            location.href = '/add_term';
+            this.$router.push({ path: '/addition_term' });
             break;
 
         }
