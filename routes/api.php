@@ -13,6 +13,7 @@
 
 Route::middleware(['auth:api'])->group(function () {
     Route::get('questions', 'QuestionApiController@index');
+    Route::post('questions', 'QuestionApiController@create');
     Route::get('questions/{section}/result', 'QuestionApiController@showResult');
     Route::get('questions/{section}/answered', 'QuestionApiController@showAnsweredCount');
     Route::get('questions/{section}/{number}', 'QuestionApiController@show');

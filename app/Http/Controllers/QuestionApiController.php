@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Services\Question\QuestionServiceInterface;
+use Illuminate\Support\Facades\Validator;
 use App\Services\Term\TermServiceInterface;
+use Illuminate\Validation\ValidationException;
+use App\Services\Question\QuestionServiceInterface;
 
 class QuestionApiController extends Controller
 {
@@ -58,6 +60,45 @@ class QuestionApiController extends Controller
         }
 
         return ['question' => $question->question];
+    }
+
+    public function create(Request $request)
+    {
+        try {
+            $validInput = $this->validateUserSelection($request->all());
+        } catch (ValidationException $exception) {
+            $displayedMessage = '';
+            foreach ($exception->validator->getMessageBag()->all() as $message) {
+                $displayedMessage = $message;
+            }
+            return ['result' => null, 'message' => $displayedMessage];
+        }
+
+        $departments = $validInput['categories'];
+        $lang = $validInput['language'];
+
+        $section = $this->questionService->retrieveLatestSection($request->user()->id);
+        if ($section === '') {
+            $section = $this->questionService->createQuestions($lang, $departments, 20);
+        }
+    }
+
+    /**
+     *
+     */
+    private function validateUserSelection($requestInput)
+    {
+        return Validator::make(
+            $requestInput,
+            [
+                'categories' => 'required',
+                'language' => 'required',
+            ],
+            [
+                'categories.required' => 'カテゴリを入力してください',
+                'language.required' => '言語を選択していください',
+            ]
+        )->validate();
     }
 
     /**

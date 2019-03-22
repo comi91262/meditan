@@ -3,7 +3,6 @@
 namespace App\Services\Question;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 use App\Services\Term\TermServiceInterface;
 use App\Services\Question\QuestionServiceInterface;

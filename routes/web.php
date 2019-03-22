@@ -11,11 +11,8 @@
 |
 */
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'MenuController@index');
-    Route::get('/select', 'MenuController@select')->name('menu.select');
-    Route::post('/exam', 'MenuController@exam')->name('menu.exam');
     Route::get('/select_condition', 'MenuController@selectCondition')->name('menu.select_condition');
     Route::post('/exam_condition', 'MenuController@examCondition')->name('menu.exam_condition');
     Route::get('/exam_retry', 'MenuController@examRetry')->name('menu.exam_retry');

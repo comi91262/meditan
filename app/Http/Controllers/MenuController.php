@@ -33,41 +33,6 @@ class MenuController extends Controller
         return view('menu');
     }
 
-    public function select()
-    {
-        $departments = $this->departmentRepository->retrieveAllDepartments();
-        return view('select', ['departments' => $departments]);
-    }
-
-    public function exam(Request $request)
-    {
-        $this->validateSelector($request);
-
-        $departments = $request->input('departments');
-        $lang = $request->input('lang');
-        $number = $request->input('number');
-
-        switch ($number) {
-            case 'ten':
-                $number = 10;
-                break;
-            case 'twenty':
-                $number = 20;
-                break;
-            case 'all':
-                $number = 1000;
-                break;
-            default:
-                // TODO 別で対応
-                break;
-        }
-
-        $section = $this->questionService->retrieveLatestSection(Auth::id());
-        if ($section === '') {
-            $section = $this->questionService->createQuestions($lang, $departments, $number);
-        }
-        return view('exam', ['section' => $section]);
-    }
 
     public function selectCondition()
     {
@@ -130,24 +95,6 @@ class MenuController extends Controller
             $section = $this->questionService->createRetryQuestions();
         }
         return view('exam', ['section' => $section]);
-    }
-
-    /**
-     *
-     */
-    public function validateSelector($request)
-    {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'departments' => 'required',
-                'lang' => 'required',
-                'number' => 'required',
-            ],
-            [
-                'required' => ':attribute が必要です.',
-            ]
-        )->validate();
     }
 
     public function showAdditionTerm()

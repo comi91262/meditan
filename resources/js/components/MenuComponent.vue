@@ -41,7 +41,7 @@
       jumpPage(key, keyPath) {
         switch (key) {
           case "1-1":
-            location.href = '/select';
+            this.$router.push({ path: '/select' });
             break;
           case "1-3":
             location.href = '/exam_retry';
