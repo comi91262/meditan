@@ -42,7 +42,7 @@ export default {
     },
     methods: {
         onSubmit() {
-            axios.post('/api/questions', {
+            axios.post('/api/questions/_kind/category', {
                 'categories': this.form.selectedDepartment,
                 'language': this.form.language,
             })

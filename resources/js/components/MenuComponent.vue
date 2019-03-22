@@ -44,7 +44,22 @@
             this.$router.push({ path: '/select' });
             break;
           case "1-3":
-            location.href = '/exam_retry';
+            axios.post('/api/questions/_kind/retry')
+            .then(response => {
+                if (response.data.result !== null) {
+                    let term = response.data.result;
+                    this.$router.push({ path: '/exam' });
+                } else {
+                    this.$message.error(response.data.message);
+                }
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    this.$message.error('認証エラーです。もう一度ログインください');
+                } else {
+                    this.$message.error('通信エラーです。もう一度試してください');
+                }
+            })
             break;
           case "2":
             this.$router.push({ path: '/history' });

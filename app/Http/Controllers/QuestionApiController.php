@@ -62,10 +62,10 @@ class QuestionApiController extends Controller
         return ['question' => $question->question];
     }
 
-    public function create(Request $request)
+    public function create(Request $request, $kind)
     {
         try {
-            $validInput = $this->validateUserSelection($request->all());
+            $validInput = $this->validateUserSelection($request->all(), $kind);
         } catch (ValidationException $exception) {
             $displayedMessage = '';
             foreach ($exception->validator->getMessageBag()->all() as $message) {
@@ -74,33 +74,25 @@ class QuestionApiController extends Controller
             return ['result' => null, 'message' => $displayedMessage];
         }
 
-        $departments = $validInput['categories'];
-        $lang = $validInput['language'];
-
         $section = $this->questionService->retrieveLatestSection($request->user()->id);
         if ($section === '') {
-            $section = $this->questionService->createQuestions($lang, $departments, 20);
+            switch ($kind) {
+                case 'category':
+                    $departments = $validInput['categories'];
+                    $lang = $validInput['language'];
+                    $this->questionService->createQuestions($lang, $departments, 20);
+                    break;
+                case 'retry':
+                    $this->questionService->createRetryQuestions();
+                    break;
+                case 'sim':
+                    $this->questionService->createConditionQuestions(20);
+                    break;
+                default: // TDDO
+                    break;
+            }
         }
     }
-
-    /**
-     *
-     */
-    private function validateUserSelection($requestInput)
-    {
-        return Validator::make(
-            $requestInput,
-            [
-                'categories' => 'required',
-                'language' => 'required',
-            ],
-            [
-                'categories.required' => 'カテゴリを入力してください',
-                'language.required' => '言語を選択していください',
-            ]
-        )->validate();
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -165,5 +157,30 @@ class QuestionApiController extends Controller
     public function showSection(Request $request)
     {
         return ['section' => $this->questionService->retrieveLatestSection($request->user()->id)];
+    }
+
+    /**
+     *  // TODO valildatorクラスを引数で切り替える
+     */
+    private function validateUserSelection($requestInput, $kind)
+    {
+        switch ($kind) {
+            case 'category':
+                return Validator::make(
+                    $requestInput,
+                    [
+                        'categories' => 'required',
+                        'language' => 'required',
+                    ],
+                    [
+                        'categories.required' => 'カテゴリを入力してください',
+                        'language.required' => '言語を選択していください',
+                    ]
+                )->validate();
+            case 'retry':
+                break;
+            case 'sim':
+                break;
+        }
     }
 }
