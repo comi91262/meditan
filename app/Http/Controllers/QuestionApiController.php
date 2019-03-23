@@ -85,8 +85,8 @@ class QuestionApiController extends Controller
                 case 'retry':
                     $this->questionService->createRetryQuestions();
                     break;
-                case 'sim':
-                    $this->questionService->createConditionQuestions(20);
+                case 'similar':
+                    $this->questionService->createSimilarQuestions(20);
                     break;
                 default: // TDDO
                     break;
@@ -179,7 +179,7 @@ class QuestionApiController extends Controller
                 )->validate();
             case 'retry':
                 break;
-            case 'sim':
+            case 'similar':
                 break;
         }
     }

@@ -13,7 +13,7 @@
         </template>
         <el-menu-item-group title="種類">
           <el-menu-item index="1-1">カテゴリテスト</el-menu-item>
-          <el-menu-item index="1-2" disabled>似た単語テスト(テスト運用中)</el-menu-item>
+          <el-menu-item index="1-2">似た単語テスト</el-menu-item>
           <el-menu-item index="1-3">やり直しテスト</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
@@ -42,6 +42,24 @@
         switch (key) {
           case "1-1":
             this.$router.push({ path: '/select' });
+            break;
+          case "1-2":
+            axios.post('/api/questions/_kind/similar')
+            .then(response => {
+                if (response.data.result !== null) {
+                    let term = response.data.result;
+                    this.$router.push({ path: '/exam' });
+                } else {
+                    this.$message.error(response.data.message);
+                }
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    this.$message.error('認証エラーです。もう一度ログインください');
+                } else {
+                    this.$message.error('通信エラーです。もう一度試してください');
+                }
+            })
             break;
           case "1-3":
             axios.post('/api/questions/_kind/retry')

@@ -120,4 +120,29 @@ class TermService implements TermServiceInterface
                 return [];
         }
     }
+
+    // TODO とりあえず普通に求める。レスポンスが悪くなる場合、キャッシュに
+    public function retrieveSimilarQuestions($number)
+    {
+        $terms = DB::table('english_terms')->pluck('term')->toArray();
+        shuffle($terms);
+
+        $tergetTerm = current($terms);
+
+        $distances =  [];
+        foreach ($terms as $term) {
+            $distances[] = [
+                'term' => $term,
+                'distance' => levenshtein($tergetTerm, $term),
+            ];
+        }
+
+        $sort = [];
+        foreach ($distances as $key => $value) {
+            $sort[$key] = $value['distance'];
+        }
+        array_multisort($sort, SORT_ASC, $distances);
+    
+        return array_slice(array_column($distances, 'term'), 0, $number);
+    }
 }

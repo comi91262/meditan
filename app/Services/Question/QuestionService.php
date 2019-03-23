@@ -85,9 +85,9 @@ class QuestionService implements QuestionServiceInterface
         return $this->questionRepository->saveTerms($terms);
     }
 
-    public function createConditionQuestions($number)
+    public function createSimilarQuestions($number)
     {
-        $terms = DB::table('english_terms')->orderBy('term', 'asc')->take($number)->pluck('term')->toArray();
+        $terms = $this->termService->retrieveSimilarQuestions($number);
         return $this->questionRepository->saveTerms($terms, Config::get('constants.language.english'));
     }
 
