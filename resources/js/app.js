@@ -9,14 +9,18 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router';
-// import Vuetify from 'vuetify';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import locale from 'element-ui/lib/locale/lang/ja';
 
-// Vue.use(Vuetify);
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
+
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
+// import locale from 'element-ui/lib/locale/lang/ja';
+
+Vue.use(Vuetify);
 Vue.use(VueRouter);
-Vue.use(ElementUI, { locale });
+// Vue.use(ElementUI, { locale });
 
 const router = new VueRouter({
   mode: 'history',
