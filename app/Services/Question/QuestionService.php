@@ -158,7 +158,7 @@ class QuestionService implements QuestionServiceInterface
     public function retrieveAllQuestions($userId)
     {
         $questions = DB::table('questions')
-            ->select()
+            ->select('answer_datetime', 'question', 'language', 'user_answer', 'success')
             ->where('user', $userId)
             ->whereNotNull('answer_datetime')
             ->orderByDesc('answer_datetime')

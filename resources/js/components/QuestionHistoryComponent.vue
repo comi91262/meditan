@@ -1,5 +1,5 @@
 <template>
-  <dev>
+  <div>
     <v-data-table
       :headers="headers"
       :items="questions"
@@ -7,33 +7,19 @@
       :pagination.sync="pagination"
       class="elevation-1"
     >
-      <template v-slot:items="props">
-        <td>{{ props.item.answer_datetime }}</td>
-        <td class="text-xs-right">{{ props.item.question }}</td>
-        <td class="text-xs-right">{{ props.item.answer }}</td>
-        <td class="text-xs-right">{{ props.item.user_answer }}</td>
+      <template v-slot:items="props" class="red lighten-1">
+        <tr v-bind:class="success(props.item.success)">
+          <td>{{ props.item.answer_datetime }}</td>
+          <td class="text-xs-right">{{ props.item.question }}</td>
+          <td class="text-xs-right">{{ props.item.answer }}</td>
+          <td class="text-xs-right">{{ props.item.user_answer }}</td>
+        </tr>
       </template>
     </v-data-table>
     <div class="text-xs-center pt-2">
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
     </div>
-  </dev>
-
-  <!--
-  <el-container>
-    <el-header>
-      <h1>回答履歴</h1>
-    </el-header>
-    <el-main>
-      <el-table :data="questions" style="width: 100%" :row-class-name="successClass">
-        <el-table-column prop="answer_datetime" label="回答日時" width="180"></el-table-column>
-        <el-table-column prop="question" label="問題" width="180"></el-table-column>
-        <el-table-column prop="answer" label="正答" width="180"></el-table-column>
-        <el-table-column prop="user_answer" label="回答" width="180"></el-table-column>
-      </el-table>
-    </el-main>
-  </el-container>
-  -->
+  </div>
 </template>
 
 <script>
@@ -47,16 +33,17 @@ export default {
           sortable: true,
           value: 'answer_datetime'
         },
-        { text: '問題', value: 'question' },
-        { text: '正答', value: 'answer' },
-        { text: '回答', value: 'user_answer' }
+        { text: '問題', sortable: false, value: 'question' },
+        { text: '正答', sortable: false, value: 'answer' },
+        { text: '回答', sortable: false, value: 'user_answer' }
       ],
       questions: [],
-      pagination: {},
-      primary_lording: false
+      pagination: {}
     };
   },
   created: function() {
+    const perPage = 15;
+    this.pagination.rowsPerPage = perPage;
     this.getHistory();
   },
   computed: {
@@ -72,26 +59,16 @@ export default {
         .get('/api/questions')
         .then(response => {
           this.questions = response.data.questions;
+          this.pagination.totalItems = this.questions.length;
         })
         .catch(error => {});
     },
-    successClass({ row, rowIndex }) {
-      if (row.success === 1) {
-        return 'success-row';
-      } else {
-        return 'wrong-row';
+    success(isSuccess) {
+      if (isSuccess === 0) {
+        return 'red lighten-1';
       }
       return '';
     }
   }
 };
 </script>
-
-<style>
-.el-table .success-row {
-  background: rgb(22, 173, 219);
-}
-.el-table .wrong-row {
-  background: rgb(238, 123, 123);
-}
-</style>
