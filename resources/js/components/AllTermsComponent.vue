@@ -1,73 +1,69 @@
 <template>
+  <v-tabs
+    color="cyan"
+    dark
+    next-icon="mdi-arrow-right-bold-box-outline"
+    prev-icon="mdi-arrow-left-bold-box-outline"
+    show-arrows
+  >
+    <v-tabs-slider color="yellow"></v-tabs-slider>
+    <v-tab
+      v-for="department in this.departments"
+      :key="department.id"
+      :href="'#tab-' + department.id"
+      v-on:change="select(department.id)"
+    >{{ department.name }}</v-tab>
 
-  <el-container>
-    <el-header>
-        <h1>単語の一覧</h1>
-    </el-header>
-    <el-main>
-        <el-tabs :tab-position="tabPosition" v-model="id" @tab-click="select">
-            <el-tab-pane v-for="department in this.departments" 
-                       :name="String(department.id)" 
-                       :key="department.name" 
-                       :label="department.name">
-                <el-table
-                    :data="terms"
-                    style="width: 100%">
-                    <el-table-column
-                        prop="japaneseTerm"
-                        label="日本語"
-                        width="180">
-                    </el-table-column>
-                    <el-table-column
-                        prop="englishTerm"
-                        label="英語"
-                        width="180">
-                    </el-table-column>
-                </el-table>
-            </el-tab-pane>
-        </el-tabs>
-    </el-main>
-  </el-container>
+    <v-tabs-items>
+      <v-tab-item
+        v-for="department in this.departments"
+        :key="department.id"
+        :value="'tab-' + department.id"
+      >
+        <v-data-table :headers="headers" :items="terms" class="elevation-1">
+          <template v-slot:items="props">
+            <td>{{ props.item.japaneseTerm }}</td>
+            <td>{{ props.item.englishTerm }}</td>
+          </template>
+        </v-data-table>
+      </v-tab-item>
+    </v-tabs-items>
+  </v-tabs>
 </template>
-
 <script>
 export default {
-    data: function () {
-        return {
-            japaneseTerm: '',
-            englishTerm: '',
-            departments: [],
-            departmentSelection: '',
-            primary_lording: false,
-            tabPosition: 'left',
-            id: "1",
-            terms: [],
-        }
+  data: function() {
+    return {
+      japaneseTerm: '',
+      englishTerm: '',
+      departments: [],
+      terms: [],
+      headers: [{ text: '日本語' }, { text: 'English' }]
+    };
+  },
+  created: function() {
+    this.getDepartments();
+    this.select(1);
+  },
+  methods: {
+    select: function(id) {
+      axios
+        .get('/api/terms/_department/' + id)
+        .then(response => {
+          this.terms = response.data.terms;
+        })
+        .catch(error => {});
     },
-    created: function () {
-        this.getDepartments();
-        this.select();
-    },
-    methods: {
-        select: function (event) {
-            axios
-                .get('/api/terms/_department/' + this.id)
-                .then(response => {
-                    this.terms = response.data.terms;
-                })
-                .catch(error => {
-                })
-        },
-        getDepartments: function (event) {
-            axios
-                .get('/api/departments')
-                .then(response => {
-                    response.data.departments.forEach((department) => {
-                        this.departments.push(department);
-                    })
-                }).catch(error => {
-                })
-        }
+    getDepartments: function(event) {
+      axios
+        .get('/api/departments')
+        .then(response => {
+          response.data.departments.forEach(department => {
+            this.departments.push(department);
+          });
+        })
+        .catch(error => {});
     }
-}
+  }
+};
 </script>
