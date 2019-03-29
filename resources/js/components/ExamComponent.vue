@@ -10,7 +10,7 @@
         <el-button type="primary" v-on:click="hint" :loading="primary_lording">ヒントをみる</el-button>
       </el-main>
     </el-container>
-    <el-dialog title="回答終了" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="回答終了" :visible.sync="dialogVisible" width="30%">
       <span>{{ endText }}</span>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="end">OK</el-button>
