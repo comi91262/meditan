@@ -34,7 +34,20 @@ const router = new VueRouter({
     { path: '/exam', name: 'exam', component: require('./components/ExamComponent.vue').default },
     { path: '/history', name: 'history', component: require('./components/QuestionHistoryComponent.vue').default },
     { path: '/list', name: 'list', component: require('./components/AllTermsComponent.vue').default },
-    { path: '/addition_term', component: require('./components/AdditionTermComponent.vue').default }
+    {
+      path: '/addition_term',
+      component: require('./components/AdditionTermComponent.vue').default,
+      children: [
+        {
+          path: 'create',
+          component: require('./components/addition_term/CreateComponent.vue').default
+        },
+        {
+          path: 'list',
+          component: require('./components/addition_term/ListComponent.vue').default
+        }
+      ]
+    }
   ]
 });
 
