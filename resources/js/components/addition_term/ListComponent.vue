@@ -1,42 +1,28 @@
 <template>
-        <el-table
-            :data="terms"
-            style="width: 100%">
-            <el-table-column
-                prop="term_jp"
-                label="日本語"
-                width="180">
-            </el-table-column>
-            <el-table-column
-                prop="term_en"
-                label="英語"
-                width="180">
-            </el-table-column>
-            <el-table-column
-                prop="department"
-                label="カテゴリ"
-                width="180">
-            </el-table-column>
-            <el-table-column>
-                <template slot-scope="scope">
-                 <el-button
-                   size="mini"
-                   type="danger"
-                   @click="handleDelete(scope.$index, terms)">Delete</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+  <div>
+    <v-data-table :headers="headers" :items="terms" hide-actions class="elevation-1">
+      <template v-slot:items="props">
+        <td>{{ props.item.term_jp }}</td>
+        <td>{{ props.item.term_en }}</td>
+        <td>{{ props.item.department }}</td>
+        <td class="justify-center">
+          <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+        </td>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
 export default {
   data: function() {
     return {
-      japaneseTerm: '',
-      englishTerm: '',
-      departments: [],
-      departmentSelection: '',
-      primary_lording: false,
+      headers: [
+        { text: '日本語', sortable: false, value: 'term_jp' },
+        { text: 'English', sortable: false, value: 'term_en' },
+        { text: 'カテゴリ', sortable: false, value: 'category' },
+        { text: 'Actions', value: 'name', sortable: false }
+      ],
       terms: []
     };
   },
@@ -52,13 +38,13 @@ export default {
         })
         .catch(error => {});
     },
-    handleDelete(index, rows) {
-      let id = rows[index].id;
+    deleteItem(item) {
+      const index = this.terms.indexOf(item);
       axios
-        .delete('/api/user_terms/' + id)
+        .delete('/api/user_terms/' + item.id)
         .then(response => {
           this.$message('単語を削除しました', 'success');
-          rows.splice(index, 1);
+          this.terms.splice(index, 1);
         })
         .catch(error => {});
     }

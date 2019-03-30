@@ -1,26 +1,31 @@
 <template>
-  <el-container>
-    <el-header>
-        <h1>単語の登録</h1>
-    </el-header>
-    <el-main>
-        <el-input placeholder="日本語を入力してね" v-model="japaneseTerm"></el-input>
-        <el-input placeholder="英語を入力してね" v-model="englishTerm"></el-input>
-        <div>
-            <h2>
-                カテゴリーを選択してください
-            </h2>
-            <el-radio-group v-model="departmentSelection">
-                <el-radio-button v-for="(department, key) in this.departments"
-                                 :key="key"
-                                 :label="department.id">
-                                 {{department.name}}
-                </el-radio-button>
-            </el-radio-group>
-        </div>
-        <el-button type="primary" v-on:click="register" :loading="primary_lording">登録</el-button>
-    </el-main>
-  </el-container>
+  <v-form ref="form" lazy-validation>
+    <v-container>
+      <v-layout>
+        <v-flex xs12 md4>
+          <v-text-field v-model="japaneseTerm" :counter="30" label="日本語" required></v-text-field>
+        </v-flex>
+
+        <v-flex xs12 md4>
+          <v-text-field v-model="englishTerm" :counter="50" label="English" required></v-text-field>
+        </v-flex>
+      </v-layout>
+    </v-container>
+
+    <v-container>
+      <v-radio-group v-model="departmentSelection" :mandatory="false">
+        <v-radio
+          v-for="(department, key) in this.departments"
+          :key="key"
+          :label="department.name"
+          :value="department.id"
+        ></v-radio>
+      </v-radio-group>
+    </v-container>
+    <v-container>
+      <v-btn color="cyan" @click="register">登録</v-btn>
+    </v-container>
+  </v-form>
 </template>
 
 <script>
@@ -77,7 +82,7 @@ export default {
           this.departments = response.data.departments;
         })
         .catch(error => {});
-    },
+    }
   }
 };
 </script>

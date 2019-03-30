@@ -112,7 +112,7 @@ export default {
           this.$router.push({ path: '/list' });
           break;
         case 'additionTerms':
-          this.$router.push({ path: '/addition_term' });
+          this.$router.push({ path: '/addition_term/create' });
           break;
       }
     }
