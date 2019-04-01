@@ -6,5 +6,4 @@
         <router-view></router-view>
     </v-app>
 </div>
-<script src="{{ asset('js/app.js') }}"></script>
 @endsection 
