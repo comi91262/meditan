@@ -8,7 +8,7 @@
         <v-list-tile-title>ようこそ</v-list-tile-title>
       </v-list-tile>
 
-      <v-list-group prepend-icon="account_circle" value="true">
+      <v-list-group prepend-icon="edit" value="true">
         <template v-slot:activator>
           <v-list-tile>
             <v-list-tile-title>問題を解く</v-list-tile-title>
@@ -23,7 +23,7 @@
         </v-list-tile>
       </v-list-group>
 
-      <v-list-group prepend-icon="account_circle" value="true" @click="jumpPage('history')">
+      <v-list-group prepend-icon="history" value="true" @click="jumpPage('history')">
         <template v-slot:activator>
           <v-list-tile>
             <v-list-tile-title>テスト履歴へ</v-list-tile-title>
@@ -31,7 +31,7 @@
         </template>
       </v-list-group>
 
-      <v-list-group prepend-icon="account_circle" value="true" @click="jumpPage('allTerms')">
+      <v-list-group prepend-icon="list" value="true" @click="jumpPage('allTerms')">
         <template v-slot:activator>
           <v-list-tile>
             <v-list-tile-title>単語の一覧を表示</v-list-tile-title>
@@ -39,7 +39,7 @@
         </template>
       </v-list-group>
 
-      <v-list-group prepend-icon="account_circle" value="true" @click="jumpPage('additionTerms')">
+      <v-list-group prepend-icon="note_add" value="true" @click="jumpPage('additionTerms')">
         <template v-slot:activator>
           <v-list-tile>
             <v-list-tile-title>単語の追加</v-list-tile-title>
@@ -55,9 +55,9 @@ export default {
   data: function() {
     return {
       tests: [
-        ['カテゴリテスト', 'settings', 'category'],
-        ['似た単語テスト', 'settings', 'similar'],
-        ['やり直しテスト', 'settings', 'retry']
+        ['カテゴリテスト', '', 'category'],
+        ['似た単語テスト', '', 'similar'],
+        ['やり直しテスト', '', 'retry']
       ]
     };
   },
