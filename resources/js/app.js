@@ -56,6 +56,8 @@ Vue.component('register-component', require('./components/RegisterComponent.vue'
 Vue.component('header-component', require('./components/HeaderComponent.vue').default);
 Vue.component('footer-component', require('./components/FooterComponent.vue').default);
 
+Vue.component('snackbar-component', require('./components/SnackbarComponent.vue').default);
+
 const app = new Vue({
   router,
   el: '#app'

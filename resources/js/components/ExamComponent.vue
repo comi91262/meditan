@@ -17,11 +17,17 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" flat @click="end">I accept</v-btn>
+            <v-btn color="primary" to="/">I accept</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </div>
+    <snackbar-component
+      :text="snackText"
+      :color="color"
+      :publish-snackbar="snackbar"
+      v-on:close-snackbar="closeSnackbar"
+    ></snackbar-component>
   </v-container>
 </template>
 
@@ -34,7 +40,10 @@ export default {
       question: '',
       number: 1,
       dialogVisible: false,
-      endText: ''
+      endText: '',
+      snackText: '',
+      color: 'success',
+      snackbar: false
     };
   },
   created: async function() {
@@ -43,6 +52,14 @@ export default {
     await this.loadQuestion();
   },
   methods: {
+    publishSnackbar(text, color) {
+      this.snackText = text;
+      this.color = color;
+      this.snackbar = true;
+    },
+    closeSnackbar() {
+      this.snackbar = false;
+    },
     loadSection: async function() {
       try {
         const response = await axios.get('/api/sections');
@@ -73,14 +90,14 @@ export default {
     },
     answer: function(event) {
       if (this.message === '') {
-        this.$message.error('回答を入力してください');
+        this.publishSnackbar('回答を入力してください', 'error');
         return;
       }
       axios.put('/api/questions/' + this.section + '/' + this.number, { answer: this.message }).then(response => {
         if (response.data.success == true) {
-          this.$message('正解！', 'success');
+          this.publishSnackbar('正解', 'success');
         } else {
-          this.$message.error('不正解。正解は' + response.data.answer + 'でした');
+          this.publishSnackbar('不正解。正解は' + response.data.answer + 'でした', 'error');
         }
         this.number++;
         this.loadQuestion();
@@ -89,7 +106,7 @@ export default {
     },
     hint: function(event) {
       axios.get('/api/questions/' + this.section + '/' + this.number + '/hint').then(response => {
-        this.$message('頭文字は' + response.data.hint + 'です');
+        this.publishSnackbar('頭文字は' + response.data.hint + 'です', 'success');
       });
     },
     result: function() {
@@ -99,9 +116,6 @@ export default {
         this.endText = total + '問中、' + success + '問正解でした';
         this.dialogVisible = true;
       });
-    },
-    end: function() {
-      window.location.href = '/';
     }
   }
 };

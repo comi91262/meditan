@@ -1,51 +1,59 @@
 <template>
-  <v-layout row>
-    <v-flex xs12 sm6 offset-sm3>
-      <v-card>
-        <v-toolbar class="primary">
-          <v-toolbar-side-icon></v-toolbar-side-icon>
-          <v-toolbar-title>ようこそ</v-toolbar-title>
-          <v-spacer></v-spacer>
+  <v-container>
+    <v-layout row>
+      <v-flex xs12 sm6 offset-sm3>
+        <v-card>
+          <v-toolbar class="primary">
+            <v-toolbar-side-icon></v-toolbar-side-icon>
+            <v-toolbar-title>ようこそ</v-toolbar-title>
+            <v-spacer></v-spacer>
 
-          <v-btn icon>
-            <v-icon>home</v-icon>
-          </v-btn>
-        </v-toolbar>
+            <v-btn icon>
+              <v-icon>home</v-icon>
+            </v-btn>
+          </v-toolbar>
 
-        <v-list>
-          <v-list-group
-            v-for="item in items"
-            :key="item.title"
-            v-model="item.active"
-            :prepend-icon="item.action"
-            no-action
-          >
-            <template v-slot:activator>
-              <v-list-tile @click="jumpPage(item.routeName)">
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </template>
-
-            <v-list-tile
-              v-for="subItem in item.items"
-              :key="subItem.title"
-              @click="jumpPage(subItem.routeName)"
+          <v-list>
+            <v-list-group
+              v-for="item in items"
+              :key="item.title"
+              v-model="item.active"
+              :prepend-icon="item.action"
+              no-action
             >
-              <v-list-tile-content>
-                <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
-              </v-list-tile-content>
+              <template v-slot:activator>
+                <v-list-tile @click="jumpPage(item.routeName)">
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </template>
 
-              <v-list-tile-action>
-                <v-icon>{{ subItem.action }}</v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
-          </v-list-group>
-        </v-list>
-      </v-card>
-    </v-flex>
-  </v-layout>
+              <v-list-tile
+                v-for="subItem in item.items"
+                :key="subItem.title"
+                @click="jumpPage(subItem.routeName)"
+              >
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+                </v-list-tile-content>
+
+                <v-list-tile-action>
+                  <v-icon>{{ subItem.action }}</v-icon>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list-group>
+          </v-list>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <snackbar-component
+      :text="snackText"
+      :color="color"
+      :publish-snackbar="snackbar"
+      v-on:close-snackbar="closeSnackbar"
+    ></snackbar-component>
+  </v-container>
 </template>
 
 <script>
@@ -59,16 +67,27 @@ export default {
           items: [
             { title: 'カテゴリテスト', routeName: 'category' },
             { title: '似た単語テスト', routeName: 'similar' },
-            { title: 'やり直しテスト', routeName: 'retry' },
+            { title: 'やり直しテスト', routeName: 'retry' }
           ]
         },
         { title: 'テスト履歴へ', action: 'history', routeName: 'history' },
         { title: '単語の一覧を表示', action: 'list', routeName: 'allTerms' },
         { title: '単語の追加', action: 'note_add', routeName: 'additionTerms' }
       ],
+      snackText: '',
+      color: 'success',
+      snackbar: false
     };
   },
   methods: {
+    publishSnackbar(text, color) {
+      this.snackText = text;
+      this.color = color;
+      this.snackbar = true;
+    },
+    closeSnackbar() {
+      this.snackbar = false;
+    },
     jumpPage(key) {
       switch (key) {
         case 'category':
@@ -79,17 +98,16 @@ export default {
             .post('/api/questions/_kind/similar')
             .then(response => {
               if (response.data.result !== null) {
-                let term = response.data.result;
                 this.$router.push({ path: '/exam' });
               } else {
-                this.$message.error(response.data.message);
+                this.publishSnackbar(response.data.message, 'error');
               }
             })
             .catch(error => {
               if (error.response.status === 401) {
-                this.$message.error('認証エラーです。もう一度ログインください');
+                this.publishSnackbar('認証エラーです。もう一度ログインください', 'error');
               } else {
-                this.$message.error('通信エラーです。もう一度試してください');
+                this.publishSnackbar('通信エラーです。もう一度試してください', 'error');
               }
             });
           break;
@@ -98,17 +116,16 @@ export default {
             .post('/api/questions/_kind/retry')
             .then(response => {
               if (response.data.result !== null) {
-                let term = response.data.result;
                 this.$router.push({ path: '/exam' });
               } else {
-                this.$message.error(response.data.message);
+                this.publishSnackbar(response.data.message, 'error');
               }
             })
             .catch(error => {
               if (error.response.status === 401) {
-                this.$message.error('認証エラーです。もう一度ログインください');
+                this.publishSnackbar('認証エラーです。もう一度ログインください', 'error');
               } else {
-                this.$message.error('通信エラーです。もう一度試してください');
+                this.publishSnackbar('通信エラーです。もう一度試してください', 'error');
               }
             });
           break;
