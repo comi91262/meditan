@@ -1,64 +1,71 @@
 <template>
-  <v-navigation-drawer stateless value="true">
-    <v-list>
-      <v-list-tile>
-        <v-list-tile-action>
-          <v-icon>home</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-title>ようこそ</v-list-tile-title>
-      </v-list-tile>
+  <v-layout row>
+    <v-flex xs12 sm6 offset-sm3>
+      <v-card>
+        <v-toolbar class="primary">
+          <v-toolbar-side-icon></v-toolbar-side-icon>
+          <v-toolbar-title>ようこそ</v-toolbar-title>
+          <v-spacer></v-spacer>
 
-      <v-list-group prepend-icon="edit" value="true">
-        <template v-slot:activator>
-          <v-list-tile>
-            <v-list-tile-title>問題を解く</v-list-tile-title>
-          </v-list-tile>
-        </template>
+          <v-btn icon>
+            <v-icon>home</v-icon>
+          </v-btn>
+        </v-toolbar>
 
-        <v-list-tile v-for="(test, i) in tests" :key="i" @click="jumpPage(test[2])">
-          <v-list-tile-title v-text="test[0]"></v-list-tile-title>
-          <v-list-tile-action>
-            <v-icon v-text="test[1]"></v-icon>
-          </v-list-tile-action>
-        </v-list-tile>
-      </v-list-group>
+        <v-list>
+          <v-list-group
+            v-for="item in items"
+            :key="item.title"
+            v-model="item.active"
+            :prepend-icon="item.action"
+            no-action
+          >
+            <template v-slot:activator>
+              <v-list-tile @click="jumpPage(item.routeName)">
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </template>
 
-      <v-list-group prepend-icon="history" value="true" @click="jumpPage('history')">
-        <template v-slot:activator>
-          <v-list-tile>
-            <v-list-tile-title>テスト履歴へ</v-list-tile-title>
-          </v-list-tile>
-        </template>
-      </v-list-group>
+            <v-list-tile
+              v-for="subItem in item.items"
+              :key="subItem.title"
+              @click="jumpPage(subItem.routeName)"
+            >
+              <v-list-tile-content>
+                <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+              </v-list-tile-content>
 
-      <v-list-group prepend-icon="list" value="true" @click="jumpPage('allTerms')">
-        <template v-slot:activator>
-          <v-list-tile>
-            <v-list-tile-title>単語の一覧を表示</v-list-tile-title>
-          </v-list-tile>
-        </template>
-      </v-list-group>
-
-      <v-list-group prepend-icon="note_add" value="true" @click="jumpPage('additionTerms')">
-        <template v-slot:activator>
-          <v-list-tile>
-            <v-list-tile-title>単語の追加</v-list-tile-title>
-          </v-list-tile>
-        </template>
-      </v-list-group>
-    </v-list>
-  </v-navigation-drawer>
+              <v-list-tile-action>
+                <v-icon>{{ subItem.action }}</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list-group>
+        </v-list>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
 export default {
   data: function() {
     return {
-      tests: [
-        ['カテゴリテスト', '', 'category'],
-        ['似た単語テスト', '', 'similar'],
-        ['やり直しテスト', '', 'retry']
-      ]
+      items: [
+        {
+          title: '問題を解く',
+          action: 'edit',
+          items: [
+            { title: 'カテゴリテスト', routeName: 'category' },
+            { title: '似た単語テスト', routeName: 'similar' },
+            { title: 'やり直しテスト', routeName: 'retry' },
+          ]
+        },
+        { title: 'テスト履歴へ', action: 'history', routeName: 'history' },
+        { title: '単語の一覧を表示', action: 'list', routeName: 'allTerms' },
+        { title: '単語の追加', action: 'note_add', routeName: 'additionTerms' }
+      ],
     };
   },
   methods: {
