@@ -18,6 +18,7 @@
         "lodash": "^4.17.5",
         "material-design-icons-iconfont": "^4.0.5",
         "popper.js": "^1.12",
+        "prettier": "^1.16.4",
         "resolve-url-loader": "2.3.1",
         "sass": "^1.17.4",
         "sass-loader": "7.*",
