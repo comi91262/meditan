@@ -25,6 +25,12 @@
     <v-container>
       <v-btn color="cyan" @click="register">登録</v-btn>
     </v-container>
+    <snackbar-component
+      :text="snackText"
+      :color="color"
+      :publish-snackbar="snackbar"
+      v-on:close-snackbar="closeSnackbar"
+    ></snackbar-component>
   </v-form>
 </template>
 
@@ -36,14 +42,24 @@ export default {
       englishTerm: '',
       departments: [],
       departmentSelection: '',
-      primary_lording: false,
-      terms: []
+      terms: [],
+      snackText: '',
+      color: 'success',
+      snackbar: false
     };
   },
   created: function() {
     this.getDepartments();
   },
   methods: {
+    publishSnackbar(text, color) {
+      this.snackText = text;
+      this.color = color;
+      this.snackbar = true;
+    },
+    closeSnackbar() {
+      this.snackbar = false;
+    },
     register: function(event) {
       axios
         .post('/api/user_terms', {
@@ -62,16 +78,17 @@ export default {
             });
             this.japaneseTerm = '';
             this.englishTerm = '';
-            this.$message('登録完了', 'success');
+            this.publishSnackbar('登録完了', 'success');
           } else {
-            this.$message.error(response.data.message);
+            this.publishSnackbar(response.data.message, 'error');
           }
         })
         .catch(error => {
+          console.log(error);
           if (error.response.status === 401) {
-            this.$message.error('認証エラーです。もう一度ログインください');
+            this.publishSnackbar('認証エラーです。もう一度ログインください', 'error');
           } else {
-            this.$message.error('通信エラーです。もう一度試してください');
+            this.publishSnackbar('通信エラーです。もう一度試してください', 'error');
           }
         });
     },

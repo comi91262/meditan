@@ -3,7 +3,7 @@
     <v-snackbar
       v-model="snackbar"
       :multi-line="true"
-      :timeout="1000"
+      :timeout="6000"
       :top="true"
       :color="color"
     >{{ text }}</v-snackbar>
@@ -23,10 +23,5 @@ export default {
       }
     }
   },
-  data: function() {
-    return {
-      timeout: 6000,
-    };
-  }
 };
 </script>

@@ -70,7 +70,7 @@ export default {
           }
         })
         .catch(function(error) {
-          window.location = '/login';
+           window.location = '/login';
         });
     }
   }

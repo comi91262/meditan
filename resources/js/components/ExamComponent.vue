@@ -9,7 +9,7 @@
       </v-flex>
     </v-layout>
 
-    <div class="text-xs-center">
+    <v-layout row justify-center>
       <v-dialog v-model="dialog" persistent max-width="290">
         <v-card>
           <v-card-title class="headline grey lighten-2" primary-title>回答終了</v-card-title>
@@ -21,7 +21,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-    </div>
+    </v-layout>
     <snackbar-component
       :text="snackText"
       :color="color"
@@ -39,7 +39,7 @@ export default {
       message: '',
       question: '',
       number: 1,
-      dialogVisible: false,
+      dialog: false,
       endText: '',
       snackText: '',
       color: 'success',
@@ -106,7 +106,7 @@ export default {
     },
     hint: function(event) {
       axios.get('/api/questions/' + this.section + '/' + this.number + '/hint').then(response => {
-        this.publishSnackbar('頭文字は' + response.data.hint + 'です', 'success');
+        this.publishSnackbar('頭文字は' + response.data.hint + 'です', 'info');
       });
     },
     result: function() {
@@ -114,7 +114,7 @@ export default {
         let total = response.data.total;
         let success = response.data.success;
         this.endText = total + '問中、' + success + '問正解でした';
-        this.dialogVisible = true;
+        this.dialog = true;
       });
     }
   }

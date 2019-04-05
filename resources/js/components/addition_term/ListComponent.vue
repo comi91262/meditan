@@ -10,6 +10,12 @@
         </td>
       </template>
     </v-data-table>
+    <snackbar-component
+      :text="snackText"
+      :color="color"
+      :publish-snackbar="snackbar"
+      v-on:close-snackbar="closeSnackbar"
+    ></snackbar-component>
   </div>
 </template>
 
@@ -23,13 +29,24 @@ export default {
         { text: 'カテゴリ', sortable: false, value: 'category' },
         { text: 'Actions', value: 'name', sortable: false }
       ],
-      terms: []
+      terms: [],
+      snackText: '',
+      color: 'success',
+      snackbar: false
     };
   },
   created: function() {
     this.getUserTerms();
   },
   methods: {
+    publishSnackbar(text, color) {
+      this.snackText = text;
+      this.color = color;
+      this.snackbar = true;
+    },
+    closeSnackbar() {
+      this.snackbar = false;
+    },
     getUserTerms: function() {
       axios
         .get('/api/user_terms')
@@ -43,7 +60,7 @@ export default {
       axios
         .delete('/api/user_terms/' + item.id)
         .then(response => {
-          this.$message('単語を削除しました', 'success');
+          this.publishSnackbar('単語を削除しました', 'success')
           this.terms.splice(index, 1);
         })
         .catch(error => {});
