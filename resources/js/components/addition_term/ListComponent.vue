@@ -27,7 +27,7 @@ export default {
         { text: '日本語', sortable: false, value: 'term_jp' },
         { text: 'English', sortable: false, value: 'term_en' },
         { text: 'カテゴリ', sortable: false, value: 'category' },
-        { text: 'Actions', value: 'name', sortable: false }
+        { text: '', value: 'name', sortable: false }
       ],
       terms: [],
       snackText: '',

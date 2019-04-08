@@ -1,6 +1,6 @@
 <template>
-  <v-form ref="form" lazy-validation>
-    <v-container>
+  <v-container>
+    <v-form ref="form" lazy-validation>
       <v-layout>
         <v-flex xs12 md4>
           <v-text-field v-model="japaneseTerm" :counter="30" label="日本語" required></v-text-field>
@@ -10,9 +10,7 @@
           <v-text-field v-model="englishTerm" :counter="50" label="English" required></v-text-field>
         </v-flex>
       </v-layout>
-    </v-container>
 
-    <v-container>
       <v-radio-group v-model="departmentSelection" :mandatory="false">
         <v-radio
           v-for="(department, key) in this.departments"
@@ -21,17 +19,16 @@
           :value="department.id"
         ></v-radio>
       </v-radio-group>
-    </v-container>
-    <v-container>
-      <v-btn color="cyan" @click="register">登録</v-btn>
-    </v-container>
-    <snackbar-component
-      :text="snackText"
-      :color="color"
-      :publish-snackbar="snackbar"
-      v-on:close-snackbar="closeSnackbar"
-    ></snackbar-component>
-  </v-form>
+      <v-btn color="primary" @click="register">登録</v-btn>
+      <v-btn color="primary" to="/">トップに戻る</v-btn>
+      <snackbar-component
+        :text="snackText"
+        :color="color"
+        :publish-snackbar="snackbar"
+        v-on:close-snackbar="closeSnackbar"
+      ></snackbar-component>
+    </v-form>
+  </v-container>
 </template>
 
 <script>
