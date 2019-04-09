@@ -1,35 +1,29 @@
 <template>
   <v-tabs
-    color="cyan"
-    dark
+    color="primary"
     next-icon="mdi-arrow-right-bold-box-outline"
     prev-icon="mdi-arrow-left-bold-box-outline"
     show-arrows
   >
-    <v-tabs-slider color="yellow"></v-tabs-slider>
+    <v-tabs-slider color="black"></v-tabs-slider>
     <v-tab
       v-for="department in this.departments"
       :key="department.id"
-      :href="'#tab-' + department.id"
       v-on:change="select(department.id)"
+      class="white--text"
     >{{ department.name }}</v-tab>
 
     <v-tabs-items>
-      <v-tab-item
-        v-for="department in this.departments"
-        :key="department.id"
-        :value="'tab-' + department.id"
-      >
-        <v-data-table :headers="headers" :items="terms" class="elevation-1">
-          <template v-slot:items="props">
-            <td>{{ props.item.japaneseTerm }}</td>
-            <td>{{ props.item.englishTerm }}</td>
-          </template>
-        </v-data-table>
-      </v-tab-item>
+      <v-data-table :headers="headers" :items="terms" class="elevation-1">
+        <template v-slot:items="props">
+          <td>{{ props.item.japaneseTerm }}</td>
+          <td>{{ props.item.englishTerm }}</td>
+        </template>
+      </v-data-table>
     </v-tabs-items>
   </v-tabs>
 </template>
+
 <script>
 export default {
   data: function() {

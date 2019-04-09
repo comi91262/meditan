@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-data-table
+      color="primary"
       :headers="headers"
       :items="questions"
       hide-actions
@@ -8,12 +9,10 @@
       class="elevation-1"
     >
       <template v-slot:items="props" class="red lighten-1">
-        <tr v-bind:class="success(props.item.success)">
-          <td>{{ props.item.answer_datetime }}</td>
-          <td class="text-xs-right">{{ props.item.question }}</td>
-          <td class="text-xs-right">{{ props.item.answer }}</td>
-          <td class="text-xs-right">{{ props.item.user_answer }}</td>
-        </tr>
+        <td>{{ props.item.answer_datetime }}</td>
+        <td>{{ props.item.question }}</td>
+        <td>{{ props.item.answer }}</td>
+        <td v-bind:class="success(props.item.success)">{{ props.item.user_answer }}</td>
       </template>
     </v-data-table>
     <div class="text-xs-center pt-2">

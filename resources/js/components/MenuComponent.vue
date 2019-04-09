@@ -4,7 +4,6 @@
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
           <v-toolbar class="primary">
-            <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>ようこそ</v-toolbar-title>
             <v-spacer></v-spacer>
 
