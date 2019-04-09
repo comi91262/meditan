@@ -80,14 +80,13 @@ export default {
       axios
         .post('/register', formData, config)
         .then(function(response) {
-          if (response.data.redirect == '/') {
+          if (response.status = 200) {
             window.location = '/';
-          } else if (response.data.redirect == '/register') {
+          } else {
             window.location = '/register';
           }
         })
         .catch(function(error) {
-          // 422 error
            window.location = '/register';
         });
     }

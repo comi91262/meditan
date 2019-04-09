@@ -63,14 +63,14 @@ export default {
       axios
         .post('/login', formData, config)
         .then(function(response) {
-          if (response.data.redirect == '/') {
+          if ((response.status = 200)) {
             window.location = '/';
-          } else if (response.data.redirect == '/login') {
+          } else {
             window.location = '/login';
           }
         })
         .catch(function(error) {
-           window.location = '/login';
+          window.location = '/login';
         });
     }
   }
