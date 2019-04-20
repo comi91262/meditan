@@ -13,13 +13,21 @@ services:
         - app
  app:
     build: ./app
+    volumes:
+        - ./logs:/var/www/meditan/storage/logs
+    depends_on:
+        - db
+    links:
+        - db
  db:
     build: ./db
     ports:
       - 3306:3306
+    volumes:
+        - ./logs:/var/log/mysql/
     environment:
-      MYSQL_HOST: master
       MYSQL_ROOT_PASSWORD: secret
+      MYSQL_HOST: db
       MYSQL_DATABASE: meditan
       MYSQL_USER: laravel
       MYSQL_PASSWORD: secret
