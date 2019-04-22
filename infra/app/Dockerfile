@@ -9,11 +9,17 @@ RUN chmod -R a+w storage/ bootstrap/cache
 
 # Install Composer
 RUN apk add composer
-RUN composer install
+RUN composer install --optimize-autoloader --no-dev
 RUN docker-php-ext-install pdo_mysql
 
 
 COPY .env /var/www/meditan/.env
-RUN php artisan migrate --seed
+
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan passport:keys
+
+# RUN /usr/sbin/mysql -u laravel -p secret
+# RUN php artisan migrate:fresh --seed
 
 
