@@ -23,20 +23,6 @@
                 autocomplete="off"
               ></v-text-field>
             </form>
-            <form>
-              <v-text-field
-                v-model="passwordConfirmation"
-                :append-icon="show ? 'visibility' : 'visibility_off'"
-                :rules="[rules.required, rules.min]"
-                :type="show ? 'text' : 'password'"
-                name="input-10-2"
-                label="Confirm Password"
-                hint="At least 8 characters"
-                class="input-group--focused"
-                @click:append="show = !show"
-                autocomplete="off"
-              ></v-text-field>
-            </form>
             <v-btn @click="submit">Register</v-btn>
           </v-card-text>
         </v-card>
@@ -51,7 +37,6 @@ export default {
     name: '',
     email: '',
     password: '',
-    passwordConfirmation: '',
     valid: false,
     show: false,
     nameRules: [v => !!v || 'Name is required', v => v.length <= 10 || 'Name must be less than 10 characters'],
@@ -69,7 +54,6 @@ export default {
       formData.append('name', this.name);
       formData.append('email', this.email);
       formData.append('password', this.password);
-      formData.append('password_confirmation', this.passwordConfirmation);
 
       const config = {
         headers: {
@@ -87,7 +71,7 @@ export default {
           }
         })
         .catch(function(error) {
-           window.location = '/register';
+            window.location = '/register';
         });
     }
   }
