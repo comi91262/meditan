@@ -7,9 +7,7 @@
             <v-toolbar-title>ようこそ</v-toolbar-title>
             <v-spacer></v-spacer>
 
-            <v-btn icon>
-              <v-icon>home</v-icon>
-            </v-btn>
+            <v-icon>home</v-icon>
           </v-toolbar>
 
           <v-list>
@@ -36,10 +34,6 @@
                 <v-list-tile-content>
                   <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
                 </v-list-tile-content>
-
-                <v-list-tile-action>
-                  <v-icon>{{ subItem.action }}</v-icon>
-                </v-list-tile-action>
               </v-list-tile>
             </v-list-group>
           </v-list>
