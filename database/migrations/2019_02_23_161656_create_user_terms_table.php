@@ -21,8 +21,8 @@ class CreateUserTermsTable extends Migration
             $table->integer('department')->comment('科')->reference('id')->on('departments');
             $table->index(['department', 'term_en']);
             $table->index(['department', 'term_jp']);
-            $table->unique(['department', 'term_en']);
-            $table->unique(['department', 'term_jp']);
+            $table->unique(['user', 'department', 'term_en']);
+            $table->unique(['user', 'department', 'term_jp']);
             $table->timestamps();
         });
     }
