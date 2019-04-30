@@ -23,8 +23,8 @@
         </v-flex>
 
         <v-flex xs12>
-          <v-btn color="cyan" @click="onSubmit">Start</v-btn>
-          <v-btn to="/" color="cyan">トップ画面に戻る</v-btn>
+          <v-btn color="primary" @click="onSubmit">Start</v-btn>
+          <v-btn to="/" color="primary">トップ画面に戻る</v-btn>
         </v-flex>
       </v-layout>
     </v-form>
