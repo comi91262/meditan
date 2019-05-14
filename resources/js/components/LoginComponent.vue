@@ -63,7 +63,7 @@ export default {
       axios
         .post('/login', formData, config)
         .then(function(response) {
-          if ((response.status = 200)) {
+          if ((response.status = 302)) {
             window.location = '/';
           } else {
             window.location = '/login';
