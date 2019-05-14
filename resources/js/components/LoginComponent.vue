@@ -19,7 +19,6 @@
               class="input-group--focused"
               @click:append="show = !show"
             ></v-text-field>
-            <v-checkbox v-model="checkbox" label="Remember Me?" required></v-checkbox>
             <v-btn @click="submit">Login</v-btn>
             <!--
             <a class="btn btn-link" href="/password/reset">'Forgot Your Password?'</a>
