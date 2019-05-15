@@ -15,5 +15,7 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'MenuController@index');
-    Route::get('/{any}', 'MenuController@index')->where('any', '.*'); // ブラウザ更新時の404対応。インフラが決まるまでの暫定対応
+    if (env('APP_ENV') === 'local') {
+        Route::get('/{any}', 'MenuController@index')->where('any', '.*');
+    }
 });
