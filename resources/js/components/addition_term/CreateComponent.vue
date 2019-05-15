@@ -2,11 +2,11 @@
   <v-container>
     <v-form ref="form" lazy-validation>
       <v-layout>
-        <v-flex xs12 md4>
+        <v-flex sm5 md5>
           <v-text-field v-model="japaneseTerm" :counter="30" label="日本語" required></v-text-field>
         </v-flex>
 
-        <v-flex xs12 md4>
+        <v-flex sm5 md5 offset-sm2 offset-md2>
           <v-text-field v-model="englishTerm" :counter="50" label="English" required></v-text-field>
         </v-flex>
       </v-layout>
@@ -81,7 +81,6 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
           if (error.response.status === 401) {
             this.publishSnackbar('認証エラーです。もう一度ログインください', 'error');
           } else {

@@ -1,27 +1,43 @@
 <template>
-  <v-tabs
-    color="primary"
-    next-icon="mdi-arrow-right-bold-box-outline"
-    prev-icon="mdi-arrow-left-bold-box-outline"
-    show-arrows
-  >
-    <v-tabs-slider color="black"></v-tabs-slider>
-    <v-tab
-      v-for="department in this.departments"
-      :key="department.id"
-      v-on:change="select(department.id)"
-      class="white--text"
-    >{{ department.name }}</v-tab>
+  <v-container>
+    <v-layout row wrap>
+      <v-flex xs12 sm6 offset-sm3>
+        <v-card>
+          <v-toolbar class="primary">
+            <v-toolbar-title>単語一覧</v-toolbar-title>
+            <v-spacer></v-spacer>
 
-    <v-tabs-items>
-      <v-data-table :headers="headers" :items="terms" class="elevation-1">
-        <template v-slot:items="props">
-          <td>{{ props.item.japaneseTerm }}</td>
-          <td>{{ props.item.englishTerm }}</td>
-        </template>
-      </v-data-table>
-    </v-tabs-items>
-  </v-tabs>
+            <v-btn @click="goHome" icon>
+              <v-icon>home</v-icon>
+            </v-btn>
+          </v-toolbar>
+          <v-tabs
+            color="primary"
+            next-icon="mdi-arrow-right-bold-box-outline"
+            prev-icon="mdi-arrow-left-bold-box-outline"
+            show-arrows
+          >
+            <v-tabs-slider color="black"></v-tabs-slider>
+            <v-tab
+              v-for="department in this.departments"
+              :key="department.id"
+              v-on:change="select(department.id)"
+              class="white--text"
+            >{{ department.name }}</v-tab>
+
+            <v-tabs-items>
+              <v-data-table :headers="headers" :items="terms" class="elevation-1">
+                <template v-slot:items="props">
+                  <td>{{ props.item.japaneseTerm }}</td>
+                  <td>{{ props.item.englishTerm }}</td>
+                </template>
+              </v-data-table>
+            </v-tabs-items>
+          </v-tabs>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -57,6 +73,9 @@ export default {
           });
         })
         .catch(error => {});
+    },
+    goHome: function() {
+      this.$router.go(-1);
     }
   }
 };

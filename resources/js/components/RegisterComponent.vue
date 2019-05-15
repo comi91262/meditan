@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
-      <v-flex xs12>
+      <v-flex sm6 offset-sm3>
         <v-card>
           <v-card-title class="primary">
             <span class="title white--text font-weight-light">Register</span>
