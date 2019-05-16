@@ -1,24 +1,39 @@
 <template>
-  <div>
-    <v-data-table
-      color="primary"
-      :headers="headers"
-      :items="questions"
-      hide-actions
-      :pagination.sync="pagination"
-      class="elevation-1"
-    >
-      <template v-slot:items="props" class="red lighten-1">
-        <td>{{ props.item.answer_datetime }}</td>
-        <td>{{ props.item.question }}</td>
-        <td>{{ props.item.answer }}</td>
-        <td v-bind:class="success(props.item.success)">{{ props.item.user_answer }}</td>
-      </template>
-    </v-data-table>
-    <div class="text-xs-center pt-2">
-      <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
-    </div>
-  </div>
+  <v-container>
+    <v-card>
+      <v-layout row wrap>
+        <v-flex xs12 md12>
+          <v-toolbar class="primary">
+            <v-toolbar-title>回答履歴</v-toolbar-title>
+            <v-spacer></v-spacer>
+
+            <v-btn @click="goHome" icon>
+              <v-icon>home</v-icon>
+            </v-btn>
+          </v-toolbar>
+          <v-data-table
+            color="primary"
+            :headers="headers"
+            :items="questions"
+            hide-actions
+            :pagination.sync="pagination"
+            class="elevation-1"
+          >
+            <template v-slot:items="props" class="red lighten-1">
+              <td>{{ props.item.answer_datetime }}</td>
+              <td>{{ props.item.question }}</td>
+              <td>{{ props.item.answer }}</td>
+              <td v-bind:class="success(props.item.success)">{{ props.item.user_answer }}</td>
+            </template>
+          </v-data-table>
+        </v-flex>
+
+        <v-flex class="text-xs-center pt-2">
+          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+        </v-flex>
+      </v-layout>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -67,7 +82,10 @@ export default {
         return 'red lighten-1';
       }
       return '';
-    }
+    },
+    goHome() {
+      this.$router.go(-1);
+    },
   }
 };
 </script>
