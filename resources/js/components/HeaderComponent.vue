@@ -4,8 +4,8 @@
     <v-spacer></v-spacer>
 
     <v-toolbar-items>
-      <v-btn href="/login" flat>Login</v-btn>
-      <v-btn href="/register" flat>Register</v-btn>
+      <v-btn href="/login" flat>ログイン</v-btn>
+      <v-btn href="/register" flat>登録する</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>

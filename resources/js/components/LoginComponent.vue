@@ -4,7 +4,7 @@
       <v-flex sm6 offset-sm3>
         <v-card>
           <v-card-title class="primary">
-            <span class="title white--text font-weight-light">Login</span>
+            <span class="title white--text font-weight-light">ログイン</span>
           </v-card-title>
           <v-card-text>
             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
@@ -19,7 +19,7 @@
               class="input-group--focused"
               @click:append="show = !show"
             ></v-text-field>
-            <v-btn @click="submit">Login</v-btn>
+            <v-btn @click="submit">ログイン</v-btn>
             <!--
             <a class="btn btn-link" href="/password/reset">'Forgot Your Password?'</a>
             -->

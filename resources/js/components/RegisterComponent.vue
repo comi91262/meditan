@@ -4,7 +4,7 @@
       <v-flex sm6 offset-sm3>
         <v-card>
           <v-card-title class="primary">
-            <span class="title white--text font-weight-light">Register</span>
+            <span class="title white--text font-weight-light">登録</span>
           </v-card-title>
           <v-card-text>
             <v-text-field v-model="name" label="Name" required></v-text-field>
@@ -23,7 +23,7 @@
                 autocomplete="off"
               ></v-text-field>
             </form>
-            <v-btn @click="submit">Register</v-btn>
+            <v-btn @click="submit">登録する</v-btn>
           </v-card-text>
         </v-card>
       </v-flex>
