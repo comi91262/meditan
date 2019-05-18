@@ -4,7 +4,7 @@
       v-model="snackbar"
       :multi-line="true"
       :timeout="6000"
-      :top="true"
+      :top="false"
       :color="color"
     >{{ text }}</v-snackbar>
   </v-card>

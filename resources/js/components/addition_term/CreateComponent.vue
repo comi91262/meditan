@@ -6,7 +6,7 @@
           <v-text-field v-model="japaneseTerm" :counter="30" label="日本語" required></v-text-field>
         </v-flex>
 
-        <v-flex sm5 md5 offset-sm2 offset-md2>
+        <v-flex sm5 md5 offset-sm1 offset-md1>
           <v-text-field v-model="englishTerm" :counter="50" label="English" required></v-text-field>
         </v-flex>
       </v-layout>

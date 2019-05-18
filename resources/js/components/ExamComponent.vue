@@ -4,20 +4,20 @@
       <v-flex>
         <h1>問題: {{ question }}</h1>
         <v-text-field placeholder="回答を入力してね" v-on:keyup.enter.native="answer" v-model="message"></v-text-field>
-        <v-btn type="primary" @click="answer">回答する</v-btn>
-        <v-btn type="primary" @click="hint">ヒントをみる</v-btn>
+        <v-btn class="primary" @click="answer">回答する</v-btn>
+        <v-btn class="primary" @click="hint">ヒントをみる</v-btn>
       </v-flex>
     </v-layout>
 
     <v-layout row justify-center>
       <v-dialog v-model="dialog" persistent max-width="290">
         <v-card>
-          <v-card-title class="headline grey lighten-2" primary-title>回答終了</v-card-title>
+          <v-card-title class="headline">回答終了</v-card-title>
           <v-card-text>{{ endText }}</v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" to="/">I accept</v-btn>
+            <v-btn color="primary" to="/">トップに戻る</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

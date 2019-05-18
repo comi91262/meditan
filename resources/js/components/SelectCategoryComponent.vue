@@ -1,33 +1,57 @@
 <template>
   <v-container>
-    <v-form ref="form" lazy-validation>
-      <v-layout row wrap>
-        <v-flex xs12>
-          <h2>カテゴリを選択してください</h2>
-            <v-checkbox v-model="selectedDepartments"
+    <v-layout row wrap>
+      <v-flex xs12 md12>
+        <v-card>
+          <v-toolbar class="primary">
+            <v-toolbar-title>カテゴリを選択</v-toolbar-title>
+            <v-spacer></v-spacer>
+
+            <v-btn @click="goHome" icon>
+              <v-icon>home</v-icon>
+            </v-btn>
+          </v-toolbar>
+
+          <v-card-text>
+            <v-checkbox
+              class="text-xs-center mt-auto pt-0"
+              v-model="selectedDepartments"
               v-for="(department, key) in this.departments"
               :key="key"
               :label="department.name"
               :value="department.id"
             ></v-checkbox>
-        </v-flex>
+          </v-card-text>
+        </v-card>
+      </v-flex>
 
-        <v-flex xs12>
-          <h2>問題文の言語を選択してください</h2>
-          <v-radio-group v-model="language">
-            <v-radio-group>
-              <v-radio label="日本語" :value="0"></v-radio>
-              <v-radio label="English" :value="1"></v-radio>
+      <v-flex xs12 md12>
+        <v-card>
+          <v-toolbar class="primary">
+            <v-toolbar-title>問題文の言語の選択</v-toolbar-title>
+            <v-spacer></v-spacer>
+
+            <v-btn @click="goHome" icon>
+              <v-icon>home</v-icon>
+            </v-btn>
+          </v-toolbar>
+          <v-card-text>
+            <v-radio-group v-model="language" class="text-xs-center mt-2">
+              <v-radio-group>
+                <v-radio label="日本語" :value="0"></v-radio>
+                <v-radio label="English" :value="1"></v-radio>
+              </v-radio-group>
             </v-radio-group>
-          </v-radio-group>
-        </v-flex>
+          </v-card-text>
+        </v-card>
+      </v-flex>
 
-        <v-flex xs12>
+      <v-flex xs12 md12>
+        <v-card>
           <v-btn color="primary" @click="onSubmit">Start</v-btn>
-          <v-btn to="/" color="primary">トップ画面に戻る</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-form>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -67,7 +91,7 @@ export default {
           }
         });
     },
-    backHome() {
+    goHome() {
       this.$router.go(-1);
     },
     getDepartments: function() {
