@@ -37,7 +37,10 @@ export default {
           this.$router.push({ path: '/addition_term/list' });
           break;
       }
-    }
+    },
+    goHome() {
+      this.$router.go(-1);
+    },
   }
 };
 </script>

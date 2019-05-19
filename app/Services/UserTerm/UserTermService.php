@@ -42,7 +42,7 @@ class UserTermService implements UserTermServiceInterface
             ->latest()
             ->get();
     }
-    
+
     public function createUserTermSet($userId, $japaneseTerm, $englishTerm, $department)
     {
         if ($this->termService->checkDuplication($japaneseTerm)) {
