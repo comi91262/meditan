@@ -1,15 +1,25 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <v-layout row wrap>
-      <v-flex sm6 offset-sm3>
-        <v-card>
-          <v-card-title class="primary">
-            <span class="title white--text font-weight-light">登録</span>
-          </v-card-title>
-          <v-card-text>
-            <v-text-field v-model="name" label="Name" required></v-text-field>
-            <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-            <form>
+  <v-form v-model="valid">
+    <v-container grid-list-md text-xs-center>
+      <v-layout row wrap>
+        <v-flex sm6 offset-sm3>
+          <v-card>
+            <v-card-title class="primary">
+              <span class="title white--text font-weight-light">登録</span>
+            </v-card-title>
+            <v-card-text>
+              <v-text-field
+                v-model="name"
+                :rules="[rules.required, rules.max]"
+                label="Name"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="email"
+                :rules="[rules.required, rules.email, rules.max]"
+                label="E-mail"
+                required
+              ></v-text-field>
               <v-text-field
                 v-model="password"
                 :append-icon="show ? 'visibility' : 'visibility_off'"
@@ -22,13 +32,13 @@
                 @click:append="show = !show"
                 autocomplete="off"
               ></v-text-field>
-            </form>
-            <v-btn @click="submit">登録する</v-btn>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+              <v-btn @click="submit">登録する</v-btn>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-form>
 </template>
 
 <script>
@@ -39,17 +49,17 @@ export default {
     password: '',
     valid: false,
     show: false,
-    nameRules: [v => !!v || 'Name is required', v => v.length <= 10 || 'Name must be less than 10 characters'],
-    emailRules: [v => !!v || 'E-mail is required', v => /.+@.+/.test(v) || 'E-mail must be valid'],
     rules: {
       required: value => !!value || 'Required.',
       min: v => v.length >= 8 || 'Min 8 characters',
-      emailMatch: () => "The email and password you entered don't match"
+      max: v => v.length <= 255 || '',
+      email: v => /.+@.+/.test(v) || 'E-mail must be valid',
     }
   }),
   methods: {
     submit() {
-      // とりあえず非同期で送る
+      if (!this.valid) return;
+
       let formData = new FormData();
       formData.append('name', this.name);
       formData.append('email', this.email);
@@ -71,7 +81,7 @@ export default {
           }
         })
         .catch(function(error) {
-            window.location = '/register';
+          window.location = '/register';
         });
     }
   }
